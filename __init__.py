@@ -90,6 +90,27 @@ try:
 
         SetVar(result, True)
 
+    if module == "pair_device":
+        pair_ip = GetParams("pair_ip")
+        pair_code = GetParams("pair_code")
+        result = GetParams("result")
+
+        try:
+            subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            subprocess.run("adb start-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+            output = subprocess.check_output(f"adb pair {pair_ip} {pair_code}", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            if "successfully" in output.lower():
+                SetVar(result, True)
+            else:
+                SetVar(result, False)
+                raise Exception("Error pairing device. Please check the IP and code")
+
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
     if module == "connect_android":
         device_ip = GetParams("device_ip")
         connection_type = GetParams("connection_type")
