@@ -4,7 +4,7 @@ Module to automate mobile devices
 
 *Read this in other languages: [English](Manual_Appium.md), [Português](Manual_Appium.pr.md), [Español](Manual_Appium.es.md)*
   
-![banner](imgs/Banner_Appium.png o jpg)
+![banner](imgs/Banner_Appium.jpg)
 ## How to install this module
   
 To install the module in Rocketbot Studio, it can be done in two ways:
