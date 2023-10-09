@@ -7,7 +7,7 @@
         "pr": "Módulo para automatizar dispositivos móveis"
     },
     "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "license": "MIT",
     "homepage": "http://rocketbot.com/",
     "linux": true,
@@ -395,19 +395,19 @@
         {
             "es": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor.",
+                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Connect Emulated Device",
-                "description": "This command allows you to connect an emulated device and configure the server.",
+                "description": "This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor.",
+                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando poderá falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },

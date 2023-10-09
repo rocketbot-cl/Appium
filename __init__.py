@@ -200,6 +200,8 @@ try:
             caps["appium:connectHardwareKeyboard"] = True
 
             android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
+
+            SetVar(result, True)
         
         except Exception as e:
             SetVar(result, False)

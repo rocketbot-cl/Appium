@@ -27,7 +27,7 @@ Este comando permite conectar um dispositivo Android e configurar o servidor uti
 Este comando permite listar os dispositivos emulados disponíveis.
 
 5. Conectar Dispositivo Emulado  
-Este comando permite conectar um dispositivo emulado e configurar o servidor.
+Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando pode falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente.
 
 6. Swipe simples  
 Esse comando permite que você faça um simples swipe na tela do dispositivo Android.

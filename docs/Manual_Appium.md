@@ -67,7 +67,7 @@ When unzipping the tool, you can run Appium Inspector.exe, which will open the t
 reload button next to the input to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
 
 ### Create an emulated device
-To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it.
+To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it. It is possible that the first execution of the command may fail because the device must boot the operating system. If this occurs, run the command again.
 
 
 ## Description of the commands
@@ -106,7 +106,7 @@ This command allows you to list the available emulated devices.
 
 ### Connect Emulated Device
   
-This command allows you to connect an emulated device and configure the server.
+This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Emulator name|Name of the emulator you want to connect|Pixel_7_Pro_API_34|

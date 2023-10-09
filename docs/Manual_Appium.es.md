@@ -64,7 +64,7 @@ Al descomprimir la herramienta, se puede ejecutar Appium Inspector.exe, lo que l
 mostrando la información del dispositivo.
 
 ## Crear un dispositivo emulado
-Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo.
+Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo. Es posible que la primera ejecución del comando falle debido a que el dispositivo debe iniciar el sistema operativo. Si esto ocurre, vuelva a ejecutar el comando.
 
 
 ## Descripción de los comandos
@@ -103,7 +103,7 @@ Este comando permite listar los dispositivos emulados disponibles.
 
 ### Conectar Dispositivo Emulado
   
-Este comando permite conectar un dispositivo emulado y configurar el servidor.
+Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Nombre del emulador|Nombre del emulador que se desea conectar|Pixel_7_Pro_API_34|

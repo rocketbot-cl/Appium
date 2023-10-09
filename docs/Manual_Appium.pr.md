@@ -110,7 +110,8 @@ Este comando permite listar os dispositivos emulados disponíveis.
 
 ### Conectar Dispositivo Emulado
   
-Este comando permite conectar um dispositivo emulado e configurar o servidor.
+Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando pode falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente. A primeira execução do comando pode falhar porque o dispositivo precisa inicializar o sistema operacional. Se isso acontecer, execute o comando novamente.
+
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Nome do emulador|Nome do emulador que você deseja conectar|Pixel_7_Pro_API_34|

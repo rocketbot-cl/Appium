@@ -27,7 +27,7 @@ This command allows you to connect an Android device and configure the server us
 This command allows you to list the available emulated devices.
 
 5. Connect Emulated Device  
-This command allows you to connect an emulated device and configure the server.
+This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.
 
 6. Simple Swipe  
 This command allows you to perform a simple swipe on the Android device screen.
