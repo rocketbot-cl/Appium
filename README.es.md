@@ -23,20 +23,29 @@ Este comando permite vincular un dispositivo Android con la máquina donde se de
 3. Conectar Android  
 Este comando permite conectar un dispositivo Android y configurar el servidor utilizando Android Debug Bridge (ADB). Se deben tener activadas las opciones de desarrollador en el dispositivo, y la depuración inalámbrica o USB según corresponda.
 
-4. Swipe simple  
+4. Listar Dispositivos Emulados  
+Este comando permite listar los dispositivos emulados disponibles.
+
+5. Conectar Dispositivo Emulado  
+Este comando permite conectar un dispositivo emulado y configurar el servidor.
+
+6. Swipe simple  
 Este comando permite realizar un swipe simple en la pantalla del dispositivo Android.
 
-5. Tap en coordenadas  
+7. Tap en coordenadas  
 Este comando permite realizar un tap en una coordenada específica de la pantalla.
 
-6. Enviar teclas  
+8. Enviar teclas  
 Este comando permite enviar teclas a un selector específico del dispositivo Android.
 
-7. Obtener texto  
+9. Obtener texto  
 Este comando permite obtener el texto de un selector específico del dispositivo Android.
 
-8. Desconectar Android  
-Este comando permite desconectar el dispositivo Android que está siendo automatizado.  
+10. Captura de pantalla  
+Este comando permite capturar la pantalla del dispositivo Android y almacenar la imagen en la ruta especificada.
+
+11. Desconectar dispositivo  
+Este comando permite desconectar el dispositivo Android o emulado que está siendo automatizado.  
 
 
 

@@ -23,20 +23,29 @@ This command allows you to pair an Android device with the machine you want to c
 3. Connect Android  
 This command allows you to connect an Android device and configure the server using Android Debug Bridge (ADB). Developer options must be enabled on the device, and wireless or USB debugging as appropriate.
 
-4. Simple Swipe  
+4. List Emulated Devices  
+This command allows you to list the available emulated devices.
+
+5. Connect Emulated Device  
+This command allows you to connect an emulated device and configure the server.
+
+6. Simple Swipe  
 This command allows you to perform a simple swipe on the Android device screen.
 
-5. Tap on coordinates  
+7. Tap on coordinates  
 This command allows you to tap on a specific coordinate on the screen.
 
-6. Send keys  
+8. Send keys  
 This command allows you to send keys to a specific selector of the Android device.
 
-7. Get text  
+9. Get text  
 This command allows you to get the text of a specific selector of the Android device.
 
-8. Disconnect Android  
-This command allows you to disconnect the Android device being automated.  
+10. Screenshot  
+This command allows you to capture the screen of the Android device and store the image in the specified path.
+
+11. Disconnect device  
+This command allows you to disconnect the Android or emulated device that is being automated  
 
 
 
