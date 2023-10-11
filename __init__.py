@@ -131,6 +131,8 @@ try:
             elif connection_type == "usb":
                 output = "connected"
 
+            
+
             if "connected" or "" in output:
                 caps = {}
                 caps["platformName"] = "Android"
@@ -150,6 +152,56 @@ try:
                 SetVar(result, False)
                 traceback.print_exc()
                 raise Exception("Error connecting to device")
+        
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
+    if module == "list_emulators":
+        result = GetParams("result")
+
+        try:
+            output = subprocess.check_output("emulator -list-avds", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+            emulators = output.split("\n")
+            emulators = list(filter(None, emulators))
+
+            SetVar(result, emulators)
+
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
+    if module == "connect_emulator":
+        emulator_name = GetParams("emulator_name")
+        result = GetParams("result")
+
+        try:
+            subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+            user_folder = os.path.expanduser("~")
+            appium_path = os.path.join(user_folder, "AppData", "Roaming", "npm", "appium.cmd")
+
+
+            subprocess.Popen("appium", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+
+            subprocess.run("adb start-server")
+            
+
+            emulator_console = subprocess.Popen(f"emulator @{emulator_name}", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+
+
+            caps = {}
+            caps["platformName"] = "Android"
+            caps["appium:automationName"] = "uiautomator2"
+            caps["appium:deviceName"] = "Android Emulator"
+            caps["appium:ensureWebviewsHavePages"] = True
+            caps["appium:nativeWebScreenshot"] = True
+            caps["appium:newCommandTimeout"] = 3600
+            caps["appium:connectHardwareKeyboard"] = True
+
+            android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
+
+            SetVar(result, True)
         
         except Exception as e:
             SetVar(result, False)
@@ -233,6 +285,23 @@ try:
 
         print(element.get_attribute("text"))
         SetVar(result, element.get_attribute("text"))
+
+    
+    if module == "get_screenshot":
+        path = GetParams("path")
+
+        if not path:
+            raise Exception("Please specify a path")
+        if not path.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")):
+            path = path + ".png"
+
+        screenshotBase64 = android_driver.get_screenshot_as_base64()
+        screenshotDecoded = base64.b64decode(screenshotBase64)
+
+        with open(path, "wb") as f:
+            f.write(screenshotDecoded)
+        
+        
 
 
     if module == "disconnect_android":

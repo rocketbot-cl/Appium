@@ -3,7 +3,7 @@
 Módulo para automatizar dispositivos móviles  
 
 *Read this in other languages: [English](Manual_Appium.md), [Português](Manual_Appium.pr.md), [Español](Manual_Appium.es.md)*
-
+  
 ![banner](imgs/Banner_Appium.jpg)
 ## Como instalar este módulo
   
@@ -24,37 +24,48 @@ Una vez instalado npm, se puede proceder a instalar Appium y el driver utilizado
 El módulo utiliza herramientas 
 del kit de Software de Android Studio, por lo que es necesario instalarlo. Para ello, se puede descargar desde el siguiente [link](https://developer.android.com/studio). Una vez descargado, se debe ejecutar el instalador y seguir los pasos que se indican. Es recomendable instalar en la ubicación por defecto para evitar errores en la ejecución.
 
+### Descargar herramientas de línea de comandos de Android Studio
+En caso de querer conectarse con un dispositivo emulado, es necesario hacerlo con las herramientas de línea de comandos. Se pueden descargar accediendo a Android Studio. En el menú superior se debe ir a la opción Tools > SDK Manager. En la ventana que se abre, se debe seleccionar la pestaña SDK Tools. En la lista de herramientas, se debe seleccionar Android SDK Command-line Tools y hacer clic en Apply. Luego hacer clic en OK. Una vez descargadas, se debe agregar a las variables de entorno la ruta hacia la carpeta que utiliza la herramienta `emulator`. Revise el siguiente apartado 
+para ver cómo agregar variables de entorno, en el punto 8 se especifica la ruta a agregar.
+
 
 ## Agregar variables de entorno
 Para ejecutar los comandos del módulo, se requiere tener ciertas rutas agregadas al PATH del sistema para que todo funcione correctamente. Para ello, siga los siguientes pasos:
 1. En la barra de búsqueda de Windows escriba Variables de Entorno y seleccione la opción Editar las variables de entorno del sistema.
 2. En la ventana que se abre, seleccione Variables de entorno.
-3. En la nueva ventana, debe crear una nueva variable del sistema. Como nombre, escriba ANDROID_HOME y como valor la ruta absoluta hacia la carpeta `C:\Users\user\AppData\Local\Android\Sdk` (reemplazar user por el nombre de usuario de la 
-computadora).
+3. En la nueva ventana, debe crear una nueva variable del sistema. Como nombre, escriba ANDROID_HOME y como valor la ruta absoluta hacia la carpeta `C:\Users\user\AppData\Local\Android\Sdk` (reemplazar user por el nombre de usuario de la computadora).
 4. Luego, seleccione la variable Path y haga clic en Editar.
-5. En la nueva ventana, haga clic en Nuevo y agregue la misma ruta utilizada en el paso anterior agregando la carpeta `platform-tools` al final. Por ejemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (reemplazar user por el nombre de usuario de la computadora).
+5. En la nueva ventana, haga clic en Nuevo y agregue la misma ruta utilizada en el paso anterior agregando la carpeta `platform-tools` al final. Por ejemplo, 
+`C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (reemplazar user por el nombre de usuario de la computadora).
 6. Por último, haga clic en Aceptar en todas las ventanas y reinicie la computadora.
 7. Para verificar que todo se haya realizado correctamente, abra una consola de comandos y escriba adb. Si todo está bien, debería aparecer una lista de comandos disponibles.
-8. Al finalizar estos pasos, se puede proceder a ejecutar los comandos del módulo.
+8. En caso de instalar las herramientas de línea de comandos, se debe agregar al path la ruta hacia la carpeta `C:\Users\user\AppData\Local\Android\Sdk\emulator` (reemplazar user por el nombre de usuario de la computadora).
+9. Al finalizar estos pasos, se puede proceder a ejecutar los comandos del módulo.
 
 
 ## Configuración de dispositivo Android
-Para conectar el dispositivo de forma correcta, se requiere configurar el dispositivo Android para que acepte la conexión, ya sea por USB o por WiFi. Para ello, siga los siguientes pasos:
-1. Activar opciones de desarrollador: En el dispositivo, ve a Ajustes o 
-Configuración > Información del teléfono > Número de compilación. Toca 7 veces Número de compilación. Aparecerá un mensaje que dice que ahora eres un desarrollador.
+### Estos pasos sólo son necesarios en caso de querer conectar con un dispositivo Android físico. En caso de querer conectar con un dispositivo emulado, se debe seguir el apartado Crear un dispositivo emulado.
+Para conectar el dispositivo de forma correcta, se requiere 
+configurar el dispositivo Android para que acepte la conexión, ya sea por USB o por WiFi. Para ello, siga los siguientes pasos:
+1. Activar opciones de desarrollador: En el dispositivo, ve a Ajustes o Configuración > Información del teléfono > Número de compilación. Toca 7 veces Número de compilación. Aparecerá un mensaje que dice que ahora eres un desarrollador.
 2. Activar depuración USB: En el dispositivo, ve a Ajustes o Configuración > Sistema > Opciones para desarrolladores y activa Depuración por USB.
 3. Activar depuración inalámbrica: En el dispositivo, ve a Ajustes o Configuración > Sistema > Opciones para desarrolladores y activa Depuración inalámbrica.
 4. Si se desea utilizar la conexión inalámbrica (WIFI) se debe emparejar el dispositivo para que se pueda conectar. Para esto se debe utilizar una única vez el comando Vincular dispositivo.
-5. Si se desea utilizar la conexión por USB, se debe conectar el dispositivo a la computadora mediante el cable USB. Luego, se debe ejecutar el comando Conectar dispositivo.
+5. Si se desea utilizar la conexión por USB, se debe conectar el dispositivo a la computadora mediante el cable USB. Luego, se debe ejecutar 
+el comando Conectar dispositivo.
 6. Si todo fue configurado correctamente, el comando Conectar Android debería devolver True.
 
 
 ## Appium inspector
-La herramienta Appium cuenta con un inspector para 
-poder visualizar los elementos de la pantalla del dispositivo. Para descargarlo, se puede seguir el siguiente [link](https://github.com/appium/appium-inspector/releases)
+La herramienta Appium cuenta con un inspector para poder visualizar los elementos de la pantalla del dispositivo. Para descargarlo, se puede seguir el siguiente [link](https://github.com/appium/appium-inspector/releases)
 
 ### Utilizar Appium inspector
-Al descomprimir la herramienta, se puede ejecutar Appium Inspector.exe, lo que levantará la ventana de la herramienta. Para conectar el dispositivo Android que fue conectado mediante el módulo en Rocketbot, debes ir a la pestaña `Attach to Session...` luego en el botón de recargar al lado del input para ingresar el ID. Si todo fue configurado correctamente, debería aparecer en el input un string donde se indica el ID de la conexión, el dispositivo, su ip y puerto, y el driver uiautomator2. Luego, se debe hacer clic en el botón Attach to Session. Esto abrirá una nueva ventana del inspector mostrando la información del dispositivo.
+Al descomprimir la herramienta, se puede ejecutar Appium Inspector.exe, lo que levantará la ventana de la herramienta. Para conectar el dispositivo Android que fue conectado mediante el módulo en Rocketbot, debes ir a la pestaña `Attach to Session...` luego en el botón de recargar al lado del input para ingresar el ID. Si todo fue configurado correctamente, debería aparecer en el input un string donde se indica el ID de la conexión, el dispositivo, su ip y puerto, y el driver uiautomator2. Luego, se debe hacer clic en el botón Attach to Session. Esto abrirá una nueva ventana del inspector 
+mostrando la información del dispositivo.
+
+## Crear un dispositivo emulado
+Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo. Es posible que la primera ejecución del comando falle debido a que el dispositivo debe iniciar el sistema operativo. Si esto ocurre, vuelva a ejecutar el comando.
+
 
 ## Descripción de los comandos
 
@@ -81,6 +92,21 @@ Este comando permite conectar un dispositivo Android y configurar el servidor ut
 | --- | --- | --- |
 |Dirección ip y puerto del dispositivo|Dirección IP y puerto del dispositivo Android que se desea conectar|ip:port|
 |Tipo de conexión|Tipo de conexión a utilizar|USB|
+|Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
+
+### Listar Dispositivos Emulados
+  
+Este comando permite listar los dispositivos emulados disponibles.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Asignar resultado a variable|Asignar resultado de la operación a una variable|result|
+
+### Conectar Dispositivo Emulado
+  
+Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Nombre del emulador|Nombre del emulador que se desea conectar|Pixel_7_Pro_API_34|
 |Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
 
 ### Swipe simple
@@ -116,8 +142,15 @@ Este comando permite obtener el texto de un selector específico del dispositivo
 |Selector|Selector en el cual se enviarán las teclas.|com.whatsapp:id/entry|
 |Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
 
-### Desconectar Android
+### Captura de pantalla
   
-Este comando permite desconectar el dispositivo Android que está siendo automatizado.
+Este comando permite capturar la pantalla del dispositivo Android y almacenar la imagen en la ruta especificada.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Ruta de la imagen|Ruta en la cual se almacenará la imagen.|C:/Users/User/Desktop/imagen.png|
+
+### Desconectar dispositivo
+  
+Este comando permite desconectar el dispositivo Android o emulado que está siendo automatizado.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |

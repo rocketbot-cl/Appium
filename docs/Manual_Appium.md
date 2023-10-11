@@ -27,26 +27,32 @@ Once npm is installed, you can proceed to install Appium and the driver used. To
 The module uses tools from the Android Studio Software 
 kit, so it is necessary to install it. To do this, you can download it from the following [link](https://developer.android.com/studio). Once downloaded, you must run the installer and follow the steps indicated. It is recommended to install in the default location to avoid errors in execution.
 
+### Download Android Studio command line tools
+If you want to connect with an emulated device, it is necessary to do it with the command line tools. They can be downloaded by accessing Android Studio. In the top menu you must go to the Tools > SDK Manager option. In the window that opens, you must select the SDK Tools tab. In the list of tools, you must select Android SDK Command-line Tools and click Apply. Then click OK. Once downloaded, you must add to the environment variables the path to the folder used by the tool `emulator`. Check the following section to see how to add environment variables, in point 9 the path to add is specified.
+
 
 ## Add environment variables
-To execute the module commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
+To execute the module 
+commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
 1. In the Windows search bar, type Environment Variables and select the Edit System Environment Variables option.
 2. In the window that opens, select Environment Variables.
 3. In the new window, you must create a new system variable. As a name, write ANDROID_HOME and as a value the absolute path to the folder `C:\Users\user\AppData\Local\Android\Sdk` (replace user with the computer username).
 4. Then, select the Path variable and click Edit.
-5. In the new window, click New and add the same path used in the 
-previous step by adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username).
+5. In the new window, click New and add the same path used in the previous step by adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username).
 6. Finally, click OK in all windows and restart the computer.
-7. To verify that everything has been done correctly, open a command prompt and type adb. If everything is fine, a list of available commands should appear.
-8. After completing these steps, you can proceed to execute the module commands.
+7. To verify that everything has been done correctly, open a command prompt and type adb. If everything is fine, a 
+list of available commands should appear.
+8. In case of installing the command line tools, the path to the folder `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username) must be added to the path.
+9. After completing these steps, you can proceed to execute the module commands.
 
 
 ## Android device configuration
+### These steps are only necessary if you want to connect with a physical Android device. If you want to connect with an emulated device, you must follow the Create an emulated device section.
 To connect the device correctly, it is necessary to configure the Android device to accept the connection, either by USB or by WiFi. To do this, follow these steps:
 1. Activate developer options: On the device, go to Settings > About phone > Build number. Tap Build number 7 times. A message will appear saying that you are now a developer.
 2. Activate USB debugging: On the device, go to Settings > System > Developer options and turn on USB debugging.
-3. Activate wireless debugging: On 
-the device, go to Settings > System > Developer options and turn on Wireless debugging.
+3. 
+Activate wireless debugging: On the device, go to Settings > System > Developer options and turn on Wireless debugging.
 4. If you want to use the wireless connection (WIFI) you must pair the device so that it can connect. To do this, you must use the Link device command once.
 5. If you want to use the USB connection, you must connect the device to the computer using the USB cable. Then, you must run the Connect device command.
 6. If everything was configured correctly, the Connect Android command should return True.
@@ -57,8 +63,11 @@ The Appium tool has an inspector to be able to visualize the elements of the dev
 
 
 ### Use Appium inspector
-When unzipping the tool, you can run Appium Inspector.exe, which will open the tool window. To connect the Android device that was connected using the module in Rocketbot, you must go to the `Attach to Session ...` tab then in the reload button next to the input 
-to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
+When unzipping the tool, you can run Appium Inspector.exe, which will open the tool window. To connect the Android device that was connected using the module in Rocketbot, you must go to the `Attach to Session ...` tab then in the 
+reload button next to the input to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
+
+### Create an emulated device
+To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it. It is possible that the first execution of the command may fail because the device must boot the operating system. If this occurs, run the command again.
 
 
 ## Description of the commands
@@ -86,6 +95,21 @@ This command allows you to connect an Android device and configure the server us
 | --- | --- | --- |
 |IP address and port of the device|IP address and port of the Android device you want to connect|ip:port|
 |Connection type|Type of connection to use|USB|
+|Assign result to variable|Assign result of connection to a variable|result|
+
+### List Emulated Devices
+  
+This command allows you to list the available emulated devices.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Assign result to variable|Assign result of operation to a variable|result|
+
+### Connect Emulated Device
+  
+This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Emulator name|Name of the emulator you want to connect|Pixel_7_Pro_API_34|
 |Assign result to variable|Assign result of connection to a variable|result|
 
 ### Simple Swipe
@@ -121,8 +145,15 @@ This command allows you to get the text of a specific selector of the Android de
 |Selector|Selector in which the keys will be sent.|com.whatsapp:id/entry|
 |Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
-### Disconnect Android
+### Screenshot
   
-This command allows you to disconnect the Android device being automated.
+This command allows you to capture the screen of the Android device and store the image in the specified path.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Image path|Path in which the image will be stored.|C:/Users/User/Desktop/imagen.png|
+
+### Disconnect device
+  
+This command allows you to disconnect the Android or emulated device that is being automated
 |Parameters|Description|example|
 | --- | --- | --- |
