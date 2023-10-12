@@ -27,25 +27,40 @@ This command allows you to connect an Android device and configure the server us
 This command allows you to list the available emulated devices.
 
 5. Connect Emulated Device  
-This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.
+This command allows you to connect an emulated device and configure the server.
 
-6. Simple Swipe  
+6. Get Current Application Information  
+This command allows you to get the package name and activity name of the application that is currently running on the Android device.
+
+7. Start application  
+This command allows you to start an application on the Android device. To get the package name and activity name, you can use the Get Current Application Information command
+
+8. Simple Swipe  
 This command allows you to perform a simple swipe on the Android device screen.
 
-7. Tap on coordinates  
+9. Tap on coordinates  
 This command allows you to tap on a specific coordinate on the screen.
 
-8. Send keys  
+10. Tap on element  
+This command allows you to tap on a specific element on the screen.
+
+11. Send keys  
 This command allows you to send keys to a specific selector of the Android device.
 
-9. Get text  
+12. Get text  
 This command allows you to get the text of a specific selector of the Android device.
 
-10. Screenshot  
+13. Get text by coordinates  
+This command allows you to get the text of an element located at a specific position of the Android device.
+
+14. Screenshot  
 This command allows you to capture the screen of the Android device and store the image in the specified path.
 
-11. Disconnect device  
-This command allows you to disconnect the Android or emulated device that is being automated  
+15. Run command on device  
+This command allows you to run a command on the Android device terminal.
+
+16. Disconnect device  
+This command allows you to disconnect the Android or emulated device that is being automated
 
 
 

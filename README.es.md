@@ -27,25 +27,40 @@ Este comando permite conectar un dispositivo Android y configurar el servidor ut
 Este comando permite listar los dispositivos emulados disponibles.
 
 5. Conectar Dispositivo Emulado  
-Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.
+Este comando permite conectar un dispositivo emulado y configurar el servidor.
 
-6. Swipe simple  
+6. Obtener información de aplicación actual  
+Este comando permite obtener el nombre del paquete y el nombre de la actividad de la aplicación que se está ejecutando actualmente en el dispositivo Android.
+
+7. Iniciar aplicación  
+Este comando permite iniciar una aplicación en el dispositivo Android. Para obtener el nombre del paquete y el nombre de la actividad, puede utilizar el comando Obtener información de aplicación actual
+
+8. Swipe simple  
 Este comando permite realizar un swipe simple en la pantalla del dispositivo Android.
 
-7. Tap en coordenadas  
+9. Tap en coordenadas  
 Este comando permite realizar un tap en una coordenada específica de la pantalla.
 
-8. Enviar teclas  
+10. Tap en elemento  
+Este comando permite realizar un tap en un elemento específico de la pantalla.
+
+11. Enviar teclas  
 Este comando permite enviar teclas a un selector específico del dispositivo Android.
 
-9. Obtener texto  
+12. Extraer texto  
 Este comando permite obtener el texto de un selector específico del dispositivo Android.
 
-10. Captura de pantalla  
+13. Extraer texto por coordenadas  
+Este comando permite obtener el texto de un elemento ubicado en una posición específica del dispositivo Android.
+
+14. Captura de pantalla  
 Este comando permite capturar la pantalla del dispositivo Android y almacenar la imagen en la ruta especificada.
 
-11. Desconectar dispositivo  
-Este comando permite desconectar el dispositivo Android o emulado que está siendo automatizado.  
+15. Ejecutar comando en dispositivo  
+Este comando permite ejecutar un comando en el terminal del dispositivo Android.
+
+16. Desconectar dispositivo  
+Este comando permite desconectar el dispositivo Android o emulado que está siendo automatizado.
 
 
 

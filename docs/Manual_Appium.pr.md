@@ -99,6 +99,7 @@ Este comando permite conectar um dispositivo Android e configurar o servidor uti
 | --- | --- | --- |
 |IP e porta do dispositivo|IP e porta do dispositivo Android que você deseja conectar|ip:port|
 |Tipo de conexão|Tipo de conexão a ser usada|USB|
+|Permitir shell|Permite executar comandos usando o terminal no dispositivo Android. É um recurso inseguro. Para mais informações, consulte https//appium.io/docs/en/2.0/guides/security/|True|
 |Atribuir resultado a variável|Atribuir resultado da conexão a uma variável|result|
 
 ### Listar dispositivos emulados
@@ -110,12 +111,28 @@ Este comando permite listar os dispositivos emulados disponíveis.
 
 ### Conectar Dispositivo Emulado
   
-Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando pode falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente. A primeira execução do comando pode falhar porque o dispositivo precisa inicializar o sistema operacional. Se isso acontecer, execute o comando novamente.
-
+Este comando permite conectar um dispositivo emulado e configurar o servidor.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Nome do emulador|Nome do emulador que você deseja conectar|Pixel_7_Pro_API_34|
+|Permitir shell|Permite executar comandos usando o terminal no dispositivo Android. É um recurso inseguro. Para mais informações, consulte https//appium.io/docs/en/2.0/guides/security/|True|
 |Atribuir resultado a variável|Atribuir resultado da conexão a uma variável|result|
+
+### Obter informações do aplicativo atual
+  
+Este comando permite obter o nome do pacote e o nome da atividade do aplicativo que está sendo executado atualmente no dispositivo Android.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
+
+### Iniciar aplicação
+  
+Este comando permite iniciar um aplicativo no dispositivo Android. Para obter o nome do pacote e o nome da atividade, você pode usar o comando Obter informações do aplicativo atual
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Nome do pacote|Nome do pacote do aplicativo que você deseja iniciar.|com.android.Settings|
+|Nome da atividade|Nome da atividade do aplicativo que você deseja iniciar.|.Settings|
+|Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
 
 ### Swipe simples
   
@@ -132,6 +149,15 @@ Este comando permite tocar em uma coordenada específica na tela.
 |Coordenada X|Coordenada X onde o toque será realizado|100|
 |Coordenada Y|Coordenada Y onde o toque será realizado|100|
 
+### Toque no elemento
+  
+Este comando permite tocar em um elemento específico na tela.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Tipo de dado|Tipo de dado do seletor no qual o toque será realizado.|id|
+|Seletor|Seletor no qual o toque será realizado.|com.whatsapp:id/entry|
+|Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
+
 ### Enviar teclas
   
 Esse comando permite enviar teclas para um seletor específico no dispositivo Android.
@@ -141,7 +167,7 @@ Esse comando permite enviar teclas para um seletor específico no dispositivo An
 |Seletor|Seletor no qual as teclas serão enviadas.|com.whatsapp:id/entry|
 |Teclas|Teclas a serem enviadas para o seletor.|Olá mundo!|
 
-### Obter texto
+### Extrair texto
   
 Este comando permite obter o texto de um seletor específico do dispositivo Android.
 |Parâmetros|Descrição|exemplo|
@@ -150,12 +176,28 @@ Este comando permite obter o texto de um seletor específico do dispositivo Andr
 |Seletor|Seletor no qual as teclas serão enviadas.|com.whatsapp:id/entry|
 |Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
 
+### Extrair texto por coordenadas
+  
+Este comando permite obter o texto de um elemento localizado em uma posição específica do dispositivo Android.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Coordenadas x,y|Coordenadas x,y do elemento para obter o texto.|450,2000|
+|Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
+
 ### Captura de tela
   
 Este comando permite capturar a tela do dispositivo Android e armazenar a imagem no caminho especificado.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Caminho da imagem|Caminho no qual a imagem será armazenada.|C:/Users/User/Desktop/imagen.png|
+
+### Executar comando no dispositivo
+  
+Este comando permite executar um comando no terminal do dispositivo Android.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Comando|Comando a ser executado no terminal do dispositivo.|pm list packages|
+|Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
 
 ### Desconectar dispositivo
   

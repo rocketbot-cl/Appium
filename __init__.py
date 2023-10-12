@@ -39,6 +39,7 @@ if cur_path not in sys.path:
 
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
+from appium.webdriver.common.mobileby import MobileBy
 
 
 from appium_selenium.webdriver.common.action_chains import ActionChains
@@ -48,7 +49,7 @@ from appium_selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 module = GetParams("module")
-global android_driver
+global android_driver, mod_consoles
 
 try:
     if module == "config_appium":
@@ -114,7 +115,9 @@ try:
     if module == "connect_android":
         device_ip = GetParams("device_ip")
         connection_type = GetParams("connection_type")
+        allow_shell = GetParams("allow_shell")
         result = GetParams("result")
+        mod_consoles = []
 
         try:
             subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -122,16 +125,22 @@ try:
             user_folder = os.path.expanduser("~")
             appium_path = os.path.join(user_folder, "AppData", "Roaming", "npm", "appium.cmd")
 
+            if allow_shell:
+                print("Allowing insecure adb shell")
+                appium_command = "appium --allow-insecure=adb_shell"
+            else:
+                appium_command = "appium"
 
-            subprocess.Popen("appium", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            appium_console = subprocess.Popen(appium_command, shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            mod_consoles.append(appium_console)
 
             subprocess.run("adb start-server")
+
             if connection_type == "wifi":
                 output = subprocess.check_output(f"adb connect {device_ip}", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
             elif connection_type == "usb":
                 output = "connected"
 
-            
 
             if "connected" or "" in output:
                 caps = {}
@@ -145,7 +154,6 @@ try:
 
                 android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
 
-
                 SetVar(result, True)
 
             else:
@@ -155,6 +163,12 @@ try:
         
         except Exception as e:
             SetVar(result, False)
+            for console in mod_consoles:
+                try:
+                    console.terminate()
+                    console.kill()
+                except:
+                    pass
             raise e
 
     if module == "list_emulators":
@@ -173,22 +187,29 @@ try:
 
     if module == "connect_emulator":
         emulator_name = GetParams("emulator_name")
+        allow_shell = GetParams("allow_shell")
         result = GetParams("result")
+        mod_consoles = []
 
         try:
             subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
-            user_folder = os.path.expanduser("~")
-            appium_path = os.path.join(user_folder, "AppData", "Roaming", "npm", "appium.cmd")
+            if allow_shell:
+                print("Allowing insecure adb shell")
+                appium_command = "appium --allow-insecure=adb_shell"
+            else:
+                appium_command = "appium"
 
+            appium_console = subprocess.Popen(appium_command, shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            mod_consoles.append(appium_console)
 
-            subprocess.Popen("appium", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
-
-            subprocess.run("adb start-server")
+            subprocess.run("adb start-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             
-
             emulator_console = subprocess.Popen(f"emulator @{emulator_name}", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            mod_consoles.append(emulator_console)
 
+            wait_console = subprocess.Popen("adb wait-for-device", shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            mod_consoles.append(wait_console)
 
             caps = {}
             caps["platformName"] = "Android"
@@ -205,6 +226,12 @@ try:
         
         except Exception as e:
             SetVar(result, False)
+            for console in mod_consoles:
+                try:
+                    console.terminate()
+                    console.kill()
+                except:
+                    pass
             raise e
 
     if module == "simple_swipe":
@@ -252,7 +279,56 @@ try:
         actions.w3c_actions.pointer_action.release()
         actions.perform()
 
+    if module == "tap_object":
+        selector = GetParams("selector")
+        data_type = GetParams("data_type")
+        result = GetParams("result")
 
+        try:
+            if data_type == "id":
+                element = android_driver.find_element(by=AppiumBy.ID, value=selector)
+            elif data_type == "xpath":
+                element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
+            elif data_type == "class":
+                element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
+            else:
+                raise Exception("Invalid data type")
+
+            element.click()
+
+            SetVar(result, True)
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
+    # if module == "scroll_to_object":
+    #     selector = GetParams("selector")
+    #     data_type = GetParams("data_type")
+    #     result = GetParams("result")
+
+    #     try:
+    #         if data_type == "id":
+    #             element = android_driver.find_element(by=AppiumBy.ID, value=selector)
+    #         elif data_type == "xpath":
+    #             element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
+    #         elif data_type == "class":
+    #             element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
+    #         else:
+    #             raise Exception("Invalid data type")
+
+    #         print(element.location)
+
+    #         # action = webdriver.common.touch_action.TouchAction(android_driver)
+    #         # action.scroll_from_element(element, 0, 10).perform()
+
+
+            
+
+    #         SetVar(result, True)
+
+    #     except Exception as e:
+    #         SetVar(result, False)
+    #         raise e
 
     if module == "send_keys":
         data_type = GetParams("data_type")
@@ -266,6 +342,8 @@ try:
             element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
         elif data_type == "class":
             element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
+        else:
+            raise Exception("Invalid data type")
         
         element.send_keys(text)
 
@@ -281,10 +359,32 @@ try:
             element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
         elif data_type == "class":
             element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
+        else:
+            raise Exception("Invalid data type")
 
-
-        print(element.get_attribute("text"))
         SetVar(result, element.get_attribute("text"))
+
+    if module == "get_text_coord":
+        coords = GetParams("coordinates")
+        result = GetParams("result")
+
+        x,y = coords.split(",")
+
+        for element in android_driver.find_elements(by=AppiumBy.XPATH, value="//*"):
+            text = element.get_attribute("text")
+
+            if not text:
+                continue
+            bounds = element.get_attribute("bounds")
+            bounds = bounds.replace("[", "").replace("]", ",").split(",")[:-1]
+
+            if int(bounds[0]) <= int(x) <= int(bounds[2]) and int(bounds[1]) <= int(y) <= int(bounds[3]):
+                SetVar(result, text)
+                break
+
+            if element == android_driver.find_elements(by=AppiumBy.XPATH, value="//*")[-1]:
+                SetVar(result, False)
+                raise Exception("No element with text was found")
 
     
     if module == "get_screenshot":
@@ -300,13 +400,62 @@ try:
 
         with open(path, "wb") as f:
             f.write(screenshotDecoded)
-        
-        
+
+    if module == "run_command":
+        command = GetParams("command")
+        result = GetParams("result")
+
+        try:
+            output = android_driver.execute_script('mobile: shell', {'command': command})
+
+            SetVar(result, output)
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
+    if module == "get_current_app_data":
+        result = GetParams("result")
+        current_app = {}
+
+        try:
+            current_app["package_name"] = android_driver.current_package
+            current_app["activity_name"] = android_driver.current_activity
+
+            SetVar(result, current_app)
+        except Exception as e:
+            SetVar(result, False)
+            raise e
+
+
+    if module == "start_app":
+        package_name = GetParams("package_name")
+        activity_name = GetParams("activity_name")
+        result = GetParams("result")
+
+        try:
+            if not activity_name or not package_name:
+                raise Exception("Please specify a package name and activity name")
+
+            android_driver.start_activity(package_name, activity_name)
+
+            SetVar(result, True)
+        except Exception as e:
+            SetVar(result, False)
+            raise e
 
 
     if module == "disconnect_android":
-        android_driver.quit()
         subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        try:
+            android_driver.quit()
+        except:
+            pass
+        for console in mod_consoles:
+            try:
+                console.terminate()
+                console.kill()
+            except:
+                pass
 
 except Exception as e:
     traceback.print_exc()

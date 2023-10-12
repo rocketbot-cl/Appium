@@ -27,25 +27,40 @@ Este comando permite conectar um dispositivo Android e configurar o servidor uti
 Este comando permite listar os dispositivos emulados disponíveis.
 
 5. Conectar Dispositivo Emulado  
-Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando pode falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente.
+Este comando permite conectar um dispositivo emulado e configurar o servidor.
 
-6. Swipe simples  
+6. Obter informações do aplicativo atual  
+Este comando permite obter o nome do pacote e o nome da atividade do aplicativo que está sendo executado atualmente no dispositivo Android.
+
+7. Iniciar aplicação  
+Este comando permite iniciar um aplicativo no dispositivo Android. Para obter o nome do pacote e o nome da atividade, você pode usar o comando Obter informações do aplicativo atual
+
+8. Swipe simples  
 Esse comando permite que você faça um simples swipe na tela do dispositivo Android.
 
-7. Toque nas coordenadas  
+9. Toque nas coordenadas  
 Este comando permite tocar em uma coordenada específica na tela.
 
-8. Enviar teclas  
+10. Toque no elemento  
+Este comando permite tocar em um elemento específico na tela.
+
+11. Enviar teclas  
 Esse comando permite enviar teclas para um seletor específico no dispositivo Android.
 
-9. Obter texto  
+12. Extrair texto  
 Este comando permite obter o texto de um seletor específico do dispositivo Android.
 
-10. Captura de tela  
+13. Extrair texto por coordenadas  
+Este comando permite obter o texto de um elemento localizado em uma posição específica do dispositivo Android.
+
+14. Captura de tela  
 Este comando permite capturar a tela do dispositivo Android e armazenar a imagem no caminho especificado.
 
-11. Desconectar dispositivo  
-Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.  
+15. Executar comando no dispositivo  
+Este comando permite executar um comando no terminal do dispositivo Android.
+
+16. Desconectar dispositivo  
+Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.
 
 
 

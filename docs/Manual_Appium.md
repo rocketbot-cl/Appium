@@ -67,7 +67,7 @@ When unzipping the tool, you can run Appium Inspector.exe, which will open the t
 reload button next to the input to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
 
 ### Create an emulated device
-To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it. It is possible that the first execution of the command may fail because the device must boot the operating system. If this occurs, run the command again.
+To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it.
 
 
 ## Description of the commands
@@ -95,6 +95,7 @@ This command allows you to connect an Android device and configure the server us
 | --- | --- | --- |
 |IP address and port of the device|IP address and port of the Android device you want to connect|ip:port|
 |Connection type|Type of connection to use|USB|
+|Allow shell|Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https//appium.io/docs/en/2.0/guides/security/|True|
 |Assign result to variable|Assign result of connection to a variable|result|
 
 ### List Emulated Devices
@@ -106,11 +107,28 @@ This command allows you to list the available emulated devices.
 
 ### Connect Emulated Device
   
-This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.
+This command allows you to connect an emulated device and configure the server.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Emulator name|Name of the emulator you want to connect|Pixel_7_Pro_API_34|
+|Allow shell|Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https//appium.io/docs/en/2.0/guides/security/|True|
 |Assign result to variable|Assign result of connection to a variable|result|
+
+### Get Current Application Information
+  
+This command allows you to get the package name and activity name of the application that is currently running on the Android device.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Assign result to variable|Name of the variable in which the result will be assigned.|variable|
+
+### Start application
+  
+This command allows you to start an application on the Android device. To get the package name and activity name, you can use the Get Current Application Information command
+|Parameters|Description|example|
+| --- | --- | --- |
+|Package name|Name of the package of the application you want to start.|com.android.Settings|
+|Activity name|Name of the activity of the application you want to start.|.Settings|
+|Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
 ### Simple Swipe
   
@@ -126,6 +144,15 @@ This command allows you to tap on a specific coordinate on the screen.
 | --- | --- | --- |
 |Coordinate X|X coordinate where the tap will be performed|100|
 |Coordinate Y|Y coordinate where the tap will be performed|100|
+
+### Tap on element
+  
+This command allows you to tap on a specific element on the screen.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Data type|Data type of the selector in which the tap will be performed.|id|
+|Selector|Selector in which the tap will be performed.|com.whatsapp:id/entry|
+|Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
 ### Send keys
   
@@ -145,12 +172,28 @@ This command allows you to get the text of a specific selector of the Android de
 |Selector|Selector in which the keys will be sent.|com.whatsapp:id/entry|
 |Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
+### Get text by coordinates
+  
+This command allows you to get the text of an element located at a specific position of the Android device.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Coordinates x,y|Coordinates x,y of the element to get the text.|450,2000|
+|Assign result to variable|Name of the variable in which the result will be assigned.|variable|
+
 ### Screenshot
   
 This command allows you to capture the screen of the Android device and store the image in the specified path.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Image path|Path in which the image will be stored.|C:/Users/User/Desktop/imagen.png|
+
+### Run command on device
+  
+This command allows you to run a command on the Android device terminal.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Command|Command to be executed in the device terminal.|pm list packages|
+|Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
 ### Disconnect device
   

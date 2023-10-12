@@ -11,6 +11,8 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Manual: __Descargar__ el archivo .zip y descomprimirlo en la carpeta modules. El nombre de la carpeta debe ser el mismo al del módulo y dentro debe tener los siguientes archivos y carpetas: \__init__.py, package.json, docs, example y libs. Si tiene abierta la aplicación, refresca el navegador para poder utilizar el nuevo modulo.
 2. Automática: Al ingresar a Rocketbot Studio sobre el margen derecho encontrara la sección de **Addons**, seleccionar **Install Mods**, buscar el modulo deseado y presionar install.  
 
+
+
 # Instructivo de configuración previa para poder utilizar el módulo Appium
 
 ## Instalaciones previas
@@ -64,7 +66,7 @@ Al descomprimir la herramienta, se puede ejecutar Appium Inspector.exe, lo que l
 mostrando la información del dispositivo.
 
 ## Crear un dispositivo emulado
-Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo. Es posible que la primera ejecución del comando falle debido a que el dispositivo debe iniciar el sistema operativo. Si esto ocurre, vuelva a ejecutar el comando.
+Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo.
 
 
 ## Descripción de los comandos
@@ -92,6 +94,7 @@ Este comando permite conectar un dispositivo Android y configurar el servidor ut
 | --- | --- | --- |
 |Dirección ip y puerto del dispositivo|Dirección IP y puerto del dispositivo Android que se desea conectar|ip:port|
 |Tipo de conexión|Tipo de conexión a utilizar|USB|
+|Permitir shell|Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https//appium.io/docs/en/2.0/guides/security/|True|
 |Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
 
 ### Listar Dispositivos Emulados
@@ -103,11 +106,28 @@ Este comando permite listar los dispositivos emulados disponibles.
 
 ### Conectar Dispositivo Emulado
   
-Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.
+Este comando permite conectar un dispositivo emulado y configurar el servidor.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Nombre del emulador|Nombre del emulador que se desea conectar|Pixel_7_Pro_API_34|
+|Permitir shell|Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https//appium.io/docs/en/2.0/guides/security/|True|
 |Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
+
+### Obtener información de aplicación actual
+  
+Este comando permite obtener el nombre del paquete y el nombre de la actividad de la aplicación que se está ejecutando actualmente en el dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
+
+### Iniciar aplicación
+  
+Este comando permite iniciar una aplicación en el dispositivo Android. Para obtener el nombre del paquete y el nombre de la actividad, puede utilizar el comando Obtener información de aplicación actual
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Nombre del paquete|Nombre del paquete de la aplicación que se desea iniciar.|com.android.Settings|
+|Nombre de la actividad|Nombre de la actividad de la aplicación que se desea iniciar.|.Settings|
+|Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
 
 ### Swipe simple
   
@@ -124,6 +144,15 @@ Este comando permite realizar un tap en una coordenada específica de la pantall
 |Coordenada X|Coordenada X donde se realizará el tap|100|
 |Coordenada Y|Coordenada Y donde se realizará el tap|100|
 
+### Tap en elemento
+  
+Este comando permite realizar un tap en un elemento específico de la pantalla.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Tipo de dato|Tipo de dato del selector en el cual se realizará el tap.|id|
+|Selector|Selector en el cual realizará el tap.|com.whatsapp:id/entry|
+|Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
+
 ### Enviar teclas
   
 Este comando permite enviar teclas a un selector específico del dispositivo Android.
@@ -133,7 +162,7 @@ Este comando permite enviar teclas a un selector específico del dispositivo And
 |Selector|Selector en el cual se enviarán las teclas.|com.whatsapp:id/entry|
 |Teclas|Teclas que se enviarán al selector.|Hola mundo!|
 
-### Obtener texto
+### Extraer texto
   
 Este comando permite obtener el texto de un selector específico del dispositivo Android.
 |Parámetros|Descripción|ejemplo|
@@ -142,12 +171,28 @@ Este comando permite obtener el texto de un selector específico del dispositivo
 |Selector|Selector en el cual se enviarán las teclas.|com.whatsapp:id/entry|
 |Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
 
+### Extraer texto por coordenadas
+  
+Este comando permite obtener el texto de un elemento ubicado en una posición específica del dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Coordenadas x,y|Coordenadas x,y del elemento a obtener el texto.|450,2000|
+|Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
+
 ### Captura de pantalla
   
 Este comando permite capturar la pantalla del dispositivo Android y almacenar la imagen en la ruta especificada.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Ruta de la imagen|Ruta en la cual se almacenará la imagen.|C:/Users/User/Desktop/imagen.png|
+
+### Ejecutar comando en dispositivo
+  
+Este comando permite ejecutar un comando en el terminal del dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Comando|Comando que se ejecutará en el terminal del dispositivo.|pm list packages|
+|Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
 
 ### Desconectar dispositivo
   
