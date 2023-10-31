@@ -40,6 +40,8 @@ if cur_path not in sys.path:
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.common.touch_action import TouchAction
+from appium.webdriver.common.multi_action import MultiAction
 
 
 from appium_selenium.webdriver.common.action_chains import ActionChains
@@ -50,6 +52,12 @@ from appium_selenium.webdriver.common.actions.pointer_input import PointerInput
 
 module = GetParams("module")
 global android_driver, mod_consoles
+
+data_types = {
+    "id": AppiumBy.ID,
+    "xpath": AppiumBy.XPATH,
+    "class": AppiumBy.CLASS_NAME
+}
 
 try:
     if module == "config_appium":
@@ -116,6 +124,8 @@ try:
         device_ip = GetParams("device_ip")
         connection_type = GetParams("connection_type")
         allow_shell = GetParams("allow_shell")
+        unlock_type = GetParams("unlock_type")
+        unlock_key = GetParams("unlock_key") if unlock_type else None
         result = GetParams("result")
         mod_consoles = []
 
@@ -151,6 +161,8 @@ try:
                 caps["appium:nativeWebScreenshot"] = True
                 caps["appium:newCommandTimeout"] = 3600
                 caps["appium:connectHardwareKeyboard"] = True
+                caps["appium:unlockType"] = unlock_type
+                caps["appium:unlockKey"] = unlock_key
 
                 android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
 
@@ -188,6 +200,8 @@ try:
     if module == "connect_emulator":
         emulator_name = GetParams("emulator_name")
         allow_shell = GetParams("allow_shell")
+        unlock_type = GetParams("unlock_type")
+        unlock_key = GetParams("unlock_key") if unlock_type else None
         result = GetParams("result")
         mod_consoles = []
 
@@ -219,6 +233,8 @@ try:
             caps["appium:nativeWebScreenshot"] = True
             caps["appium:newCommandTimeout"] = 3600
             caps["appium:connectHardwareKeyboard"] = True
+            caps["appium:unlockType"] = unlock_type
+            caps["appium:unlockKey"] = unlock_key
 
             android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
 
@@ -285,14 +301,7 @@ try:
         result = GetParams("result")
 
         try:
-            if data_type == "id":
-                element = android_driver.find_element(by=AppiumBy.ID, value=selector)
-            elif data_type == "xpath":
-                element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
-            elif data_type == "class":
-                element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
-            else:
-                raise Exception("Invalid data type")
+            element = android_driver.find_element(by=data_types[data_type], value=selector)
 
             element.click()
 
@@ -301,49 +310,12 @@ try:
             SetVar(result, False)
             raise e
 
-    # if module == "scroll_to_object":
-    #     selector = GetParams("selector")
-    #     data_type = GetParams("data_type")
-    #     result = GetParams("result")
-
-    #     try:
-    #         if data_type == "id":
-    #             element = android_driver.find_element(by=AppiumBy.ID, value=selector)
-    #         elif data_type == "xpath":
-    #             element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
-    #         elif data_type == "class":
-    #             element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
-    #         else:
-    #             raise Exception("Invalid data type")
-
-    #         print(element.location)
-
-    #         # action = webdriver.common.touch_action.TouchAction(android_driver)
-    #         # action.scroll_from_element(element, 0, 10).perform()
-
-
-            
-
-    #         SetVar(result, True)
-
-    #     except Exception as e:
-    #         SetVar(result, False)
-    #         raise e
-
     if module == "send_keys":
         data_type = GetParams("data_type")
         selector = GetParams("selector")
         text = GetParams("text")
 
-        if data_type == "id":
-            element = android_driver.find_element(by=AppiumBy.ID, value=selector)
-            element.click()
-        elif data_type == "xpath":
-            element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
-        elif data_type == "class":
-            element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
-        else:
-            raise Exception("Invalid data type")
+        element = android_driver.find_element(by=data_types[data_type], value=selector)
         
         element.send_keys(text)
 
@@ -353,14 +325,7 @@ try:
         selector = GetParams("selector")
         result = GetParams("result")
 
-        if data_type == "id":
-            element = android_driver.find_element(by=AppiumBy.ID, value=selector)
-        elif data_type == "xpath":
-            element = android_driver.find_element(by=AppiumBy.XPATH, value=selector)
-        elif data_type == "class":
-            element = android_driver.find_element(by=AppiumBy.CLASS_NAME, value=selector)
-        else:
-            raise Exception("Invalid data type")
+        element = android_driver.find_element(by=data_types[data_type], value=selector)
 
         SetVar(result, element.get_attribute("text"))
 
@@ -456,6 +421,125 @@ try:
                 console.kill()
             except:
                 pass
+
+    if module == "lock_device":
+
+        # check if the device is already locked
+        if android_driver.is_locked():
+            raise Exception("Device is already locked")
+
+        android_driver.lock()
+
+    if module == "unlock_device":
+
+        # check if the device is already unlocked
+        if not android_driver.is_locked():
+            raise Exception("Device is already unlocked")
+        
+        android_driver.unlock()
+
+    if module == "coords_zoom":
+        action = GetParams("action")
+        speed = eval(GetParams("speed")) if GetParams("speed") else 1
+        coords = GetParams("coordinates")
+        pixels = int(GetParams("pixels"))
+
+
+
+
+        screen_size = android_driver.get_window_size()
+        width = screen_size["width"]
+        height = screen_size["height"]
+        print(width, height)
+
+        xx = eval(coords.split(",")[0]) if coords else width // 2
+        yy = eval(coords.split(",")[1]) if coords else height // 2
+
+        if xx > width or yy > height or xx < 0 or yy < 0:
+            raise Exception("Coordinates are out of bounds")
+
+        if pixels > width or pixels > height or pixels < 0 or width < (xx + pixels) or height < (yy + pixels):
+            raise Exception("Pixels are out of bounds")
+
+        action1 = TouchAction(android_driver)
+        action2 = TouchAction(android_driver)
+
+        move_distance = pixels // speed
+        
+        if action == "zoom_in":
+            action1.long_press(x=xx, y=yy)
+            action2.long_press(x=xx, y=yy)
+
+            for _ in range(speed):
+                action1.move_to(x=xx, y=yy - move_distance)
+                action2.move_to(x=xx, y=yy + move_distance)
+                move_distance += pixels // speed
+
+        if action == "zoom_out":
+            action1.long_press(x=xx, y=yy + pixels)
+            action2.long_press(x=xx, y=yy - pixels)
+
+            for _ in range(speed):
+                action1.move_to(x=xx, y=yy - move_distance + pixels)
+                action2.move_to(x=xx, y=yy + move_distance - pixels)
+                move_distance += pixels // speed
+
+        
+
+        m_action = MultiAction(android_driver)
+        m_action.add(action1, action2)
+        m_action.perform()
+
+    if module == "object_zoom":
+        action = GetParams("action")
+        speed = eval(GetParams("speed")) if GetParams("speed") else 1
+        data_type = GetParams("data_type")
+        selector = GetParams("selector")
+        pixels = int(GetParams("pixels"))
+
+
+        if pixels < 0:
+            raise Exception("Pixels must be greater than 0")
+
+        if not selector:
+            raise Exception("Please specify a selector")
+
+        element = android_driver.find_element(by=data_types[data_type], value=selector)
+
+        bounds = element.get_attribute("bounds")
+
+        xx = (int(bounds.split("][")[0].replace("[", "").split(",")[0]) + int(bounds.split("][")[1].replace("]", "").split(",")[0])) // 2
+        yy = (int(bounds.split("][")[0].replace("[", "").split(",")[1]) + int(bounds.split("][")[1].replace("]", "").split(",")[1])) // 2
+
+
+        action1 = TouchAction(android_driver)
+        action2 = TouchAction(android_driver)
+
+        move_distance = pixels // speed
+
+        if action == "zoom_in":
+            action1.long_press(element)
+            action2.long_press(element)
+
+            for _ in range(speed):
+                action1.move_to(x=xx, y=yy - move_distance)
+                action2.move_to(x=xx, y=yy + move_distance)
+                move_distance += pixels // speed
+        
+        if action == "zoom_out":
+            action1.long_press(element)
+            action2.long_press(element)
+
+
+            for _ in range(speed):
+                action1.move_to(x=xx, y=yy - move_distance + pixels)
+                action2.move_to(x=xx, y=yy + move_distance - pixels)
+                move_distance += pixels // speed
+
+        m_action = MultiAction(android_driver)
+        m_action.add(action1, action2)
+        m_action.perform()
+
 
 except Exception as e:
     traceback.print_exc()
