@@ -94,6 +94,8 @@ Este comando permite conectar un dispositivo Android y configurar el servidor ut
 | --- | --- | --- |
 |Dirección ip y puerto del dispositivo|Dirección IP y puerto del dispositivo Android que se desea conectar|ip:port|
 |Tipo de conexión|Tipo de conexión a utilizar|USB|
+|Tipo de desbloqueo|Tipo de desbloqueo a utilizar|PIN|
+|Código de desbloqueo|Código de desbloqueo del dispositivo Android que se desea conectar|1234|
 |Permitir shell|Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https//appium.io/docs/en/2.0/guides/security/|True|
 |Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
 
@@ -111,7 +113,21 @@ Este comando permite conectar un dispositivo emulado y configurar el servidor.
 | --- | --- | --- |
 |Nombre del emulador|Nombre del emulador que se desea conectar|Pixel_7_Pro_API_34|
 |Permitir shell|Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https//appium.io/docs/en/2.0/guides/security/|True|
+|Tipo de desbloqueo|Tipo de desbloqueo a utilizar|PIN|
+|Código de desbloqueo|Código de desbloqueo del dispositivo Android que se desea conectar|1234|
 |Asignar resultado a variable|Asignar resultado de la conexión a una variable|result|
+
+### Bloquear dispositivo
+  
+Este comando permite bloquear un dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+
+### Desbloquear Dispositivo
+  
+Este comando permite desbloquear un dispositivo Android. Sólo disponible si se ha establecido el tipo y código de desbloqueo en el comando de conexión.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
 
 ### Obtener información de aplicación actual
   
@@ -179,6 +195,27 @@ Este comando permite obtener el texto de un elemento ubicado en una posición es
 |Coordenadas x,y|Coordenadas x,y del elemento a obtener el texto.|450,2000|
 |Asignar resultado a variable|Nombre de la variable en la cual se asignará el resultado.|variable|
 
+### Zoom en coordenadas
+  
+Este comando permite realizar un zoom in o zoom out sobre las coordenadas especificadas en el dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Tipo de zoom|Tipo de zoom a realizar.|Zoom in|
+|Coordenadas x,y|Coordenadas x,y donde se realizará el zoom.|450,2000|
+|Píxeles a desplazar|Píxeles a desplazar en el zoom.|500|
+|Velocidad de zoom|Velocidad de zoom a realizar.|Normal|
+
+### Zoom en objeto
+  
+Este comando permite realizar un zoom in o zoom out sobre un objeto en el dispositivo Android.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Tipo de zoom|Tipo de zoom a realizar.|Zoom in|
+|Tipo de dato|Tipo de dato del selector en el cual se realizará el zoom.|id|
+|Selector|Selector en el cual realizará el zoom|com.whatsapp:id/entry|
+|Píxeles a desplazar|Píxeles a desplazar en el zoom.|500|
+|Velocidad de zoom|Velocidad de zoom a realizar.|Normal|
+
 ### Captura de pantalla
   
 Este comando permite capturar la pantalla del dispositivo Android y almacenar la imagen en la ruta especificada.
@@ -188,7 +225,7 @@ Este comando permite capturar la pantalla del dispositivo Android y almacenar la
 
 ### Ejecutar comando en dispositivo
   
-Este comando permite ejecutar un comando en el terminal del dispositivo Android.
+Este comando permite ejecutar un comando en el terminal del dispositivo Android. Para ejecutar este comando correctamente debe estar marcado el checkbox de Permitir shell en el comando de conexión.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Comando|Comando que se ejecutará en el terminal del dispositivo.|pm list packages|

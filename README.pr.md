@@ -29,38 +29,50 @@ Este comando permite listar os dispositivos emulados disponíveis.
 5. Conectar Dispositivo Emulado  
 Este comando permite conectar um dispositivo emulado e configurar o servidor.
 
-6. Obter informações do aplicativo atual  
+6. Bloquear dispositivo  
+Este comando permite bloquear um dispositivo Android.
+
+7. Desbloquear Dispositivo  
+Este comando permite desbloquear um dispositivo Android. Disponível apenas se o tipo e o código de desbloqueio tiverem sido definidos no comando de conexão.
+
+8. Obter informações do aplicativo atual  
 Este comando permite obter o nome do pacote e o nome da atividade do aplicativo que está sendo executado atualmente no dispositivo Android.
 
-7. Iniciar aplicação  
+9. Iniciar aplicação  
 Este comando permite iniciar um aplicativo no dispositivo Android. Para obter o nome do pacote e o nome da atividade, você pode usar o comando Obter informações do aplicativo atual
 
-8. Swipe simples  
+10. Swipe simples  
 Esse comando permite que você faça um simples swipe na tela do dispositivo Android.
 
-9. Toque nas coordenadas  
+11. Toque nas coordenadas  
 Este comando permite tocar em uma coordenada específica na tela.
 
-10. Toque no elemento  
+12. Toque no elemento  
 Este comando permite tocar em um elemento específico na tela.
 
-11. Enviar teclas  
+13. Enviar teclas  
 Esse comando permite enviar teclas para um seletor específico no dispositivo Android.
 
-12. Extrair texto  
+14. Extrair texto  
 Este comando permite obter o texto de um seletor específico do dispositivo Android.
 
-13. Extrair texto por coordenadas  
+15. Extrair texto por coordenadas  
 Este comando permite obter o texto de um elemento localizado em uma posição específica do dispositivo Android.
 
-14. Captura de tela  
+16. Zoom em coordenadas  
+Este comando permite dar zoom in ou zoom out nas coordenadas especificadas no dispositivo Android.
+
+17. Zoom em objeto  
+Este comando permite dar zoom in ou zoom out em um objeto no dispositivo Android.
+
+18. Captura de tela  
 Este comando permite capturar a tela do dispositivo Android e armazenar a imagem no caminho especificado.
 
-15. Executar comando no dispositivo  
-Este comando permite executar um comando no terminal do dispositivo Android.
+19. Executar comando no dispositivo  
+Este comando permite executar um comando no terminal do dispositivo Android. Para executar este comando corretamente, a caixa de seleção Permitir shell no comando de conexão deve estar marcada.
 
-16. Desconectar dispositivo  
-Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.
+20. Desconectar dispositivo  
+Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.  
 
 
 

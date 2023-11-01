@@ -7,7 +7,7 @@
         "pr": "Módulo para automatizar dispositivos móveis"
     },
     "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "license": "MIT",
     "homepage": "http://rocketbot.com/",
     "linux": true,
@@ -1976,19 +1976,19 @@
         {
             "es": {
                 "title": "Ejecutar comando en dispositivo",
-                "description": "Este comando permite ejecutar un comando en el terminal del dispositivo Android.",
+                "description": "Este comando permite ejecutar un comando en el terminal del dispositivo Android. Para ejecutar este comando correctamente debe estar marcado el checkbox de Permitir shell en el comando de conexión.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Run command on device",
-                "description": "This command allows you to run a command on the Android device terminal.",
+                "description": "This command allows you to run a command on the Android device terminal. To run this command correctly, the Allow shell checkbox in the connection command must be checked.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Executar comando no dispositivo",
-                "description": "Este comando permite executar um comando no terminal do dispositivo Android.",
+                "description": "Este comando permite executar um comando no terminal do dispositivo Android. Para executar este comando corretamente, a caixa de seleção Permitir shell no comando de conexão deve estar marcada.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },

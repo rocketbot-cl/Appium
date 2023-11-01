@@ -95,6 +95,8 @@ This command allows you to connect an Android device and configure the server us
 | --- | --- | --- |
 |IP address and port of the device|IP address and port of the Android device you want to connect|ip:port|
 |Connection type|Type of connection to use|USB|
+|Unlock type|Type of unlock to use|PIN|
+|Unlock code|Unlock code of the Android device you want to connect|1234|
 |Allow shell|Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https//appium.io/docs/en/2.0/guides/security/|True|
 |Assign result to variable|Assign result of connection to a variable|result|
 
@@ -112,7 +114,21 @@ This command allows you to connect an emulated device and configure the server.
 | --- | --- | --- |
 |Emulator name|Name of the emulator you want to connect|Pixel_7_Pro_API_34|
 |Allow shell|Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https//appium.io/docs/en/2.0/guides/security/|True|
+|Unlock type|Type of unlock to use|PIN|
+|Unlock code|Unlock code of the Android device you want to connect|1234|
 |Assign result to variable|Assign result of connection to a variable|result|
+
+### Lock device
+  
+This command allows you to lock an Android device.
+|Parameters|Description|example|
+| --- | --- | --- |
+
+### Unlock Device
+  
+This command allows you to unlock an Android device. Only available if the unlock type and code have been set in the connection command.
+|Parameters|Description|example|
+| --- | --- | --- |
 
 ### Get Current Application Information
   
@@ -180,6 +196,27 @@ This command allows you to get the text of an element located at a specific posi
 |Coordinates x,y|Coordinates x,y of the element to get the text.|450,2000|
 |Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
+### Zoom in coordinates
+  
+This command allows you to zoom in or zoom out on the coordinates specified on the Android device.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Type of zoom|Type of zoom to perform.|Zoom in|
+|Coordinates x,y|Coordinates x,y where the zoom will be performed.|450,2000|
+|Pixels to move|Pixels to move in the zoom.|500|
+|Zoom speed|Zoom speed to perform.|Normal|
+
+### Zoom in object
+  
+This command allows you to zoom in or zoom out on an object on the Android device.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Type of zoom|Type of zoom to perform.|Zoom in|
+|Data type|Data type of the selector in which the zoom will be performed.|id|
+|Selector|Selector in which to perform the zoom|com.whatsapp:id/entry|
+|Pixels to move|Pixels to move in the zoom.|500|
+|Zoom speed|Zoom speed to perform.|Normal|
+
 ### Screenshot
   
 This command allows you to capture the screen of the Android device and store the image in the specified path.
@@ -189,7 +226,7 @@ This command allows you to capture the screen of the Android device and store th
 
 ### Run command on device
   
-This command allows you to run a command on the Android device terminal.
+This command allows you to run a command on the Android device terminal. To run this command correctly, the Allow shell checkbox in the connection command must be checked.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Command|Command to be executed in the device terminal.|pm list packages|
