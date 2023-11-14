@@ -7,7 +7,7 @@
         "pr": "Módulo para automatizar dispositivos móveis"
     },
     "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version": "1.3.1",
+    "version": "2.0.0",
     "license": "MIT",
     "homepage": "http://rocketbot.com/",
     "linux": true,
@@ -29,19 +29,19 @@
         {
             "es": {
                 "title": "Configurar Appium",
-                "description": "Este comando comprueba si se tiene instalado Appium, el driver uiautomator2. Si alguna de las dependencias no está instalada, se instalará automáticamente.",
+                "description": "Este comando comprueba si se tienen instaladas las dependencias necesarias para correr Appium.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Configure Appium",
-                "description": "This command checks if Appium and the uiautomator2 driver is installed. If any of the dependencies is not installed, it will be installed automatically.",
+                "description": "This command checks if you have installed the necessary dependencies to run Appium.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Configurar Appium",
-                "description": "Este comando verifica se o Appium e o driver uiautomator2 estão instalados. Se alguma das dependências não estiver instalada, ela será instalada automaticamente.",
+                "description": "Este comando verifica se você instalou as dependências necessárias para executar o Appium.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -492,19 +492,19 @@
         {
             "es": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor.",
+                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se ejecuta el emulador, es posible que se demore unos minutos en iniciar.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Connect Emulated Device",
-                "description": "This command allows you to connect an emulated device and configure the server.",
+                "description": "This command allows you to connect an emulated device and configure the server. If this is the first time you run the emulator, it may take a few minutes to start.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor.",
+                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você executa o emulador, pode levar alguns minutos para iniciar.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },

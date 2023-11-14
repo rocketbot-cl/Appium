@@ -66,7 +66,7 @@ Al descomprimir la herramienta, se puede ejecutar Appium Inspector.exe, lo que l
 mostrando la información del dispositivo.
 
 ## Crear un dispositivo emulado
-Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un nuevo proyecto. En la ventana que se abre, del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo.
+Para poder crear un dispositivo emulado, se debe abrir Android Studio. Si es la primera vez que lo abres, debes crear un nuevo proyecto con cualquier nombre e información, de esta forma accederemos a la ventana del proyecto. Del lado derecho tendrán el Device Manager (Si no está abierto, desde la barra lateral derecha podrán abrirlo). Se debe hacer clic en Create Device. Luego, se debe seleccionar el dispositivo que se desea emular y hacer clic en Next. En la siguiente ventana, se debe seleccionar la versión de Android que se desea emular. Debes descargarla (seguir los pasos de la ventana que instala, puede demorar dependiendo de la versión elegida), seleccionarla y hacer clic en Next. En la última ventana, se debe verificar la configuración del dispositivo y hacer clic en Finish. Una vez realizado, se debe ejecutar el comando Conectar dispositivo emulado para poder utilizarlo.
 
 
 ## Descripción de los comandos
