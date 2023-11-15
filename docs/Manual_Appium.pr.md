@@ -17,43 +17,43 @@ Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
 
 
 ## Instalações anteriores
-Para poder usar o módulo, é necessário ter npm e nodejs instalados. Para isso, você pode seguir o seguinte [link](https://nodejs.org/en/download/).
-npm é o gerenciador de pacotes nodejs, e é necessário para poder instalar o Appium. É recomendável instalar no local padrão para evitar erros na execução.
+Para poder usar o módulo, é necessário instalar dependências como npm, nodejs, java e Android Studio, também é necessário configurar certas variáveis ​​de ambiente no sistema. Para poder configurar tudo corretamente, você pode executar o comando Configure Appium do módulo para detectar automaticamente o que precisa ser instalado ou configurado. Você também pode seguir as etapas abaixo.
 
 
-### Instalação e configuração do Appium e uiautomator2
-Depois de instalado o npm, você pode prosseguir para instalar o Appium e o driver usado. Para fazer isso, você pode executar o comando Configure Appium do módulo. No entanto, se você quiser realizar a instalação manualmente, pode seguir o seguinte [link](http://appium.io/docs/en/2.1/quickstart/install/) para instalar o Appium e o seguinte [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para instalar o driver.
+### Instalação manual do Appium e uiautomator2
+Para poder instalar e configurar o Appium e o uiautomator2, é necessário instalar o npm e o nodejs. Para fazer isso, você pode seguir o seguinte [link](https://nodejs.org/en/download/). Depois de instalado o npm, você pode seguir o seguinte [link](http://appium.io/docs/en/2.1/quickstart/install/) para baixar e instalar o Appium e o seguinte [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para baixar e instalar o driver.
 
 
-### Download e instalação do Android Studio
-O módulo usa ferramentas do kit de software do Android Studio, portanto, é 
-necessário instalá-lo. Para fazer isso, você pode baixá-lo no seguinte [link](https://developer.android.com/studio). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. É recomendável instalar no local padrão para evitar erros na execução.
+### Download e instalação do 
+Android Studio e SDK Tools
+O módulo usa ferramentas do kit de software do Android Studio (SDK Tools), portanto, é necessário instalá-lo. Para fazer isso, você pode baixá-lo no seguinte [link](https://developer.android.com/studio). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. É recomendável instalar no local padrão para evitar erros na execução. Para baixar as SDK Tools, você deve acessar o Android Studio. No menu superior, você deve ir para a opção Tools > SDK Manager. Na janela que se abre, você deve selecionar a guia SDK Tools. Na lista de ferramentas, você deve selecionar `Android SDK Build-Tools`, `Android Emulator`, `Android SDK Platform-Tools` e clicar em Apply. Depois de tudo baixado, você deve adicionar ao path do sistema os caminhos para as pastas usadas pelas ferramentas `emulator` e `platform-tools`. Um exemplo de caminho é `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador). 
+Verifique a seção correspondente para ver como adicionar variáveis ​​de ambiente.
 
-### Baixe as ferramentas de linha de comando do Android Studio
-Se você deseja se conectar com um dispositivo emulado, é necessário fazê-lo com as ferramentas de linha de comando. Eles podem ser baixados acessando o Android Studio. No menu superior, você deve ir para a opção Tools > SDK Manager. Na janela que se abre, você deve selecionar a guia SDK Tools. Na lista de ferramentas, você deve selecionar Android SDK Command-line Tools e clicar em Apply. Em seguida, clique em OK. Depois de baixado, você deve adicionar às variáveis ​​de ambiente o caminho para a pasta usada pela ferramenta `emulator`. Verifique a seguinte seção para ver como adicionar variáveis ​​de ambiente, no ponto 9 é especificado o caminho a ser 
-adicionado.
+
+### Download e instalação do Java
+Para instalar o Java, você pode seguir o seguinte [link](https://www.java.com/en/download/). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. Após a instalação, reinicie a máquina. É recomendável instalar no local padrão para evitar erros na execução. Para verificar se tudo foi feito corretamente, após a reinicialização, você pode abrir um prompt de comando e digitar java -version. Se tudo estiver bem, a versão do Java instalada deve aparecer.
 
 
 ## Adicionar variáveis ​​de ambiente
-Para executar os comandos do módulo, você precisa ter determinados caminhos adicionados ao PATH do sistema para que tudo funcione corretamente. Para fazer isso, siga estas etapas:
+Para executar os comandos do módulo, você precisa ter certos caminhos adicionados ao PATH do sistema para que tudo funcione corretamente. Para fazer isso, siga estas etapas:
 1. Na barra de pesquisa do Windows, digite Variáveis ​​de ambiente e selecione a opção Editar variáveis ​​de ambiente do sistema.
-2. Na janela que se abre, selecione Variáveis ​​de ambiente.
-3. Na nova janela, você deve criar uma nova variável do sistema. Como nome, escreva ANDROID_HOME e como valor o caminho absoluto para a pasta `C:\Users\user\AppData\Local\Android\Sdk` (substitua o usuário pelo nome de usuário do computador).
-4. Em seguida, selecione a variável Path e clique em Editar.
-5. Na nova janela, clique em Novo e adicione o mesmo caminho usado na etapa anterior, adicionando a pasta `platform-tools` no final. Por exemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (substitua o usuário pelo nome de usuário do computador).
-6. Por fim, 
-clique em OK em todas as janelas e reinicie o computador.
-7. Para verificar se tudo foi feito corretamente, abra um prompt de comando e digite adb. Se tudo estiver bem, uma lista de comandos disponíveis deve aparecer.
-8. Em caso de instalar as ferramentas de linha de comando, o caminho para a pasta `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador) deve ser adicionado ao caminho.
-9. Depois de concluir estas etapas, você pode prosseguir para executar os comandos do módulo.
+2. Na janela que se abre, selecione Variáveis ​​de 
+ambiente.
+3. Na nova janela, você deve criar uma nova variável do sistema. Como nome, escreva ANDROID_HOME e como valor o caminho absoluto para a pasta onde as Android SDK Tools estão instaladas. Por padrão, é: `C:\Users\user\AppData\Local\Android\Sdk` (substitua o usuário pelo nome de usuário do computador).
+4. Em seguida, na janela Variáveis ​​de ambiente, selecione a variável do usuário Path e clique em Editar.
+5. Na nova janela, clique em Novo e adicione o mesmo caminho usado na etapa anterior adicionando a pasta `platform-tools` no final. Por exemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (substitua o usuário pelo nome de usuário do computador). Você também deve fazer o mesmo, mas com a pasta `emulator`. Por exemplo `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador).
+6. Por fim, clique em OK em todas as janelas e reinicie o computador.
+7. Para verificar se tudo foi feito corretamente, abra um prompt de 
+comando e digite adb. Se tudo estiver bem, uma lista de comandos disponíveis deve aparecer.
+8. Após concluir estas etapas, você pode prosseguir para executar os comandos do módulo. Como recomendação, você pode executar o comando Configure Appium para verificar se nada ficou pendente.
 
 
 ## Configuração do dispositivo Android
 ### Essas etapas são necessárias apenas se você quiser se conectar a um dispositivo Android físico. Se você quiser se conectar a um dispositivo emulado, deverá seguir a seção Criar um dispositivo emulado.
 Para conectar o dispositivo corretamente, é necessário configurar o dispositivo Android para aceitar a conexão, seja por USB ou por WiFi. Para fazer isso, siga estas etapas:
-1. Ative as opções do desenvolvedor: No 
-dispositivo, vá para Configurações > Sobre o telefone > Número da compilação. Toque no número da compilação 7 vezes. Uma mensagem aparecerá dizendo que você agora é um desenvolvedor.
-2. Ative a depuração USB: No dispositivo, vá para Configurações > Sistema > Opções do desenvolvedor e ative a depuração USB.
+1. Ative as opções do desenvolvedor: No dispositivo, vá para Configurações > Sobre o telefone > Número da compilação. Toque no número da compilação 7 vezes. Uma mensagem aparecerá dizendo que você agora é um desenvolvedor.
+2. Ative a depuração USB: No dispositivo, vá para Configurações > 
+Sistema > Opções do desenvolvedor e ative a depuração USB.
 3. Ative a depuração sem fio: No dispositivo, vá para Configurações > Sistema > Opções do desenvolvedor e ative a depuração sem fio.
 4. Se você deseja usar a conexão sem fio (WIFI), deve parear o dispositivo para que ele possa se conectar. Para fazer isso, você deve usar o comando Link device uma vez.
 5. Se você deseja usar a conexão USB, deve conectar o dispositivo ao computador usando o cabo USB. Em seguida, você deve executar o comando Connect device.
@@ -61,16 +61,16 @@ dispositivo, vá para Configurações > Sobre o telefone > Número da compilaç�
 
 
 ## Inspetor Appium
-A ferramenta Appium possui um inspetor para poder visualizar os elementos da tela do dispositivo. Para baixá-lo, você pode 
-seguir o seguinte [link](https://github.com/appium/appium-inspector/releases)
+A ferramenta Appium possui um inspetor para poder visualizar os elementos da tela do dispositivo. Para baixá-lo, você pode seguir o seguinte [link](https://github.com/appium/appium-inspector/releases)
 
 
 ### Use o inspetor Appium
-Ao descompactar a ferramenta, você pode executar o Appium Inspector.exe, que abrirá a janela da ferramenta. Para conectar o dispositivo Android que foi conectado usando o módulo no Rocketbot, você deve ir para a guia `Attach to Session ...` e depois no botão de recarregar ao lado da entrada para inserir o ID. Se tudo foi configurado corretamente, uma string deve aparecer na entrada onde o ID da conexão, o dispositivo, seu ip e porta e o driver uiautomator2 são indicados. Em seguida, você deve clicar no botão Attach to Session. Isso abrirá uma nova janela do inspetor mostrando as informações do dispositivo.
+Ao descompactar a ferramenta, você pode executar o Appium Inspector.exe, que abrirá a janela da ferramenta. Para conectar o dispositivo Android 
+que foi conectado usando o módulo no Rocketbot, você deve ir para a guia `Attach to Session ...` e depois no botão de recarregar ao lado da entrada para inserir o ID. Se tudo foi configurado corretamente, uma string deve aparecer na entrada onde o ID da conexão, o dispositivo, seu ip e porta e o driver uiautomator2 são indicados. Em seguida, você deve clicar no botão Attach to Session. Isso abrirá uma nova janela do inspetor mostrando as informações do dispositivo.
 
 ### Criar um dispositivo emulado
-Para poder criar um dispositivo emulado, você deve abrir o Android Studio e criar um novo projeto. Na janela que se abre, do lado direito você terá o Device Manager (Se não estiver aberto, na barra lateral direita você pode abri-lo). Você deve 
-clicar em Create Device. Em seguida, você deve selecionar o dispositivo que deseja emular e clicar em Avançar. Na próxima janela, você deve selecionar a versão do Android que deseja emular e clicar em Avançar. Na última janela, você deve verificar a configuração do dispositivo e clicar em Concluir. Feito isso, você deve executar o comando Connect emulated device para poder usá-lo.
+Para poder criar um dispositivo emulado, você deve abrir o Android Studio e criar um novo projeto. Na janela que se abre, do lado direito você terá o Device Manager (Se não estiver aberto, na barra lateral direita você pode abri-lo). Você deve clicar em Create Device. Em seguida, você deve selecionar o dispositivo que deseja emular e clicar em Avançar. Na próxima janela, você deve selecionar a versão do Android que deseja emular e clicar em Avançar. Na última janela, você deve verificar a 
+configuração do dispositivo e clicar em Concluir. Feito isso, você deve executar o comando Connect emulated device para poder usá-lo.
 
 
 
@@ -78,7 +78,7 @@ clicar em Create Device. Em seguida, você deve selecionar o dispositivo que des
 
 ### Configurar Appium
   
-Este comando verifica se o Appium e o driver uiautomator2 estão instalados. Se alguma das dependências não estiver instalada, ela será instalada automaticamente.
+Este comando verifica se você instalou as dependências necessárias para executar o Appium. Ele tentará instalar alguns, mas não todos. Para aqueles em que o Rocketbot não puder, ele gerará um erro indicando as etapas a seguir para instalá-los manualmente. É recomendável executar este comando apenas para validar se você possui as dependências necessárias e não incluí-lo na versão do bot que é implantada em produção.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Atribuir resultado a variável|Atribuir resultado da configuração a uma variável|result|
@@ -113,7 +113,7 @@ Este comando permite listar os dispositivos emulados disponíveis.
 
 ### Conectar Dispositivo Emulado
   
-Este comando permite conectar um dispositivo emulado e configurar o servidor.
+Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você executa o emulador, pode levar alguns minutos para iniciar.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Nome do emulador|Nome do emulador que você deseja conectar|Pixel_7_Pro_API_34|
@@ -127,11 +127,13 @@ Este comando permite conectar um dispositivo emulado e configurar o servidor.
 Este comando permite bloquear um dispositivo Android.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
+| --- | --- | --- |
 
 ### Desbloquear Dispositivo
   
 Este comando permite desbloquear um dispositivo Android. Disponível apenas se o tipo e o código de desbloqueio tiverem sido definidos no comando de conexão.
 |Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
 | --- | --- | --- |
 
 ### Obter informações do aplicativo atual
@@ -236,8 +238,19 @@ Este comando permite executar um comando no terminal do dispositivo Android. Par
 |Comando|Comando a ser executado no terminal do dispositivo.|pm list packages|
 |Atribuir resultado à variável|Nome da variável na qual o resultado será atribuído.|variável|
 
+### Aguardar por objeto
+  
+Este comando permite aguardar por um objeto no dispositivo Android. O comando será executado até que o objeto seja encontrado ou até que o tempo máximo de espera seja atingido.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Tipo de dado|Tipo de dado do seletor a ser pesquisado.|id|
+|Seletor|Seletor do objeto a ser pesquisado.|com.whatsapp:id/toolbar|
+|Tempo máximo de espera|Nome da variável na qual o resultado da pesquisa será atribuído.|10|
+|Atribuir resultado à variável|Nome da variável na qual o resultado da pesquisa será atribuído.|variável|
+
 ### Desconectar dispositivo
   
 Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.
 |Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
 | --- | --- | --- |

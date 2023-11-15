@@ -9,10 +9,15 @@ from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
 from appium.webdriver.common.multi_action import MultiAction
+from appium_selenium.common.exceptions import TimeoutException
+from appium_selenium.common.exceptions import WebDriverException
+from appium_selenium.common.exceptions import InvalidElementStateException
+from appium_selenium.webdriver.support import expected_conditions as EC
+from appium_selenium.webdriver.support.ui import WebDriverWait
 from appium_selenium.webdriver.common.action_chains import ActionChains
 from appium_selenium.webdriver.common.actions import interaction
-from appium_selenium.webdriver.common.actions.action_builder import ActionBuilder
 from appium_selenium.webdriver.common.actions.pointer_input import PointerInput
+from appium_selenium.webdriver.common.actions.action_builder import ActionBuilder
 
 data_types = {
     "id": AppiumBy.ID,
@@ -101,13 +106,14 @@ class AppiumObject:
                 self.android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
 
 
-        except subprocess.CalledProcessError as e:
-            check_sdk()
+        except (subprocess.CalledProcessError, WebDriverException):
+            self.check_sdk()
             if self.connection_type == "wifi":
                 raise Exception("Error connecting to device. First check if the device is connected to the same WIFI as the computer. Then check if the IP is correct. Finally, double check if the port entered in the command is the same as the one in the 'Wireless debugging' window and not from 'Pair device' window.")
             elif self.connection_type == "usb":
                 raise Exception("Error connecting to device. First check if the device is connected to the computer. Then check if the USB debugging is activated in the device. If the error persists, go to the developer options in the device and revoke all USB debugging authorizations. Finally, execute the command again and accept the USB debugging authorization in the device.")
-            
+
+
 
     def connect_emulator(self):
         """
@@ -162,28 +168,8 @@ class AppiumObject:
                 self.android_driver = webdriver.Remote("http://127.0.0.1:4723", caps)
 
         except subprocess.CalledProcessError as e:
-            check_sdk()
+            self.check_sdk()
             raise Exception("Error connecting to emulator. Make sure to install the emulator from the SDK Manager in Android Studio.")
-
-
-    @classmethod
-    def kill_server(self):
-        """
-        This class method is used to kill the adb server, any running emulators, and any running Appium instances.
-
-        It first attempts to kill any running emulators using the 'adb emu kill' command.
-
-        It then kills the adb server using the 'adb kill-server' command.
-
-        Finally, it iterates over all running processes and kills any process named 'adb.exe' or 'node.exe' that is running an Appium instance.
-        """
-        subprocess.run("adb emu kill", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        for process in psutil.process_iter():
-            if process.name() == "adb.exe":
-                process.kill()
-            if process.name() == "node.exe" and "appium" in str(process.cmdline()):
-                process.kill()
 
 
     def simple_swipe(self, direction):
@@ -229,6 +215,7 @@ class AppiumObject:
         actions.w3c_actions.pointer_action.release()
         actions.perform()
 
+
     def simple_tap(self, x, y):
         """
         This function performs a simple tap action on the Android device at the specified x and y coordinates.
@@ -247,6 +234,7 @@ class AppiumObject:
         actions.w3c_actions.pointer_action.release()
         actions.perform()
 
+
     def tap_object(self, selector, data_type):
         """
         This function performs a tap action on a specific object on the Android device.
@@ -258,6 +246,7 @@ class AppiumObject:
         element = self.android_driver.find_element(by=data_types[data_type], value=selector)
         element.click()
 
+
     def send_keys(self, selector, data_type, text):
         """
         This function sends the specified text to a specific object on the Android device.
@@ -266,10 +255,13 @@ class AppiumObject:
 
         Once the element is found, it sends the provided text to the element.
         """
-        element = self.android_driver.find_element(by=data_types[data_type], value=selector)
-        element.send_keys(text)
-
+        try:
+            element = self.android_driver.find_element(by=data_types[data_type], value=selector)
+            element.send_keys(text)
+        except InvalidElementStateException:
+            raise Exception(f"The element with selector '{selector}' and data type '{data_type}' is present in the screen but is not editable. Are you interacting with the correct element?")
     
+
     def get_text(self, selector, data_type):
         """
         This function retrieves the text from a specific object on the Android device.
@@ -281,6 +273,7 @@ class AppiumObject:
         element = self.android_driver.find_element(by=data_types[data_type], value=selector)
 
         return element.text
+
 
     def get_text_coord(self, coords):
         """
@@ -312,6 +305,7 @@ class AppiumObject:
             if element == self.android_driver.find_elements(by=AppiumBy.XPATH, value="//*")[-1]:
                 return None
             
+
     def get_screenshot(self, path):
         """
         This function takes a screenshot of the current screen on the Android device and saves it to the specified path.
@@ -328,6 +322,7 @@ class AppiumObject:
         with open(path, "wb") as f:
             f.write(screenshotDecoded)
 
+
     def lock(self):
         """
         This function locks the Android device.
@@ -341,6 +336,7 @@ class AppiumObject:
 
         self.android_driver.lock()
 
+
     def unlock(self):
         """
         This function unlocks the Android device.
@@ -353,6 +349,7 @@ class AppiumObject:
             raise Exception("Device is already unlocked")
 
         self.android_driver.unlock()
+
 
     def coords_zoom(self, action, speed, coords, pixels):
         """
@@ -410,6 +407,7 @@ class AppiumObject:
         m_action = MultiAction(self.android_driver)
         m_action.add(action1, action2)
         m_action.perform()
+
 
     def object_zoom(self, action, speed, selector, data_type, pixels):
         """
@@ -471,173 +469,256 @@ class AppiumObject:
         m_action.add(action1, action2)
         m_action.perform()
 
-def check_appium():
-    """
-    This function checks if Appium is installed in the system by running the command 'appium -v'.
-    If Appium is installed, it prints the installed version.
-    If Appium is not installed, it tries to install it using the command 'npm i --location=global appium@2.1.3'.
-    If the installation is successful, it prints 'Appium installed successfully'.
-    In case of any error during the check or installation process, it raises the respective error.
 
-    Raises:
-        subprocess.CalledProcessError: If 'appium -v' command fails, indicating Appium is not installed.
-        subprocess.CalledProcessError: If 'npm i --location=global appium@2.1.3' command fails, indicating npm is not installed.
-    """
-    try:
-        # Check if appium is installed
-        command = "appium -v"
-        output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+    def wait_for_object(self, selector, data_type, timeout):
+        """
+        This function waits for a specific object to appear on the Android device.
 
-        print("Appium version: ", output.strip())
+        It first creates a WebDriverWait object with the specified timeout.
 
-    except subprocess.CalledProcessError:
+        It then waits for the element to be present on the screen.
+
+        If the element is present, it returns True, otherwise it returns False.
+        """
         try:
-            print("Appium is not installed. Installing...")
+            wait = WebDriverWait(self.android_driver, timeout)
+            wait.until(EC.presence_of_element_located((data_types[data_type], selector)))
 
-            command = "npm i --location=global appium@2.1.3"
-            subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-            print("Appium installed successfully")
-        
-        except subprocess.CalledProcessError:
-            raise Exception("You must install npm from https://nodejs.org/en/download/. Make sure to add to PATH the npm folder during the installation.")
-
-def check_uiautomator():
-    """
-    This function checks if the uiautomator2 driver is installed in the system by running the command 'appium driver list'.
-    It then searches the output for the string 'uiautomator2' followed by 'not installed'.
-    If the uiautomator2 driver is not installed, it tries to install it using the command 'appium driver install uiautomator2@2.29.7'.
-    If the installation is successful, it prints 'uiautomator2 driver installed successfully'.
-    In case of any error during the check or installation process, it prints 'Error installing uiautomator2 driver' and raises the respective error.
-
-    Raises:
-        subprocess.CalledProcessError: If any error occurs during the check or installation process.
-    """
-    try:
-        # Check if uiautomator2 driver is installed
-        list_command = "appium driver list"
-        output = subprocess.check_output(list_command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True).strip()
-        print(output)
-        matches = re.search(r"uiautomator2.*?(not installed)", output, re.IGNORECASE)
-
-        if matches:
-            print("Installing uiautomator2 driver...")
-            command = "appium driver install uiautomator2@2.29.7"
-            subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-            print("uiautomator2 driver installed successfully")
-
-    except subprocess.CalledProcessError:
-        print("Error installing uiautomator2 driver")
-        raise e
-
-def check_sdk():
-    """
-    This function checks if adb (Android Debug Bridge) and emulator is installed in the system by running the command 'adb version' and 'emulator -version'.
-    If adb and emulator is installed and in path, it prints the installed version.
-    If adb or emulator is not installed, it raises an exception with a message instructing the user to install the SDK Tools from Android Studio, 
-    which includes adb and emulator. The message includes a link to download Android Studio and instructions to add the platform-tools and emulator from the 
-    SDK folder to the PATH after installation.
-
-    Raises:
-        subprocess.CalledProcessError: If 'adb version' or 'emulator -version' command fails, indicating that SDK Tools is not installed or the platform-tools/emulator is not in user PATH.
-    """
-    try:
-        # Check if adb is installed and in path
-        command = "adb version"
-        output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
-
-        print("adb version: ", output.strip())
-
-        
-        # Check if emulator is installed and in path
-        command = "emulator -version"
-        output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
-
-        print("emulator version: ", output.strip())
-
-    except subprocess.CalledProcessError:
-        raise Exception("You must install the SDK Tools from Android Studio in order to use Appium. Download Android Studio here: https://developer.android.com/. For more information for how to install the SDK Tools visit https://developer.android.com/about/versions/14/setup-sdk#install-sdk. After the installation, you must add the platform-tools and the emulator folders from the SDK folder to the user PATH. For example C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk\\platform-tools and C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk\\emulator. Finally, restart Rocketbot.")
-
-def check_java():
-    """
-    This function checks if Java is installed in the system by running the command 'java -version'.
-    If Java is installed, it prints the installed version.
-    If Java is not installed, it raises an exception with a message instructing the user to install Java.
-
-    Raises:
-        subprocess.CalledProcessError: If 'java -version' command fails, indicating Java is not installed.
-    """
-    try:
-        # Check if Java is installed
-        command = "java -version"
-        output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
-
-        print("Java version: ", output.strip())
-
-    except subprocess.CalledProcessError:
-        raise Exception("You must install Java in order to use Appium. Download Java here: https://www.java.com/en/download/. After the installation restart your computer.")
-
-def check_path():
-    """
-    This function checks if the environment variable ANDROID_HOME are set in the system.
-    ANDROID_HOME should point to the Android SDK folder.
-    If this environment variable is not set, it raises an exception with a message instructing the user to set 
-    the ANDROID_HOME environment variable to the Android SDK folder and then reload Rocketbot. The message includes a link 
-    for more information on how to set these environment variables.
-
-    Raises:
-        Exception: If ANDROID_HOME environment variable is not set.
-    """
-    android_home = os.environ.get("ANDROID_HOME")
-    android_sdk_root = os.environ.get("ANDROID_SDK_ROOT")
-
-    if not android_home and not android_sdk_root:
-        raise Exception("You must set the ANDROID_HOME environment variable to the Android SDK folder. For example C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk and then Reload Rocketbot. For more information visit https://developer.android.com/studio/command-line/variables.")
-
-def pair_device(ip, code):
-    """
-    This function pairs the device with the computer using the IP and code.
-    It runs the command 'adb pair <ip> <code>' and checks the output for the string 'successfully'.
-    If the pairing is successful, it prints 'Device paired successfully'.
-    In case of any error during the pairing process, it prints 'Error pairing device. Please check the IP and code' and raises the respective error.
-
-    Args:
-        ip (str): The IP of the device.
-        code (str): The code of the device.
-    Returns:
-        result (bool): True if the pairing is successful, False otherwise.
-    """
-    try:
-        subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        subprocess.run("adb start-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-
-        output = subprocess.check_output(f"adb pair {ip} {code}", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
-
-        if "successfully" in output.lower():
             return True
-        else:
+
+        except TimeoutException:
             return False
 
-    except subprocess.CalledProcessError:
-        check_sdk()
-        raise Exception("Error pairing device. First check if the device is connected to the same WIFI as the computer. Then check if the IP and code are correct. Make sure to activate the wireless debugging in the device. Finally, double check if the port entered in the command is the same as the one in the 'Pair device' window and not from 'Wireless debugging' window.")
-    
-def list_emulators():
-    """
-    This function lists all the Android Virtual Devices (AVDs) available in the system by running the command 'emulator -list-avds'.
-    It then splits the output by newline characters to get a list of emulator names. It filters out any empty strings from the list and returns it.
 
-    If the 'emulator -list-avds' command fails, it checks the SDK installation and raises an exception with a message instructing the user to install the emulator from the SDK Manager in Android Studio.
+    def get_current_app_data(self):
+        """
+        This function retrieves the name of the current app running on the Android device.
 
-    Raises:
-        subprocess.CalledProcessError: If 'emulator -list-avds' command fails, indicating the emulator is not installed.
-        Exception: If there is an error listing the emulators.
-    """
-    try:
-        output = subprocess.check_output("emulator -list-avds", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
-        emulators = output.split("\n")
-        emulators = list(filter(None, emulators))
-        return emulators
-    
-    except subprocess.CalledProcessError:
-        check_sdk()
-        raise Exception("Error listing emulators. Make sure to install the emulator from the SDK Manager in Android Studio.")
+        It first gets the current package name and activity name using the 'current_package' and 'current_activity' attributes of the webdriver.
+
+        It then creates a dictionary with the package name and activity name and returns it.
+        """
+        current_app = {}
+
+        current_app["package_name"] = self.android_driver.current_package
+        current_app["activity_name"] = self.android_driver.current_activity
+
+        return current_app
+
+
+    def start_app(self, package_name, activity_name):
+        if not activity_name or not package_name:
+                raise Exception("Please specify a package name and activity name")
+
+        self.android_driver.start_activity(package_name, activity_name)
+
+
+    def run_command(self, command):
+        """
+        This function runs a shell command on the Android device.
+
+        It first checks if the 'allow_shell' attribute is True. If it is not, it raises an exception.
+
+        It then runs the provided command using the 'execute_script' method of the webdriver.
+        """
+        if not self.allow_shell:
+            raise Exception("You must allow shell when connecting to the device in order to run shell commands.")
+
+        return self.android_driver.execute_script("mobile: shell", {"command": command})
+
+    @classmethod
+    def kill_server(self):
+        """
+        This class method is used to kill the adb server, any running emulators, and any running Appium instances.
+
+        It first attempts to kill any running emulators using the 'adb emu kill' command.
+
+        It then kills the adb server using the 'adb kill-server' command.
+
+        Finally, it iterates over all running processes and kills any process named 'adb.exe' or 'node.exe' that is running an Appium instance.
+        """
+        subprocess.run("adb emu kill", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        for process in psutil.process_iter():
+            if process.name() == "adb.exe":
+                process.kill()
+            if process.name() == "node.exe" and "appium" in str(process.cmdline()):
+                process.kill()
+
+    @classmethod
+    def check_appium(self):
+        """
+        This function checks if Appium is installed in the system by running the command 'appium -v'.
+        If Appium is installed, it prints the installed version.
+        If Appium is not installed, it tries to install it using the command 'npm i --location=global appium@2.1.3'.
+        If the installation is successful, it prints 'Appium installed successfully'.
+        In case of any error during the check or installation process, it raises the respective error.
+
+        Raises:
+            subprocess.CalledProcessError: If 'appium -v' command fails, indicating Appium is not installed.
+            subprocess.CalledProcessError: If 'npm i --location=global appium@2.1.3' command fails, indicating npm is not installed.
+        """
+        try:
+            # Check if appium is installed
+            command = "appium -v"
+            output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            print("Appium version: ", output.strip())
+
+        except subprocess.CalledProcessError:
+            try:
+                print("Appium is not installed. Installing...")
+
+                command = "npm i --location=global appium@2.1.3"
+                subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+                print("Appium installed successfully")
+            
+            except subprocess.CalledProcessError:
+                raise Exception("You must install npm from https://nodejs.org/en/download/. Make sure to add to PATH the npm folder during the installation.")
+
+    @classmethod
+    def check_uiautomator(self):
+        """
+        This function checks if the uiautomator2 driver is installed in the system by running the command 'appium driver list'.
+        It then searches the output for the string 'uiautomator2' followed by 'not installed'.
+        If the uiautomator2 driver is not installed, it tries to install it using the command 'appium driver install uiautomator2@2.29.7'.
+        If the installation is successful, it prints 'uiautomator2 driver installed successfully'.
+        In case of any error during the check or installation process, it prints 'Error installing uiautomator2 driver' and raises the respective error.
+
+        Raises:
+            subprocess.CalledProcessError: If any error occurs during the check or installation process.
+        """
+        try:
+            # Check if uiautomator2 driver is installed
+            list_command = "appium driver list"
+            output = subprocess.check_output(list_command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True).strip()
+            print(output)
+            matches = re.search(r"uiautomator2.*?(not installed)", output, re.IGNORECASE)
+
+            if matches:
+                print("Installing uiautomator2 driver...")
+                command = "appium driver install uiautomator2@2.29.7"
+                subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+                print("uiautomator2 driver installed successfully")
+
+        except subprocess.CalledProcessError as e:
+            print("Error installing uiautomator2 driver")
+            raise e
+
+    @classmethod
+    def check_sdk(self):
+        """
+        This function checks if adb (Android Debug Bridge) and emulator is installed in the system by running the command 'adb version' and 'emulator -version'.
+        If adb and emulator is installed and in path, it prints the installed version.
+        If adb or emulator is not installed, it raises an exception with a message instructing the user to install the SDK Tools from Android Studio, 
+        which includes adb and emulator. The message includes a link to download Android Studio and instructions to add the platform-tools and emulator from the 
+        SDK folder to the PATH after installation.
+
+        Raises:
+            subprocess.CalledProcessError: If 'adb version' or 'emulator -version' command fails, indicating that SDK Tools is not installed or the platform-tools/emulator is not in user PATH.
+        """
+        try:
+            # Check if adb is installed and in path
+            command = "adb version"
+            output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            print("adb version: ", output.strip())
+
+            
+            # Check if emulator is installed and in path
+            command = "emulator -version"
+            output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            print("emulator version: ", output.strip())
+
+        except subprocess.CalledProcessError:
+            raise Exception("You must install the SDK Tools from Android Studio in order to use Appium. Download Android Studio here: https://developer.android.com/. For more information for how to install the SDK Tools visit https://developer.android.com/about/versions/14/setup-sdk#install-sdk. After the installation, you must add the platform-tools and the emulator folders from the SDK folder to the user PATH. For example C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk\\platform-tools and C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk\\emulator. Finally, restart Rocketbot.")
+
+    @classmethod
+    def check_java(self):
+        """
+        This function checks if Java is installed in the system by running the command 'java -version'.
+        If Java is installed, it prints the installed version.
+        If Java is not installed, it raises an exception with a message instructing the user to install Java.
+
+        Raises:
+            subprocess.CalledProcessError: If 'java -version' command fails, indicating Java is not installed.
+        """
+        try:
+            # Check if Java is installed
+            command = "java -version"
+            output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            print("Java version: ", output.strip())
+
+        except subprocess.CalledProcessError:
+            raise Exception("You must install Java in order to use Appium. Download Java here: https://www.java.com/en/download/. After the installation restart your computer.")
+
+    @classmethod
+    def check_path(self):
+        """
+        This function checks if the environment variable ANDROID_HOME are set in the system.
+        ANDROID_HOME should point to the Android SDK folder.
+        If this environment variable is not set, it raises an exception with a message instructing the user to set 
+        the ANDROID_HOME environment variable to the Android SDK folder and then reload Rocketbot. The message includes a link 
+        for more information on how to set these environment variables.
+
+        Raises:
+            Exception: If ANDROID_HOME environment variable is not set.
+        """
+        android_home = os.environ.get("ANDROID_HOME")
+        android_sdk_root = os.environ.get("ANDROID_SDK_ROOT")
+
+        if not android_home and not android_sdk_root:
+            raise Exception("You must set the ANDROID_HOME environment variable to the Android SDK folder. For example C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk and then Reload Rocketbot. For more information visit https://developer.android.com/studio/command-line/variables.")
+
+    @classmethod
+    def pair_device(self, ip, code):
+        """
+        This function pairs the device with the computer using the IP and code.
+        It runs the command 'adb pair <ip> <code>' and checks the output for the string 'successfully'.
+        If the pairing is successful, it prints 'Device paired successfully'.
+        In case of any error during the pairing process, it prints 'Error pairing device. Please check the IP and code' and raises the respective error.
+
+        Args:
+            ip (str): The IP of the device.
+            code (str): The code of the device.
+        Returns:
+            result (bool): True if the pairing is successful, False otherwise.
+        """
+        try:
+            subprocess.run("adb kill-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            subprocess.run("adb start-server", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+            output = subprocess.check_output(f"adb pair {ip} {code}", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+            if "successfully" in output.lower():
+                return True
+            else:
+                return False
+
+        except subprocess.CalledProcessError:
+            self.check_sdk()
+            raise Exception("Error pairing device. First check if the device is connected to the same WIFI as the computer. Then check if the IP and code are correct. Make sure to activate the wireless debugging in the device. Finally, double check if the port entered in the command is the same as the one in the 'Pair device' window and not from 'Wireless debugging' window.")
+        
+    @classmethod
+    def list_emulators(self):
+        """
+        This function lists all the Android Virtual Devices (AVDs) available in the system by running the command 'emulator -list-avds'.
+        It then splits the output by newline characters to get a list of emulator names. It filters out any empty strings from the list and returns it.
+
+        If the 'emulator -list-avds' command fails, it checks the SDK installation and raises an exception with a message instructing the user to install the emulator from the SDK Manager in Android Studio.
+
+        Raises:
+            subprocess.CalledProcessError: If 'emulator -list-avds' command fails, indicating the emulator is not installed.
+            Exception: If there is an error listing the emulators.
+        """
+        try:
+            output = subprocess.check_output("emulator -list-avds", shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+            emulators = output.split("\n")
+            emulators = list(filter(None, emulators))
+            return emulators
+        
+        except subprocess.CalledProcessError:
+            self.check_sdk()
+            raise Exception("Error listing emulators. Make sure to install the emulator from the SDK Manager in Android Studio.")

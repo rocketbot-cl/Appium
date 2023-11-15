@@ -15,35 +15,33 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 
 
 ## Previous installations
-To be able to use the module, it is necessary to have npm and nodejs installed. For this, you can follow the following [link](https://nodejs.org/en/download/).
-npm is the nodejs package manager, and it is necessary to be able to install Appium. It is recommended to install in the default location to avoid errors in execution.
+To be able to use the module, it is necessary to install dependencies such as npm, nodejs, java and Android Studio, certain environment variables must also be configured in the system. To be able to configure everything correctly, you can run the Configure Appium command of the module to automatically detect what needs to be installed or configured. You can also follow the steps below.
 
 
-### Appium and uiautomator2 installation and configuration
-Once npm is installed, you can proceed to install Appium and the driver used. To do this, you can run the Configure Appium command of the module. However, if you want to perform the installation manually, you can follow the following [link](http://appium.io/docs/en/2.1/quickstart/install/) to install Appium and the following [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) to install the driver.
+### Manual installation of Appium and uiautomator2
+To be able to install and configure Appium and uiautomator2, it is necessary to install npm and nodejs. To do this, you can follow the following [link](https://nodejs.org/en/download/). Once npm is installed, you can follow the following [link](http://appium.io/docs/en/2.1/quickstart/install/) to download and install Appium and the following [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) to download and install the driver.
 
+### Download and 
+installation of Android Studio and SDK Tools
+The module uses tools from the Android Studio Software kit (SDK Tools), so it is necessary to install it. To do this, you can download it from the following [link](https://developer.android.com/studio). Once downloaded, you must run the installer and follow the steps indicated. It is recommended to install in the default location to avoid errors in execution. To download the SDK Tools you must access Android Studio. In the top menu you must go to the Tools > SDK Manager option. In the window that opens, you must select the SDK Tools tab. In the list of tools, you must select `Android SDK Build-Tools`, `Android Emulator`, `Android SDK Platform-Tools` and click Apply. Once everything is downloaded, the paths to the folders used by the `emulator` and `platform-tools` tools must be added to the system path. An example of a path is `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username). Check the following 
+section to see how to add environment variables.
 
-### Download and installation of Android Studio
-The module uses tools from the Android Studio Software 
-kit, so it is necessary to install it. To do this, you can download it from the following [link](https://developer.android.com/studio). Once downloaded, you must run the installer and follow the steps indicated. It is recommended to install in the default location to avoid errors in execution.
-
-### Download Android Studio command line tools
-If you want to connect with an emulated device, it is necessary to do it with the command line tools. They can be downloaded by accessing Android Studio. In the top menu you must go to the Tools > SDK Manager option. In the window that opens, you must select the SDK Tools tab. In the list of tools, you must select Android SDK Command-line Tools and click Apply. Then click OK. Once downloaded, you must add to the environment variables the path to the folder used by the tool `emulator`. Check the following section to see how to add environment variables, in point 9 the path to add is specified.
+### Download and installation of Java
+To install Java you can follow the following [link](https://www.java.com/en/download/). Once downloaded, you must run the installer and follow the steps indicated. After installation, restart the machine. It is recommended to install in the default location to avoid errors in execution. To verify that everything has been done correctly, after restarting you can open a command prompt and type java -version. If everything is fine, the installed Java version should appear.
 
 
 ## Add environment variables
-To execute the module 
-commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
-1. In the Windows search bar, type Environment Variables and select the Edit System Environment Variables option.
-2. In the window that opens, select Environment Variables.
-3. In the new window, you must create a new system variable. As a name, write ANDROID_HOME and as a value the absolute path to the folder `C:\Users\user\AppData\Local\Android\Sdk` (replace user with the computer username).
-4. Then, select the Path variable and click Edit.
-5. In the new window, click New and add the same path used in the previous step by adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username).
+To run the module commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
+1. In the Windows search bar, type Environment Variables and select the Edit system environment variables option.
+2. In the window that opens, select Environment variables.
+3. In the new window, you must create a new system variable. As name, write 
+ANDROID_HOME and as value the absolute path to the folder where the Android SDK Tools are installed. By default it is: `C:\Users\user\AppData\Local\Android\Sdk` (replace user with the computer username).
+4. Then, in the Environment variables window select the Path user variable and click Edit.
+5. In the new window, click New and add the same path used in the previous step adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username). You must also do the same but with the `emulator` folder. For example `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username).
 6. Finally, click OK in all windows and restart the computer.
-7. To verify that everything has been done correctly, open a command prompt and type adb. If everything is fine, a 
-list of available commands should appear.
-8. In case of installing the command line tools, the path to the folder `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username) must be added to the path.
-9. After completing these steps, you can proceed to execute the module commands.
+7. To verify that everything has been done correctly, open a command prompt and type adb. If everything is fine, a list of available commands should appear.
+8. After completing these steps, you can proceed to run the module commands. As a 
+recommendation, you can run the Configure Appium command to check that nothing is left pending.
 
 
 ## Android device configuration
@@ -51,9 +49,9 @@ list of available commands should appear.
 To connect the device correctly, it is necessary to configure the Android device to accept the connection, either by USB or by WiFi. To do this, follow these steps:
 1. Activate developer options: On the device, go to Settings > About phone > Build number. Tap Build number 7 times. A message will appear saying that you are now a developer.
 2. Activate USB debugging: On the device, go to Settings > System > Developer options and turn on USB debugging.
-3. 
-Activate wireless debugging: On the device, go to Settings > System > Developer options and turn on Wireless debugging.
-4. If you want to use the wireless connection (WIFI) you must pair the device so that it can connect. To do this, you must use the Link device command once.
+3. Activate wireless debugging: On the device, go to Settings > System > Developer options and turn on Wireless debugging.
+4. If you want to use the wireless connection (WIFI) you must pair the device so that it can 
+connect. To do this, you must use the Link device command once.
 5. If you want to use the USB connection, you must connect the device to the computer using the USB cable. Then, you must run the Connect device command.
 6. If everything was configured correctly, the Connect Android command should return True.
 
@@ -63,8 +61,8 @@ The Appium tool has an inspector to be able to visualize the elements of the dev
 
 
 ### Use Appium inspector
-When unzipping the tool, you can run Appium Inspector.exe, which will open the tool window. To connect the Android device that was connected using the module in Rocketbot, you must go to the `Attach to Session ...` tab then in the 
-reload button next to the input to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
+When unzipping the tool, you can run Appium Inspector.exe, which will open the tool window. To connect the Android device that was connected using the module in Rocketbot, you must go to the `Attach to Session ...` tab then in the reload button next to the input to enter the ID. If everything was configured correctly, a string should appear in the input where the ID of the connection, the device, its ip and port, and the uiautomator2 driver 
+are indicated. Then, you must click on the Attach to Session button. This will open a new window of the inspector showing the device information.
 
 ### Create an emulated device
 To be able to create an emulated device, you must open Android Studio and create a new project. In the window that opens, on the right side you will have the Device Manager (If it is not open, from the right side bar you can open it). You must click on Create Device. Then, you must select the device you want to emulate and click Next. In the next window, you must select the Android version you want to emulate and click Next. In the last window, you must verify the device configuration and click Finish. Once done, you must run the Connect emulated device command to be able to use it.
@@ -74,7 +72,7 @@ To be able to create an emulated device, you must open Android Studio and create
 
 ### Configure Appium
   
-This command checks if Appium and the uiautomator2 driver is installed. If any of the dependencies is not installed, it will be installed automatically.
+This command checks if you have installed the necessary dependencies to run Appium. It will try to install some, but not all. For those in which Rocketbot cannot, it will generate an error indicating the steps to follow to install them manually. It is recommended to run this command only to validate that you have the necessary dependencies, and not include it in the version of the bot that is deployed in production.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Assign result to variable|Assign result of the configuration to a variable|result|
@@ -109,7 +107,7 @@ This command allows you to list the available emulated devices.
 
 ### Connect Emulated Device
   
-This command allows you to connect an emulated device and configure the server.
+This command allows you to connect an emulated device and configure the server. If this is the first time you run the emulator, it may take a few minutes to start.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Emulator name|Name of the emulator you want to connect|Pixel_7_Pro_API_34|
@@ -123,11 +121,13 @@ This command allows you to connect an emulated device and configure the server.
 This command allows you to lock an Android device.
 |Parameters|Description|example|
 | --- | --- | --- |
+| --- | --- | --- |
 
 ### Unlock Device
   
 This command allows you to unlock an Android device. Only available if the unlock type and code have been set in the connection command.
 |Parameters|Description|example|
+| --- | --- | --- |
 | --- | --- | --- |
 
 ### Get Current Application Information
@@ -232,8 +232,19 @@ This command allows you to run a command on the Android device terminal. To run 
 |Command|Command to be executed in the device terminal.|pm list packages|
 |Assign result to variable|Name of the variable in which the result will be assigned.|variable|
 
+### Wait for object
+  
+This command allows you to wait for an object on the Android device. The command will run until the object is found or until the maximum waiting time is met.
+|Parameters|Description|example|
+| --- | --- | --- |
+|Data type|Data type of the selector to be searched.|id|
+|Selector|Selector of the object to be searched.|com.whatsapp:id/toolbar|
+|Maximum waiting time|Maximum waiting time in seconds.|10|
+|Assign result to variable|Name of the variable in which the search result will be assigned.|variable|
+
 ### Disconnect device
   
 This command allows you to disconnect the Android or emulated device that is being automated
 |Parameters|Description|example|
+| --- | --- | --- |
 | --- | --- | --- |

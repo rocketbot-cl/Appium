@@ -1,3 +1,7 @@
+
+
+
+
 # Appium
   
 Module to automate mobile devices  
@@ -15,7 +19,7 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 
 
 1. Configure Appium  
-This command checks if Appium and the uiautomator2 driver is installed. If any of the dependencies is not installed, it will be installed automatically.
+This command checks if you have installed the necessary dependencies to run Appium. It will try to install some, but not all. For those in which Rocketbot cannot, it will generate an error indicating the steps to follow to install them manually. It is recommended to run this command only to validate that you have the necessary dependencies, and not include it in the version of the bot that is deployed in production.
 
 2. Pair device  
 This command allows you to pair an Android device with the machine you want to connect to. This step is necessary to perform only once per device if you want to connect via WIFI.
@@ -27,7 +31,7 @@ This command allows you to connect an Android device and configure the server us
 This command allows you to list the available emulated devices.
 
 5. Connect Emulated Device  
-This command allows you to connect an emulated device and configure the server.
+This command allows you to connect an emulated device and configure the server. If this is the first time you run the emulator, it may take a few minutes to start.
 
 6. Lock device  
 This command allows you to lock an Android device.
@@ -71,7 +75,10 @@ This command allows you to capture the screen of the Android device and store th
 19. Run command on device  
 This command allows you to run a command on the Android device terminal. To run this command correctly, the Allow shell checkbox in the connection command must be checked.
 
-20. Disconnect device  
+20. Wait for object  
+This command allows you to wait for an object on the Android device. The command will run until the object is found or until the maximum waiting time is met.
+
+21. Disconnect device  
 This command allows you to disconnect the Android or emulated device that is being automated  
 
 

@@ -35,7 +35,6 @@ import sys
 import traceback
 
 
-
 base_path = tmp_global_obj["basepath"] # type: ignore
 cur_path = base_path + 'modules' + os.sep + 'Appium' + os.sep + 'libs' + os.sep
 
@@ -43,7 +42,7 @@ if cur_path not in sys.path:
     sys.path.append(cur_path)
 
 global mod_appium_session
-from AppiumObject import AppiumObject, check_appium, check_uiautomator, check_sdk, check_java, check_path, pair_device, list_emulators # type: ignore
+from AppiumObject import AppiumObject # type: ignore
 from appium_selenium.common.exceptions import InvalidSessionIdException # type: ignore
 from appium_selenium.common.exceptions import WebDriverException # type: ignore
 
@@ -66,11 +65,11 @@ try:
         result = GetParams("result")
 
         try:
-            check_appium()
-            check_uiautomator()
-            check_sdk()
-            check_java()
-            check_path()
+            AppiumObject.check_appium()
+            AppiumObject.check_uiautomator()
+            AppiumObject.check_sdk()
+            AppiumObject.check_java()
+            AppiumObject.check_path()
 
             SetVar(result, True)
         
@@ -85,10 +84,9 @@ try:
         result = GetParams("result")
 
         try:
-            paired = pair_device(pair_ip, pair_code)
+            paired = AppiumObject.pair_device(pair_ip, pair_code)
 
             SetVar(result, paired)
-        
         except Exception as e:
             SetVar(result, False)
             raise e
@@ -112,23 +110,22 @@ try:
                                               emulator_name=None)
 
             SetVar(result, True)
-        
         except Exception as e:
             SetVar(result, False)
             raise e
+
 
     if module == "list_emulators":
         result = GetParams("result")
 
         try:
-
-            emulators = list_emulators()
+            emulators = AppiumObject.list_emulators()
 
             SetVar(result, emulators)
-
         except Exception as e:
             SetVar(result, False)
             raise e
+
 
     if module == "connect_emulator":
         emulator_name = GetParams("emulator_name")
@@ -137,9 +134,8 @@ try:
         unlock_key = GetParams("unlock_key") if unlock_type else None
         result = GetParams("result")
         
-
         try:
-            emulators = list_emulators()
+            emulators = AppiumObject.list_emulators()
 
             if emulator_name not in emulators:
                 raise Exception("Emulator not found")
@@ -153,10 +149,10 @@ try:
                                               emulator_name=emulator_name)
 
             SetVar(result, True)
-        
         except Exception as e:
             SetVar(result, False)
             raise e
+
 
     if module == "simple_swipe":
         direction = GetParams("direction")
@@ -167,6 +163,7 @@ try:
             traceback.print_exc()
             raise e
 
+
     if module == "simple_tap":
         x = GetParams("x")
         y = GetParams("y")
@@ -176,6 +173,7 @@ try:
         except Exception as e:
             traceback.print_exc()
             raise e
+
 
     if module == "tap_object":
         selector = GetParams("selector")
@@ -190,6 +188,7 @@ try:
             SetVar(result, False)
             traceback.print_exc()
             raise e
+
 
     if module == "send_keys":
         data_type = GetParams("data_type")
@@ -247,25 +246,26 @@ try:
             traceback.print_exc()
             raise e
 
+
     if module == "run_command":
         command = GetParams("command")
         result = GetParams("result")
 
         try:
-            output = mod_appium_session.android_driver.execute_script('mobile: shell', {'command': command})
+            output = mod_appium_session.run_command(command)
 
             SetVar(result, output)
         except Exception as e:
             SetVar(result, False)
             raise e
 
+
     if module == "get_current_app_data":
         result = GetParams("result")
         current_app = {}
 
         try:
-            current_app["package_name"] = mod_appium_session.android_driver.current_package
-            current_app["activity_name"] = mod_appium_session.android_driver.current_activity
+            current_app = mod_appium_session.get_current_app_data()
 
             SetVar(result, current_app)
         except Exception as e:
@@ -279,10 +279,7 @@ try:
         result = GetParams("result")
 
         try:
-            if not activity_name or not package_name:
-                raise Exception("Please specify a package name and activity name")
-
-            mod_appium_session.android_driver.start_activity(package_name, activity_name)
+            mod_appium_session.start_app(package_name, activity_name)
 
             SetVar(result, True)
         except Exception as e:
@@ -307,7 +304,6 @@ try:
             raise Exception("The session unexpectedly closed.")
     
 
-
     if module == "lock_device":
         try:
             mod_appium_session.lock()
@@ -315,12 +311,14 @@ try:
             traceback.print_exc()
             raise e
 
+
     if module == "unlock_device":
         try:
             mod_appium_session.unlock()
         except Exception as e:
             traceback.print_exc()
             raise e
+
 
     if module == "coords_zoom":
         action = GetParams("action")
@@ -334,6 +332,7 @@ try:
             traceback.print_exc()
             raise e
 
+
     if module == "object_zoom":
         action = GetParams("action")
         speed = eval(GetParams("speed")) if GetParams("speed") else 1
@@ -345,6 +344,21 @@ try:
             mod_appium_session.object_zoom(action, speed, selector, data_type, pixels)
         except Exception as e:
             traceback.print_exc()
+            raise e
+        
+    
+    if module == "wait_for_object":
+        data_type = GetParams("data_type")
+        selector = GetParams("selector")
+        timeout = int(GetParams("timeout")) if GetParams("timeout") else 10
+        result = GetParams("result")
+
+        try:
+            found = mod_appium_session.wait_for_object(selector, data_type, timeout)
+
+            SetVar(result, found)
+        except Exception as e:
+            SetVar(result, False)
             raise e
 
 

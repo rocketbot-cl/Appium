@@ -1,3 +1,7 @@
+
+
+
+
 # Appium
   
 Módulo para automatizar dispositivos móviles  
@@ -15,7 +19,7 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 
 
 1. Configurar Appium  
-Este comando comprueba si se tiene instalado Appium, el driver uiautomator2. Si alguna de las dependencias no está instalada, se instalará automáticamente.
+Este comando comprueba si se tienen instaladas las dependencias necesarias para correr Appium. Intentará instalar algunas, pero no todas. Para aquellas en las que Rocketbot no pueda, generará un error indicando los pasos a seguir para instalarlas manualmente. Se recomienda ejecutar este comando solamente para validar que se tienen las dependencias necesarias, y no incluirlo en la versión del bot que se despliegue en producción.
 
 2. Vincular dispositivo  
 Este comando permite vincular un dispositivo Android con la máquina donde se desea conectar. Este paso es necesario realizarlo una única vez por dispositivo si se desea conectar mediante WIFI.
@@ -27,7 +31,7 @@ Este comando permite conectar un dispositivo Android y configurar el servidor ut
 Este comando permite listar los dispositivos emulados disponibles.
 
 5. Conectar Dispositivo Emulado  
-Este comando permite conectar un dispositivo emulado y configurar el servidor.
+Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se ejecuta el emulador, es posible que se demore unos minutos en iniciar.
 
 6. Bloquear dispositivo  
 Este comando permite bloquear un dispositivo Android.
@@ -71,7 +75,10 @@ Este comando permite capturar la pantalla del dispositivo Android y almacenar la
 19. Ejecutar comando en dispositivo  
 Este comando permite ejecutar un comando en el terminal del dispositivo Android. Para ejecutar este comando correctamente debe estar marcado el checkbox de Permitir shell en el comando de conexión.
 
-20. Desconectar dispositivo  
+20. Esperar por objeto  
+Este comando permite esperar por un objeto en el dispositivo Android. El comando se ejecutará hasta que el objeto sea encontrado o hasta que se cumpla el tiempo máximo de espera.
+
+21. Desconectar dispositivo  
 Este comando permite desconectar el dispositivo Android o emulado que está siendo automatizado.  
 
 

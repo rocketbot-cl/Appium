@@ -2,32 +2,29 @@
 
 
 ## Previous installations
-To be able to use the module, it is necessary to have npm and nodejs installed. For this, you can follow the following [link](https://nodejs.org/en/download/).
-npm is the nodejs package manager, and it is necessary to be able to install Appium. It is recommended to install in the default location to avoid errors in execution.
+To be able to use the module, it is necessary to install dependencies such as npm, nodejs, java and Android Studio, certain environment variables must also be configured in the system. To be able to configure everything correctly, you can run the Configure Appium command of the module to automatically detect what needs to be installed or configured. You can also follow the steps below.
 
 
-### Appium and uiautomator2 installation and configuration
-Once npm is installed, you can proceed to install Appium and the driver used. To do this, you can run the Configure Appium command of the module. However, if you want to perform the installation manually, you can follow the following [link](http://appium.io/docs/en/2.1/quickstart/install/) to install Appium and the following [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) to install the driver.
+### Manual installation of Appium and uiautomator2
+To be able to install and configure Appium and uiautomator2, it is necessary to install npm and nodejs. To do this, you can follow the following [link](https://nodejs.org/en/download/). Once npm is installed, you can follow the following [link](http://appium.io/docs/en/2.1/quickstart/install/) to download and install Appium and the following [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) to download and install the driver.
 
+### Download and installation of Android Studio and SDK Tools
+The module uses tools from the Android Studio Software kit (SDK Tools), so it is necessary to install it. To do this, you can download it from the following [link](https://developer.android.com/studio). Once downloaded, you must run the installer and follow the steps indicated. It is recommended to install in the default location to avoid errors in execution. To download the SDK Tools you must access Android Studio. In the top menu you must go to the Tools > SDK Manager option. In the window that opens, you must select the SDK Tools tab. In the list of tools, you must select `Android SDK Build-Tools`, `Android Emulator`, `Android SDK Platform-Tools` and click Apply. Once everything is downloaded, the paths to the folders used by the `emulator` and `platform-tools` tools must be added to the system path. An example of a path is `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username). Check the following section to see how to add environment variables.
 
-### Download and installation of Android Studio
-The module uses tools from the Android Studio Software kit, so it is necessary to install it. To do this, you can download it from the following [link](https://developer.android.com/studio). Once downloaded, you must run the installer and follow the steps indicated. It is recommended to install in the default location to avoid errors in execution.
-
-### Download Android Studio command line tools
-If you want to connect with an emulated device, it is necessary to do it with the command line tools. They can be downloaded by accessing Android Studio. In the top menu you must go to the Tools > SDK Manager option. In the window that opens, you must select the SDK Tools tab. In the list of tools, you must select Android SDK Command-line Tools and click Apply. Then click OK. Once downloaded, you must add to the environment variables the path to the folder used by the tool `emulator`. Check the following section to see how to add environment variables, in point 9 the path to add is specified.
+### Download and installation of Java
+To install Java you can follow the following [link](https://www.java.com/en/download/). Once downloaded, you must run the installer and follow the steps indicated. After installation, restart the machine. It is recommended to install in the default location to avoid errors in execution. To verify that everything has been done correctly, after restarting you can open a command prompt and type java -version. If everything is fine, the installed Java version should appear.
 
 
 ## Add environment variables
-To execute the module commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
-1. In the Windows search bar, type Environment Variables and select the Edit System Environment Variables option.
-2. In the window that opens, select Environment Variables.
-3. In the new window, you must create a new system variable. As a name, write ANDROID_HOME and as a value the absolute path to the folder `C:\Users\user\AppData\Local\Android\Sdk` (replace user with the computer username).
-4. Then, select the Path variable and click Edit.
-5. In the new window, click New and add the same path used in the previous step by adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username).
+To run the module commands, you need to have certain paths added to the system PATH so that everything works correctly. To do this, follow these steps:
+1. In the Windows search bar, type Environment Variables and select the Edit system environment variables option.
+2. In the window that opens, select Environment variables.
+3. In the new window, you must create a new system variable. As name, write ANDROID_HOME and as value the absolute path to the folder where the Android SDK Tools are installed. By default it is: `C:\Users\user\AppData\Local\Android\Sdk` (replace user with the computer username).
+4. Then, in the Environment variables window select the Path user variable and click Edit.
+5. In the new window, click New and add the same path used in the previous step adding the `platform-tools` folder at the end. For example, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (replace user with the computer username). You must also do the same but with the `emulator` folder. For example `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username).
 6. Finally, click OK in all windows and restart the computer.
 7. To verify that everything has been done correctly, open a command prompt and type adb. If everything is fine, a list of available commands should appear.
-8. In case of installing the command line tools, the path to the folder `C:\Users\user\AppData\Local\Android\Sdk\emulator` (replace user with the computer username) must be added to the path.
-9. After completing these steps, you can proceed to execute the module commands.
+8. After completing these steps, you can proceed to run the module commands. As a recommendation, you can run the Configure Appium command to check that nothing is left pending.
 
 
 ## Android device configuration
@@ -56,30 +53,28 @@ To be able to create an emulated device, you must open Android Studio and create
 # Instructivo de configuración previa para poder utilizar el módulo Appium
 
 ## Instalaciones previas
-Para poder utilizar el módulo, es necesario tener instalado npm y nodejs. Para ello, se puede seguir el siguiente [link](https://nodejs.org/es/download/).
-npm es el gestor de paquetes de nodejs, y es necesario para poder instalar Appium. Es recomendable instalar en la ubicación por defecto para evitar errores en la ejecución.
+Para poder utilizar el módulo, se requieren instalar dependencias como npm, nodejs, java y Android Studio, también se deben configurar ciertas variables de entorno en el sistema. Para poder configurar todo correctamente, se puede ejecutar el comando Configurar Appium del módulo para detectar automáticamente qué se debe instalar o configurar. Tambien se pueden seguir los pasos a continuación.
 
-### Instalación y configuración de Appium y uiautomator2
-Una vez instalado npm, se puede proceder a instalar Appium y el driver utilizado. Para realizar esto, se puede ejecutar el comando Configurar Appium del módulo. Sin embargo, si se desea realizar la instalación manualmente, se puede seguir el siguiente [link](http://appium.io/docs/en/2.1/quickstart/install/) para instalar Appium y el siguiente [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para instalar el driver.
+### Instalación manual de Appium y uiautomator2
+Para poder instalar y configurar Appium y uiautomator2 se requiere instalar npm y nodejs. Para ello, se puede seguir el siguiente [link](https://nodejs.org/en/download/). Una vez instalado npm, se puede seguir el siguiente [link](http://appium.io/docs/en/2.1/quickstart/install/) para descargar e instalar Appium y el siguiente [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para descargar e instalar el driver.
 
-### Descarga e instalación de Android Studio
-El módulo utiliza herramientas del kit de Software de Android Studio, por lo que es necesario instalarlo. Para ello, se puede descargar desde el siguiente [link](https://developer.android.com/studio). Una vez descargado, se debe ejecutar el instalador y seguir los pasos que se indican. Es recomendable instalar en la ubicación por defecto para evitar errores en la ejecución.
+### Descarga e instalación de Android Studio y SDK Tools
+El módulo utiliza herramientas del kit de Software de Android Studio (SDK Tools), por lo que es necesario instalarlo. Para ello, se puede descargar desde el siguiente [link](https://developer.android.com/studio). Una vez descargado, se debe ejecutar el instalador y seguir los pasos que se indican. Es recomendable instalar en la ubicación por defecto para evitar errores en la ejecución. Para descargar las SDK Tools se debe acceder a Android Studio. En el menú superior se debe ir a la opción Tools > SDK Manager. En la ventana que se abre, se debe seleccionar la pestaña SDK Tools. En la lista de herramientas, se debe seleccionar `Android SDK Build-Tools`, `Android Emulator`, `Android SDK Platform-Tools` y hacer clic en Apply. Una vez todo descargado, se deben agregar al path del sistema las rutas hacia las carpetas usadas por las herramientas `emulator` y `platform-tools`. Un ejemplo de ruta es `C:\Users\user\AppData\Local\Android\Sdk\emulator` (reemplazar user por el nombre de usuario de la computadora). Verifique la sección correspondiente para ver cómo agregar variables de entorno.
 
-### Descargar herramientas de línea de comandos de Android Studio
-En caso de querer conectarse con un dispositivo emulado, es necesario hacerlo con las herramientas de línea de comandos. Se pueden descargar accediendo a Android Studio. En el menú superior se debe ir a la opción Tools > SDK Manager. En la ventana que se abre, se debe seleccionar la pestaña SDK Tools. En la lista de herramientas, se debe seleccionar Android SDK Command-line Tools y hacer clic en Apply. Luego hacer clic en OK. Una vez descargadas, se debe agregar a las variables de entorno la ruta hacia la carpeta que utiliza la herramienta `emulator`. Revise el siguiente apartado para ver cómo agregar variables de entorno, en el punto 8 se especifica la ruta a agregar.
+### Descarga e instalación de Java
+Para instalar Java se puede seguir el siguiente [link](https://www.java.com/es/download/). Una vez descargado, se debe ejecutar el instalador y seguir los pasos que se indican. Despues de la instalación reinicia la máquina. Es recomendable instalar en la ubicación por defecto para evitar errores en la ejecución. Para verificar que todo se haya realizado correctamente, luego de reiniciar se puede abrir una consola de comandos y escribir java -version. Si todo está bien, debería aparecer la versión de Java instalada.
 
 
 ## Agregar variables de entorno
 Para ejecutar los comandos del módulo, se requiere tener ciertas rutas agregadas al PATH del sistema para que todo funcione correctamente. Para ello, siga los siguientes pasos:
 1. En la barra de búsqueda de Windows escriba Variables de Entorno y seleccione la opción Editar las variables de entorno del sistema.
 2. En la ventana que se abre, seleccione Variables de entorno.
-3. En la nueva ventana, debe crear una nueva variable del sistema. Como nombre, escriba ANDROID_HOME y como valor la ruta absoluta hacia la carpeta `C:\Users\user\AppData\Local\Android\Sdk` (reemplazar user por el nombre de usuario de la computadora).
-4. Luego, seleccione la variable Path y haga clic en Editar.
-5. En la nueva ventana, haga clic en Nuevo y agregue la misma ruta utilizada en el paso anterior agregando la carpeta `platform-tools` al final. Por ejemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (reemplazar user por el nombre de usuario de la computadora).
+3. En la nueva ventana, debe crear una nueva variable del sistema. Como nombre, escriba ANDROID_HOME y como valor la ruta absoluta hacia la carpeta donde se tengan instaladas las SDK Tools de Android. Por defecto es: `C:\Users\user\AppData\Local\Android\Sdk` (reemplazar user por el nombre de usuario de la computadora).
+4. Luego, en la ventana de Variables de entorno seleccione la variable de usuario Path y haga clic en Editar.
+5. En la nueva ventana, haga clic en Nuevo y agregue la misma ruta utilizada en el paso anterior agregando la carpeta `platform-tools` al final. Por ejemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (reemplazar user por el nombre de usuario de la computadora). También deberá hacer lo mismo pero con la carpeta `emulator`. Por ejemplo `C:\Users\user\AppData\Local\Android\Sdk\emulator` (reemplazar user por el nombre de usuario de la computadora).
 6. Por último, haga clic en Aceptar en todas las ventanas y reinicie la computadora.
 7. Para verificar que todo se haya realizado correctamente, abra una consola de comandos y escriba adb. Si todo está bien, debería aparecer una lista de comandos disponibles.
-8. En caso de instalar las herramientas de línea de comandos, se debe agregar al path la ruta hacia la carpeta `C:\Users\user\AppData\Local\Android\Sdk\emulator` (reemplazar user por el nombre de usuario de la computadora).
-9. Al finalizar estos pasos, se puede proceder a ejecutar los comandos del módulo.
+8. Al finalizar estos pasos, se puede proceder a ejecutar los comandos del módulo. Como recomendación se puede ejecutar el comando Configurar Appium para revisar que no haya quedado nada pendiente.
 
 
 ## Configuración de dispositivo Android
@@ -108,32 +103,31 @@ Para poder crear un dispositivo emulado, se debe abrir Android Studio y crear un
 
 
 ## Instalações anteriores
-Para poder usar o módulo, é necessário ter npm e nodejs instalados. Para isso, você pode seguir o seguinte [link](https://nodejs.org/en/download/).
-npm é o gerenciador de pacotes nodejs, e é necessário para poder instalar o Appium. É recomendável instalar no local padrão para evitar erros na execução.
+Para poder usar o módulo, é necessário instalar dependências como npm, nodejs, java e Android Studio, também é necessário configurar certas variáveis ​​de ambiente no sistema. Para poder configurar tudo corretamente, você pode executar o comando Configure Appium do módulo para detectar automaticamente o que precisa ser instalado ou configurado. Você também pode seguir as etapas abaixo.
 
 
-### Instalação e configuração do Appium e uiautomator2
-Depois de instalado o npm, você pode prosseguir para instalar o Appium e o driver usado. Para fazer isso, você pode executar o comando Configure Appium do módulo. No entanto, se você quiser realizar a instalação manualmente, pode seguir o seguinte [link](http://appium.io/docs/en/2.1/quickstart/install/) para instalar o Appium e o seguinte [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para instalar o driver.
+### Instalação manual do Appium e uiautomator2
+Para poder instalar e configurar o Appium e o uiautomator2, é necessário instalar o npm e o nodejs. Para fazer isso, você pode seguir o seguinte [link](https://nodejs.org/en/download/). Depois de instalado o npm, você pode seguir o seguinte [link](http://appium.io/docs/en/2.1/quickstart/install/) para baixar e instalar o Appium e o seguinte [link](http://appium.io/docs/en/2.1/quickstart/uiauto2-driver/) para baixar e instalar o driver.
 
 
-### Download e instalação do Android Studio
-O módulo usa ferramentas do kit de software do Android Studio, portanto, é necessário instalá-lo. Para fazer isso, você pode baixá-lo no seguinte [link](https://developer.android.com/studio). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. É recomendável instalar no local padrão para evitar erros na execução.
+### Download e instalação do Android Studio e SDK Tools
+O módulo usa ferramentas do kit de software do Android Studio (SDK Tools), portanto, é necessário instalá-lo. Para fazer isso, você pode baixá-lo no seguinte [link](https://developer.android.com/studio). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. É recomendável instalar no local padrão para evitar erros na execução. Para baixar as SDK Tools, você deve acessar o Android Studio. No menu superior, você deve ir para a opção Tools > SDK Manager. Na janela que se abre, você deve selecionar a guia SDK Tools. Na lista de ferramentas, você deve selecionar `Android SDK Build-Tools`, `Android Emulator`, `Android SDK Platform-Tools` e clicar em Apply. Depois de tudo baixado, você deve adicionar ao path do sistema os caminhos para as pastas usadas pelas ferramentas `emulator` e `platform-tools`. Um exemplo de caminho é `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador). Verifique a seção correspondente para ver como adicionar variáveis ​​de ambiente.
 
-### Baixe as ferramentas de linha de comando do Android Studio
-Se você deseja se conectar com um dispositivo emulado, é necessário fazê-lo com as ferramentas de linha de comando. Eles podem ser baixados acessando o Android Studio. No menu superior, você deve ir para a opção Tools > SDK Manager. Na janela que se abre, você deve selecionar a guia SDK Tools. Na lista de ferramentas, você deve selecionar Android SDK Command-line Tools e clicar em Apply. Em seguida, clique em OK. Depois de baixado, você deve adicionar às variáveis ​​de ambiente o caminho para a pasta usada pela ferramenta `emulator`. Verifique a seguinte seção para ver como adicionar variáveis ​​de ambiente, no ponto 9 é especificado o caminho a ser adicionado.
+
+### Download e instalação do Java
+Para instalar o Java, você pode seguir o seguinte [link](https://www.java.com/en/download/). Depois de baixado, você deve executar o instalador e seguir as etapas indicadas. Após a instalação, reinicie a máquina. É recomendável instalar no local padrão para evitar erros na execução. Para verificar se tudo foi feito corretamente, após a reinicialização, você pode abrir um prompt de comando e digitar java -version. Se tudo estiver bem, a versão do Java instalada deve aparecer.
 
 
 ## Adicionar variáveis ​​de ambiente
-Para executar os comandos do módulo, você precisa ter determinados caminhos adicionados ao PATH do sistema para que tudo funcione corretamente. Para fazer isso, siga estas etapas:
+Para executar os comandos do módulo, você precisa ter certos caminhos adicionados ao PATH do sistema para que tudo funcione corretamente. Para fazer isso, siga estas etapas:
 1. Na barra de pesquisa do Windows, digite Variáveis ​​de ambiente e selecione a opção Editar variáveis ​​de ambiente do sistema.
 2. Na janela que se abre, selecione Variáveis ​​de ambiente.
-3. Na nova janela, você deve criar uma nova variável do sistema. Como nome, escreva ANDROID_HOME e como valor o caminho absoluto para a pasta `C:\Users\user\AppData\Local\Android\Sdk` (substitua o usuário pelo nome de usuário do computador).
-4. Em seguida, selecione a variável Path e clique em Editar.
-5. Na nova janela, clique em Novo e adicione o mesmo caminho usado na etapa anterior, adicionando a pasta `platform-tools` no final. Por exemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (substitua o usuário pelo nome de usuário do computador).
+3. Na nova janela, você deve criar uma nova variável do sistema. Como nome, escreva ANDROID_HOME e como valor o caminho absoluto para a pasta onde as Android SDK Tools estão instaladas. Por padrão, é: `C:\Users\user\AppData\Local\Android\Sdk` (substitua o usuário pelo nome de usuário do computador).
+4. Em seguida, na janela Variáveis ​​de ambiente, selecione a variável do usuário Path e clique em Editar.
+5. Na nova janela, clique em Novo e adicione o mesmo caminho usado na etapa anterior adicionando a pasta `platform-tools` no final. Por exemplo, `C:\Users\user\AppData\Local\Android\Sdk\platform-tools` (substitua o usuário pelo nome de usuário do computador). Você também deve fazer o mesmo, mas com a pasta `emulator`. Por exemplo `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador).
 6. Por fim, clique em OK em todas as janelas e reinicie o computador.
 7. Para verificar se tudo foi feito corretamente, abra um prompt de comando e digite adb. Se tudo estiver bem, uma lista de comandos disponíveis deve aparecer.
-8. Em caso de instalar as ferramentas de linha de comando, o caminho para a pasta `C:\Users\user\AppData\Local\Android\Sdk\emulator` (substitua o usuário pelo nome de usuário do computador) deve ser adicionado ao caminho.
-9. Depois de concluir estas etapas, você pode prosseguir para executar os comandos do módulo.
+8. Após concluir estas etapas, você pode prosseguir para executar os comandos do módulo. Como recomendação, você pode executar o comando Configure Appium para verificar se nada ficou pendente.
 
 
 ## Configuração do dispositivo Android
