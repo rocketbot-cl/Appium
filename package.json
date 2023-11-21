@@ -7,7 +7,7 @@
         "pr": "Módulo para automatizar dispositivos móveis"
     },
     "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version": "1.1.1",
+    "version": "2.0.0",
     "license": "MIT",
     "homepage": "http://rocketbot.com/",
     "linux": true,
@@ -29,19 +29,19 @@
         {
             "es": {
                 "title": "Configurar Appium",
-                "description": "Este comando comprueba si se tiene instalado Appium, el driver uiautomator2. Si alguna de las dependencias no está instalada, se instalará automáticamente.",
+                "description": "Este comando comprueba si se tienen instaladas las dependencias necesarias para correr Appium. Intentará instalar algunas, pero no todas. Para aquellas en las que Rocketbot no pueda, generará un error indicando los pasos a seguir para instalarlas manualmente. Se recomienda ejecutar este comando solamente para validar que se tienen las dependencias necesarias, y no incluirlo en la versión del bot que se despliegue en producción.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Configure Appium",
-                "description": "This command checks if Appium and the uiautomator2 driver is installed. If any of the dependencies is not installed, it will be installed automatically.",
+                "description": "This command checks if you have installed the necessary dependencies to run Appium. It will try to install some, but not all. For those in which Rocketbot cannot, it will generate an error indicating the steps to follow to install them manually. It is recommended to run this command only to validate that you have the necessary dependencies, and not include it in the version of the bot that is deployed in production.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Configurar Appium",
-                "description": "Este comando verifica se o Appium e o driver uiautomator2 estão instalados. Se alguma das dependências não estiver instalada, ela será instalada automaticamente.",
+                "description": "Este comando verifica se você instalou as dependências necessárias para executar o Appium. Ele tentará instalar alguns, mas não todos. Para aqueles em que o Rocketbot não puder, ele gerará um erro indicando as etapas a seguir para instalá-los manualmente. É recomendável executar este comando apenas para validar se você possui as dependências necessárias e não incluí-lo na versão do bot que é implantada em produção.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -247,7 +247,7 @@
                             "pr": "Somente para conexões WIFI. Para obter o endereço IP e a porta do dispositivo Android, vá para Configurações > Sistema > Opções do desenvolvedor > Depuração sem fio"
                         },
                         "id": "device_ip",
-                        "css": "col-md-12"
+                        "css": "col-md-6"
                     },
                     {
                         "type": "select",
@@ -287,6 +287,103 @@
                         "data_type": "str",
                         "default": null,
                         "required": true
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "PIN",
+                            "en": "PIN",
+                            "pr": "PIN"
+                        },
+                        "title": {
+                            "es": "Tipo de desbloqueo",
+                            "en": "Unlock type",
+                            "pr": "Tipo de desbloqueio"
+                        },
+                        "options": [
+                            {
+                                "title": "None",
+                                "value": null
+                            },
+                            {
+                                "title": "PIN",
+                                "value": "pin"
+                            },
+                            {
+                                "title": "Password",
+                                "value": "password"
+                            },
+                            {
+                                "title": "Pattern",
+                                "value": "pattern"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de desbloqueo a utilizar",
+                            "en": "Type of unlock to use",
+                            "pr": "Tipo de desbloqueio a ser usado"
+                        },
+                        "help": {
+                            "es": "Advertencia: Si se tiene configurada una huella digital como método de desbloqueo, la misma se deshabilitará del dispositivo para establecer el método de contraseña elegido como principal.",
+                            "en": "Warning: If a fingerprint is configured as the unlock method, it will be disabled from the device to establish the chosen password method as the main one.",
+                            "pr": "Aviso: Se uma impressão digital for configurada como método de desbloqueio, ela será desativada do dispositivo para estabelecer o método de senha escolhido como o principal."
+
+                        },
+                        "id": "unlock_type",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "1234",
+                            "en": "1234",
+                            "pr": "1234"
+                        },
+                        "title": {
+                          "es": "Código de desbloqueo",
+                          "en": "Unlock code",
+                          "pr": "Código de desbloqueio"
+                        },
+                        "description": {
+                          "es": "Código de desbloqueo del dispositivo Android que se desea conectar",
+                          "en": "Unlock code of the Android device you want to connect",
+                          "pr": "Código de desbloqueio do dispositivo Android que você deseja conectar"
+                        },
+                        "help": {
+                            "es": "Si el tipo de desbloqueo es Pattern, el código debe ser una secuencia de números del 1 al 9. El uno representa el punto de la esquina superior izquierda y el nueve el punto de la esquina inferior derecha. Por ejemplo, el código 159 representa un patrón de desbloqueo que va desde la esquina superior izquierda hasta la esquina inferior derecha pasando por el punto central.",
+                            "en": "If the unlock type is Pattern, the code must be a sequence of numbers from 1 to 9. One represents the point of the upper left corner and nine the point of the lower right corner. For example, the code 159 represents an unlock pattern that goes from the upper left corner to the lower right corner passing through the central point.",
+                            "pr": "Se o tipo de desbloqueio for Pattern, o código deve ser uma sequência de números de 1 a 9. Um representa o ponto do canto superior esquerdo e nove o ponto do canto inferior direito. Por exemplo, o código 159 representa um padrão de desbloqueio que vai do canto superior esquerdo ao canto inferior direito passando pelo ponto central."
+                        },
+                        "id": "unlock_key",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "True",
+                            "en": "True",
+                            "pr": "True"
+                        },
+                        "title": {
+                          "es": "Permitir shell",
+                          "en": "Allow shell",
+                          "pr": "Permitir shell"
+                        },
+                        "description": {
+                          "es": "Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https://appium.io/docs/en/2.0/guides/security/",
+                          "en": "Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https://appium.io/docs/en/2.0/guides/security/",
+                          "pr": "Permite executar comandos usando o terminal no dispositivo Android. É um recurso inseguro. Para mais informações, consulte https://appium.io/docs/en/2.0/guides/security/"
+                        },
+                        "help": {
+                            "es": "Permitir shell es una característica insegura. Para más información, consulte https://appium.io/docs/en/2.0/guides/security/",
+                            "en": "Allowing shell is an unsafe feature. For more information, see https://appium.io/docs/en/2.0/guides/security/",
+                            "pr": "Permitir shell é um recurso inseguro. Para mais informações, consulte https://appium.io/docs/en/2.0/guides/security/"
+                        },
+                        "id": "allow_shell",
+                        "css": "col-md-6"
                     },
                     {
                         "type": "input",
@@ -395,19 +492,19 @@
         {
             "es": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se conecta el dispositivo, es posible que el comando falle debido a que debe iniciar el sistema operativo. Si esto ocurre vuelva a ejecutar el comando.",
+                "description": "Este comando permite conectar un dispositivo emulado y configurar el servidor. Si es la primera vez que se ejecuta el emulador, es posible que se demore unos minutos en iniciar.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "en": {
                 "title": "Connect Emulated Device",
-                "description": "This command allows you to connect an emulated device and configure the server. If this is the first time you connect the device, the command may fail because you must start the operating system. If this happens, run the command again.",
+                "description": "This command allows you to connect an emulated device and configure the server. If this is the first time you run the emulator, it may take a few minutes to start.",
                 "title_options": "Select Option",
                 "options": null
             },
             "pr": {
                 "title": "Conectar Dispositivo Emulado",
-                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando poderá falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente.",
+                "description": "Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você executa o emulador, pode levar alguns minutos para iniciar.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -437,7 +534,98 @@
                             "pr": "Você pode obter o nome do emulador com o comando Listar Dispositivos Emulados"
                         },
                         "id": "emulator_name",
-                        "css": "col-md-12"
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "True",
+                            "en": "True",
+                            "pr": "True"
+                        },
+                        "title": {
+                          "es": "Permitir shell",
+                          "en": "Allow shell",
+                          "pr": "Permitir shell"
+                        },
+                        "description": {
+                          "es": "Permite ejecutar comandos utilizando la terminal en el dispositivo Android. Es una característica insegura. Para más información, consulte https://appium.io/docs/en/2.0/guides/security/",
+                          "en": "Allows you to run commands using the terminal on the Android device. It is an unsafe feature. For more information, see https://appium.io/docs/en/2.0/guides/security/",
+                          "pr": "Permite executar comandos usando o terminal no dispositivo Android. É um recurso inseguro. Para mais informações, consulte https://appium.io/docs/en/2.0/guides/security/"
+                        },
+                        "help": {
+                            "es": "Permitir shell es una característica insegura. Para más información, consulte https://appium.io/docs/en/2.0/guides/security/",
+                            "en": "Allowing shell is an unsafe feature. For more information, see https://appium.io/docs/en/2.0/guides/security/",
+                            "pr": "Permitir shell é um recurso inseguro. Para mais informações, consulte https://appium.io/docs/en/2.0/guides/security/"
+                        },
+                        "id": "allow_shell",
+                        "css": "col-md-6"
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "PIN",
+                            "en": "PIN",
+                            "pr": "PIN"
+                        },
+                        "title": {
+                            "es": "Tipo de desbloqueo",
+                            "en": "Unlock type",
+                            "pr": "Tipo de desbloqueio"
+                        },
+                        "options": [
+                            {
+                                "title": "None",
+                                "value": null
+                            },
+                            {
+                                "title": "PIN",
+                                "value": "pin"
+                            },
+                            {
+                                "title": "Password",
+                                "value": "password"
+                            },
+                            {
+                                "title": "Pattern",
+                                "value": "pattern"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de desbloqueo a utilizar",
+                            "en": "Type of unlock to use",
+                            "pr": "Tipo de desbloqueio a ser usado"
+                        },
+                        "id": "unlock_type",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "1234",
+                            "en": "1234",
+                            "pr": "1234"
+                        },
+                        "title": {
+                          "es": "Código de desbloqueo",
+                          "en": "Unlock code",
+                          "pr": "Código de desbloqueio"
+                        },
+                        "description": {
+                          "es": "Código de desbloqueo del dispositivo Android que se desea conectar",
+                          "en": "Unlock code of the Android device you want to connect",
+                          "pr": "Código de desbloqueio do dispositivo Android que você deseja conectar"
+                        },
+                        "help": {
+                            "es": "Si el tipo de desbloqueo es Pattern, el código debe ser una secuencia de números del 1 al 9. El uno representa el punto de la esquina superior izquierda y el nueve el punto de la esquina inferior derecha. Por ejemplo, el código 159 representa un patrón de desbloqueo que va desde la esquina superior izquierda hasta la esquina inferior derecha pasando por el punto central.",
+                            "en": "If the unlock type is Pattern, the code must be a sequence of numbers from 1 to 9. One represents the point of the upper left corner and nine the point of the lower right corner. For example, the code 159 represents an unlock pattern that goes from the upper left corner to the lower right corner passing through the central point.",
+                            "pr": "Se o tipo de desbloqueio for Pattern, o código deve ser uma sequência de números de 1 a 9. Um representa o ponto do canto superior esquerdo e nove o ponto do canto inferior direito. Por exemplo, o código 159 representa um padrão de desbloqueio que vai do canto superior esquerdo ao canto inferior direito passando pelo ponto central."
+                        },
+                        "id": "unlock_key",
+                        "css": "col-md-6"
                     },
                     {
                         "type": "input",
@@ -470,6 +658,256 @@
             "video_youtube": "",
             "icon": "data:image/png;base64,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",
             "module": "connect_emulator",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Bloquear dispositivo",
+                "description": "Este comando permite bloquear un dispositivo Android.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Lock device",
+                "description": "This command allows you to lock an Android device.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Bloquear dispositivo",
+                "description": "Este comando permite bloquear um dispositivo Android.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": []
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "lock_device",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Desbloquear Dispositivo",
+                "description": "Este comando permite desbloquear un dispositivo Android. Sólo disponible si se ha establecido el tipo y código de desbloqueo en el comando de conexión.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Unlock Device",
+                "description": "This command allows you to unlock an Android device. Only available if the unlock type and code have been set in the connection command.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Desbloquear Dispositivo",
+                "description": "Este comando permite desbloquear um dispositivo Android. Disponível apenas se o tipo e o código de desbloqueio tiverem sido definidos no comando de conexão.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": []
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "unlock_device",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Obtener información de aplicación actual",
+                "description": "Este comando permite obtener el nombre del paquete y el nombre de la actividad de la aplicación que se está ejecutando actualmente en el dispositivo Android.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Get Current Application Information",
+                "description": "This command allows you to get the package name and activity name of the application that is currently running on the Android device.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Obter informações do aplicativo atual",
+                "description": "Este comando permite obter o nome do pacote e o nome da atividade do aplicativo que está sendo executado atualmente no dispositivo Android.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado.",
+                            "en": "Name of the variable in which the result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAACapJREFUeF7tnW9wVNUVwM/dTSKt2EoBKSlmhuoMtrrBqTLiTKfVaiqjHekIpK2tfKAmmbbTbOp02uFLjaPT+sVK7Bd8ARm0CiEbBCrFdqoypQkhhWLeCxJL/yApzWZ3IYlUnN1k93RewgvJ7nu799137937kt2ve8+fe373nPfn/nkE/PCL6N8EAlsBYYlLd88CGa+DdV/6k0u5ojUnRbPsZHhv7xrIkENC/UKsgw0rtwm1wahcDSAR/WMAmMfYB+9ifXuD0Nyc8a7Iu4biAekwfgmIm713gauGUVhffT1XjS6VyQcS6R0DIGUu/ZTfvO9COTTfOy7bsDwgEX0MANQHkU1AMhjxQCJ6PwCskD3SuNtbXy0+VgAgzsieUxUQSCe5B6a4CvthffUXRLogBkix75pERszULTBb+AOJ6Cg6Hrz1Lz4/Cmu3n4QAFnYdCYE3Nq6EwdCK+fDAZz/i7Qs/IBG9DQBqeTsoSt9DO9+Fz50d9qo+qRlhrs9PfID4KCvqn3rHK4Qcec0I84kjl4u6T2B8/5nDEEwXLkmstIaNv5S1Q3uaVd6S80bWBzDKUmnY9Ks/e40TlTwSXNuqNx2gauzQiB2ID2BseuYwlAnMCvuYkkOa0fggKxQ2ID6AIeJa4SLIvZoRvt1F+6mm7oGUYNDFmWCfpjeF6BpfbeUOSAmGq/gi4vbWvqbH3QjRA2nXo0Bcz9i58cVz2yKXKVv/SRm5/cWTjb20naMDsr//OhhLfUirtBjtHn/6MAQy4m5rvfRJMxoDAITKOTogipeq5e/FoKb9lJeYCZelfXgsDERxGGYkVSxVdoRpoOQHgkigw1BirtlpCPsFxhX/+zUjnPf1fX4gimdH1fsJWLPbEF5ueBoolCXOQDr0ekB4kaczvHX5LDumup8PijMQxbPje891wif/l+LNWIo+JNjZqjd92c6YPZAOoxkQn5TiHaMRv2aH1V2nLLEHonh2fPf5Lrj2Q79P1xOcfD6Z+csFsudUFQTSHzAOXClifs+OfFmSC0Tx7LjlxHn4yht/lwJehpHs0uU7ILMlO5yyZCaQiP4vAFguY2Sw2phtQABgRDPCC6x4ZAOhegHGGkyvcqLnxb36xyo/vWz5CsgszI5JhhXzKrQTDeba52lLSSO6+c6+mpWyDLlZCwQArCy5miGK312ZwBueeieJANfIgC/bhv+AZMg3oDZ00AxU3W0tjxECL8sOmkh71iTWZIb44DW73QLnulu3rCIB0iMyUPJ0kwHNaKyaBBLRzfWV98gzzmApz4rz+uoXmgDxeQatSomYZcsCovTt7kTUKLYA1IVakgSgQqkou3DGP0AQDsCG6rW0fasPtag/wGw64x8gCy+Uw73uNmDWV29pASSNtBBVaFeZXnqNP0oWRblyCqifsoUAeZL49Q7LzYiuv23LKBDyKTcyxWmLMfLpA/3LR1Mp86Wiuj8PGWJ1asMXm+cvCC64pG4nJx9AyNGh2Jm7j0RvVtpRDkCs/qlewkj3UBy/2hmFpKLLMIHAWVhXzXVKQGUoE0DM0bP6yKCaSUKwDtbxP7mnPtRiHpsRVK3T6gPJpK6H2jtHRQSuLtTSRhTbOTwFRNksWRcKAKFbOc4CrSHU8gQCPMciK0JmBpCvdUbhsmrXEo4XdKcANqz8zbcwk9ktIsBudc4AomSWSABiXkf1tvfgeOu7buPHvX0OEPNuy7zrUuYnEEh3PH4HZOC41dd9DYfg4j89n+7gKXQ5QExtNV1RuCR9O7FDPwQBse4us63ueGAXYBH7bgtEqdLFGcjRaPwnhMCv8w3jl+5/zdMo9yLsCEQZKJyANCMG1sQS1EdfFAlK2gSS9wGp6A+MHIA4lad8IxkRYUfNLi+D3b0swjZybCjxKgI+mk+6qFA8AGEBMT0Or9f9Hob/PeI+sIwSlQuHy0nXwMAnAhXzLhfScfeRQSjKNJxLIIhIjsUS3PZFyixdUzOGtCPpbyNJ+KFxsRA7vv9TPqn3DCZWZQIoZAWKLCiugViRllrCMsGlUHur44NR91DcvFDnbHzhOSq23/cqkCvrQXjqzdbFDEQqGMQXYMPK8HTnu2PxAUBYJjI42brFZwlu1oymZyfm1LujsT8CITWsHXz6/RE4GDOPbxfyw657Km8MpvEcCs6EfN63P7YfLg1yP/NyymTOUlLa60ihkJ/7eAxq/5pgPxEYARo/fx08umx+IVPS/xeZJcKA5L23n1i1OrnmXmjRF4Rq+/2viTp5elwzwuWm21Or33lliKBYKKNWRJbYbtjZgxisiiWkfw1AmUhTOiINyMTF/cr8OqVvc7JZ27f3wUeJgs/R1LHBAGxs7Q2/YgnM2NIm456e2lOFG/LMkoLboktZUngkcARyUTPCC6dbzNmnXgIiD4jdeSc5QE7ERm8ew9SZwm7N3RacXqUMa0b4M9lRtD18ppQl+Qfb7378B4ifvuBpRLo6DagzGl0bJMF9nizOYuELZy7C/h+8yd5DhFe0vvBGOwWOB5iVssQ53phB2PF19tlEphPljoyMLChPjkme/GAfdFIlEeClGraFEJoRNt8aOc715T0Es5Ql9phTl8fgtw+3s4yBtGaE8346sOC5vSUouXHXd5+C49uoTw+fUlDoRNIZLxedcHdH46eBwC0sw2G2yuxYswtw3N0KAxoYVEBK77hyh5XbJ3Uk8J1WPUy1mLtgybLcKZWuq2BcAnH1JTdqID2JxCOZNHbM1jLkpl9ugNCWKss+NZCJ0hWNJ4H49+gKN0F3avtB13/grV/QfWTMLQzqa8h05+Z66aLNDhYYTEDm+kWeBggrDGYgcxXKmz9/G/57Iv9mJi8wPAGZi1AKZYdXGJ6BzCUofZHT0LP1pMO1Hgc0o6mKx02Dq7ssx6f5ObA4wik7AoH0sq29T5znAYNLhliOHBtKJBHQt6e55QvozgfbIJ3K3XzFo0Rl2+WSIZbSrmg0FCBBnddoUUWPTXY8qxnhzSL84wpkNr5myYKBV+YzRLCY0CkEyORTfSwMhGwR5rkExTsfaoN0crJUiShPdl0QBsTv2TJybhT2bjqY0Yyw1BODhAPxIxgSJI/ctWjR6xKSMMeENCCW5aND8XGi4DlVpn9l6bFr76ys5Ldwl4GodCBTYKLxHkJgFYPPnEWwc/WSG2w/YcfZEJW6ogGxvDuOWD4eS8j+IOHbq5csvo8qQpIbFR3I9P6ae8x7YokzCHAT3zjgP+66YfEKQgi3/et8/buqTSkgdp00NxLdGI//iCD5GQAsddgCjQQghYhvlZcFfnrHokWnRQVMtN7/A6vSxj6BYcgrAAAAAElFTkSuQmCC",
+            "module": "get_current_app_data",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Iniciar aplicación",
+                "description": "Este comando permite iniciar una aplicación en el dispositivo Android. Para obtener el nombre del paquete y el nombre de la actividad, puede utilizar el comando Obtener información de aplicación actual",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Start application",
+                "description": "This command allows you to start an application on the Android device. To get the package name and activity name, you can use the Get Current Application Information command",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Iniciar aplicação",
+                "description": "Este comando permite iniciar um aplicativo no dispositivo Android. Para obter o nome do pacote e o nome da atividade, você pode usar o comando Obter informações do aplicativo atual",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "com.android.Settings",
+                            "en": "com.android.Settings",
+                            "pr": "com.android.Settings"
+                        },
+                        "title": {
+                            "es": "Nombre del paquete",
+                            "en": "Package name",
+                            "pr": "Nome do pacote"
+                        },
+                        "description": {
+                            "es": "Nombre del paquete de la aplicación que se desea iniciar.",
+                            "en": "Name of the package of the application you want to start.",
+                            "pr": "Nome do pacote do aplicativo que você deseja iniciar."
+                        },
+                        "id": "package_name",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": ".Settings",
+                            "en": ".Settings",
+                            "pr": ".Settings"
+                        },
+                        "title": {
+                            "es": "Nombre de la actividad",
+                            "en": "Activity name",
+                            "pr": "Nome da atividade"
+                        },
+                        "description": {
+                            "es": "Nombre de la actividad de la aplicación que se desea iniciar.",
+                            "en": "Name of the activity of the application you want to start.",
+                            "pr": "Nome da atividade do aplicativo que você deseja iniciar."
+                        },
+                        "id": "activity_name",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado.",
+                            "en": "Name of the variable in which the result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "start_app",
             "module_name": "Appium",
             "visible": true,
             "options": false,
@@ -637,6 +1075,132 @@
         },
         {
             "es": {
+                "title": "Tap en elemento",
+                "description": "Este comando permite realizar un tap en un elemento específico de la pantalla.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Tap on element",
+                "description": "This command allows you to tap on a specific element on the screen.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Toque no elemento",
+                "description": "Este comando permite tocar em um elemento específico na tela.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "id",
+                            "en": "id",
+                            "pr": "id"
+                        },
+                        "title": {
+                            "es": "Tipo de dato",
+                            "en": "Data type",
+                            "pr": "Tipo de dado"
+                        },
+                        "options": [
+                            {
+                                "title": "id",
+                                "value": "id"
+                            },
+                            {
+                                "title": "xpath",
+                                "value": "xpath"
+                            },
+                            {
+                                "title": "class",
+                                "value": "class"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de dato del selector en el cual se realizará el tap.",
+                            "en": "Data type of the selector in which the tap will be performed.",
+                            "pr": "Tipo de dado do seletor no qual o toque será realizado."
+                        },
+                        "id": "data_type",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "com.whatsapp:id/entry",
+                            "en": "com.whatsapp:id/entry",
+                            "pr": "com.whatsapp:id/entry"
+                        },
+                        "title": {
+                            "es": "Selector",
+                            "en": "Selector",
+                            "pr": "Seletor"
+                        },
+                        "description": {
+                            "es": "Selector en el cual realizará el tap.",
+                            "en": "Selector in which the tap will be performed.",
+                            "pr": "Seletor no qual o toque será realizado."
+                        },
+                        "id": "selector",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado.",
+                            "en": "Name of the variable in which the result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAACapJREFUeF7tnW9wVNUVwM/dTSKt2EoBKSlmhuoMtrrBqTLiTKfVaiqjHekIpK2tfKAmmbbTbOp02uFLjaPT+sVK7Bd8ARm0CiEbBCrFdqoypQkhhWLeCxJL/yApzWZ3IYlUnN1k93RewgvJ7nu799137937kt2ve8+fe373nPfn/nkE/PCL6N8EAlsBYYlLd88CGa+DdV/6k0u5ojUnRbPsZHhv7xrIkENC/UKsgw0rtwm1wahcDSAR/WMAmMfYB+9ifXuD0Nyc8a7Iu4biAekwfgmIm713gauGUVhffT1XjS6VyQcS6R0DIGUu/ZTfvO9COTTfOy7bsDwgEX0MANQHkU1AMhjxQCJ6PwCskD3SuNtbXy0+VgAgzsieUxUQSCe5B6a4CvthffUXRLogBkix75pERszULTBb+AOJ6Cg6Hrz1Lz4/Cmu3n4QAFnYdCYE3Nq6EwdCK+fDAZz/i7Qs/IBG9DQBqeTsoSt9DO9+Fz50d9qo+qRlhrs9PfID4KCvqn3rHK4Qcec0I84kjl4u6T2B8/5nDEEwXLkmstIaNv5S1Q3uaVd6S80bWBzDKUmnY9Ks/e40TlTwSXNuqNx2gauzQiB2ID2BseuYwlAnMCvuYkkOa0fggKxQ2ID6AIeJa4SLIvZoRvt1F+6mm7oGUYNDFmWCfpjeF6BpfbeUOSAmGq/gi4vbWvqbH3QjRA2nXo0Bcz9i58cVz2yKXKVv/SRm5/cWTjb20naMDsr//OhhLfUirtBjtHn/6MAQy4m5rvfRJMxoDAITKOTogipeq5e/FoKb9lJeYCZelfXgsDERxGGYkVSxVdoRpoOQHgkigw1BirtlpCPsFxhX/+zUjnPf1fX4gimdH1fsJWLPbEF5ueBoolCXOQDr0ekB4kaczvHX5LDumup8PijMQxbPje891wif/l+LNWIo+JNjZqjd92c6YPZAOoxkQn5TiHaMRv2aH1V2nLLEHonh2fPf5Lrj2Q79P1xOcfD6Z+csFsudUFQTSHzAOXClifs+OfFmSC0Tx7LjlxHn4yht/lwJehpHs0uU7ILMlO5yyZCaQiP4vAFguY2Sw2phtQABgRDPCC6x4ZAOhegHGGkyvcqLnxb36xyo/vWz5CsgszI5JhhXzKrQTDeba52lLSSO6+c6+mpWyDLlZCwQArCy5miGK312ZwBueeieJANfIgC/bhv+AZMg3oDZ00AxU3W0tjxECL8sOmkh71iTWZIb44DW73QLnulu3rCIB0iMyUPJ0kwHNaKyaBBLRzfWV98gzzmApz4rz+uoXmgDxeQatSomYZcsCovTt7kTUKLYA1IVakgSgQqkou3DGP0AQDsCG6rW0fasPtag/wGw64x8gCy+Uw73uNmDWV29pASSNtBBVaFeZXnqNP0oWRblyCqifsoUAeZL49Q7LzYiuv23LKBDyKTcyxWmLMfLpA/3LR1Mp86Wiuj8PGWJ1asMXm+cvCC64pG4nJx9AyNGh2Jm7j0RvVtpRDkCs/qlewkj3UBy/2hmFpKLLMIHAWVhXzXVKQGUoE0DM0bP6yKCaSUKwDtbxP7mnPtRiHpsRVK3T6gPJpK6H2jtHRQSuLtTSRhTbOTwFRNksWRcKAKFbOc4CrSHU8gQCPMciK0JmBpCvdUbhsmrXEo4XdKcANqz8zbcwk9ktIsBudc4AomSWSABiXkf1tvfgeOu7buPHvX0OEPNuy7zrUuYnEEh3PH4HZOC41dd9DYfg4j89n+7gKXQ5QExtNV1RuCR9O7FDPwQBse4us63ueGAXYBH7bgtEqdLFGcjRaPwnhMCv8w3jl+5/zdMo9yLsCEQZKJyANCMG1sQS1EdfFAlK2gSS9wGp6A+MHIA4lad8IxkRYUfNLi+D3b0swjZybCjxKgI+mk+6qFA8AGEBMT0Or9f9Hob/PeI+sIwSlQuHy0nXwMAnAhXzLhfScfeRQSjKNJxLIIhIjsUS3PZFyixdUzOGtCPpbyNJ+KFxsRA7vv9TPqn3DCZWZQIoZAWKLCiugViRllrCMsGlUHur44NR91DcvFDnbHzhOSq23/cqkCvrQXjqzdbFDEQqGMQXYMPK8HTnu2PxAUBYJjI42brFZwlu1oymZyfm1LujsT8CITWsHXz6/RE4GDOPbxfyw657Km8MpvEcCs6EfN63P7YfLg1yP/NyymTOUlLa60ihkJ/7eAxq/5pgPxEYARo/fx08umx+IVPS/xeZJcKA5L23n1i1OrnmXmjRF4Rq+/2viTp5elwzwuWm21Or33lliKBYKKNWRJbYbtjZgxisiiWkfw1AmUhTOiINyMTF/cr8OqVvc7JZ27f3wUeJgs/R1LHBAGxs7Q2/YgnM2NIm456e2lOFG/LMkoLboktZUngkcARyUTPCC6dbzNmnXgIiD4jdeSc5QE7ERm8ew9SZwm7N3RacXqUMa0b4M9lRtD18ppQl+Qfb7378B4ifvuBpRLo6DagzGl0bJMF9nizOYuELZy7C/h+8yd5DhFe0vvBGOwWOB5iVssQ53phB2PF19tlEphPljoyMLChPjkme/GAfdFIlEeClGraFEJoRNt8aOc715T0Es5Ql9phTl8fgtw+3s4yBtGaE8346sOC5vSUouXHXd5+C49uoTw+fUlDoRNIZLxedcHdH46eBwC0sw2G2yuxYswtw3N0KAxoYVEBK77hyh5XbJ3Uk8J1WPUy1mLtgybLcKZWuq2BcAnH1JTdqID2JxCOZNHbM1jLkpl9ugNCWKss+NZCJ0hWNJ4H49+gKN0F3avtB13/grV/QfWTMLQzqa8h05+Z66aLNDhYYTEDm+kWeBggrDGYgcxXKmz9/G/57Iv9mJi8wPAGZi1AKZYdXGJ6BzCUofZHT0LP1pMO1Hgc0o6mKx02Dq7ssx6f5ObA4wik7AoH0sq29T5znAYNLhliOHBtKJBHQt6e55QvozgfbIJ3K3XzFo0Rl2+WSIZbSrmg0FCBBnddoUUWPTXY8qxnhzSL84wpkNr5myYKBV+YzRLCY0CkEyORTfSwMhGwR5rkExTsfaoN0crJUiShPdl0QBsTv2TJybhT2bjqY0Yyw1BODhAPxIxgSJI/ctWjR6xKSMMeENCCW5aND8XGi4DlVpn9l6bFr76ys5Ldwl4GodCBTYKLxHkJgFYPPnEWwc/WSG2w/YcfZEJW6ogGxvDuOWD4eS8j+IOHbq5csvo8qQpIbFR3I9P6ae8x7YokzCHAT3zjgP+66YfEKQgi3/et8/buqTSkgdp00NxLdGI//iCD5GQAsddgCjQQghYhvlZcFfnrHokWnRQVMtN7/A6vSxj6BYcgrAAAAAElFTkSuQmCC",
+            "module": "tap_object",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
                 "title": "Enviar teclas",
                 "description": "Este comando permite enviar teclas a un selector específico del dispositivo Android.",
                 "title_options": "Seleccione una opción",
@@ -757,7 +1321,7 @@
         },
         {
             "es": {
-                "title": "Obtener texto",
+                "title": "Extraer texto",
                 "description": "Este comando permite obtener el texto de un selector específico del dispositivo Android.",
                 "title_options": "Seleccione una opción",
                 "options": null
@@ -769,7 +1333,7 @@
                 "options": null
             },
             "pr": {
-                "title": "Obter texto",
+                "title": "Extrair texto",
                 "description": "Este comando permite obter o texto de um seletor específico do dispositivo Android.",
                 "title_options": "Selecione uma opção",
                 "options": null
@@ -859,6 +1423,7 @@
                             "en": "Variable name without {}",
                             "pr": "Nome da variável sem {}"
                         },
+                        "remove_vars": true,
                         "id": "result",
                         "css": "col-md-12",
                         "data_type": "str",
@@ -870,6 +1435,474 @@
             "video_youtube": "",
             "icon": "data:image/png;base64,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",
             "module": "get_text",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Extraer texto por coordenadas",
+                "description": "Este comando permite obtener el texto de un elemento ubicado en una posición específica del dispositivo Android.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Get text by coordinates",
+                "description": "This command allows you to get the text of an element located at a specific position of the Android device.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Extrair texto por coordenadas",
+                "description": "Este comando permite obter o texto de um elemento localizado em uma posição específica do dispositivo Android.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "450,2000",
+                            "en": "450,2000",
+                            "pr": "450,2000"
+                        },
+                        "title": {
+                            "es": "Coordenadas x,y",
+                            "en": "Coordinates x,y",
+                            "pr": "Coordenadas x,y"
+                        },
+                        "description": {
+                            "es": "Coordenadas x,y del elemento a obtener el texto.",
+                            "en": "Coordinates x,y of the element to get the text.",
+                            "pr": "Coordenadas x,y do elemento para obter o texto."
+                        },
+                        "help": {
+                            "es": "Coordenadas separadas por coma. Ejemplo: 450,2000",
+                            "en": "Coordinates separated by comma. Example: 450,2000",
+                            "pr": "Coordenadas separadas por vírgula. Exemplo: 450,2000"
+                        },
+                        "id": "coordinates",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado.",
+                            "en": "Name of the variable in which the result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "get_text_coord",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Zoom en coordenadas",
+                "description": "Este comando permite realizar un zoom in o zoom out sobre las coordenadas especificadas en el dispositivo Android.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Zoom in coordinates",
+                "description": "This command allows you to zoom in or zoom out on the coordinates specified on the Android device.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Zoom em coordenadas",
+                "description": "Este comando permite dar zoom in ou zoom out nas coordenadas especificadas no dispositivo Android.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "Zoom in",
+                            "en": "Zoom in",
+                            "pr": "Zoom in"
+                        },
+                        "title": {
+                            "es": "Tipo de zoom",
+                            "en": "Type of zoom",
+                            "pr": "Tipo de zoom"
+                        },
+                        "options": [
+                            {
+                                "title": "Zoom in",
+                                "value": "zoom_in"
+                            },
+                            {
+                                "title": "Zoom out",
+                                "value": "zoom_out"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de zoom a realizar.",
+                            "en": "Type of zoom to perform.",
+                            "pr": "Tipo de zoom a realizar."
+                        },
+                        "id": "action",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "450,2000",
+                            "en": "450,2000",
+                            "pr": "450,2000"
+                        },
+                        "title": {
+                            "es": "Coordenadas x,y",
+                            "en": "Coordinates x,y",
+                            "pr": "Coordenadas x,y"
+                        },
+                        "description": {
+                            "es": "Coordenadas x,y donde se realizará el zoom.",
+                            "en": "Coordinates x,y where the zoom will be performed.",
+                            "pr": "Coordenadas x,y onde o zoom será realizado."
+                        },
+                        "help": {
+                            "es": "Coordenadas separadas por coma. Ejemplo: 450,2000. Si no se coloca nada se realizará en el centro de la pantalla.",
+                            "en": "Coordinates separated by comma. Example: 450,2000. If nothing is placed, it will be done in the center of the screen.",
+                            "pr": "Coordenadas separadas por vírgula. Exemplo: 450,2000. Se nada for colocado, será feito no centro da tela."
+                        },
+                        "id": "coordinates",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "500",
+                            "en": "500",
+                            "pr": "500"
+                        },
+                        "title": {
+                            "es": "Píxeles a desplazar",
+                            "en": "Pixels to move",
+                            "pr": "Pixels a deslocar"
+                        },
+                        "description": {
+                            "es": "Píxeles a desplazar en el zoom.",
+                            "en": "Pixels to move in the zoom.",
+                            "pr": "Pixels a deslocar no zoom."
+                        },
+                        "help": {
+                            "es": "La suma de los píxeles y las coordenadas no deben exceder los límites de la pantalla del dispositivo.",
+                            "en": "The sum of the pixels and the coordinates must not exceed the limits of the device screen.",
+                            "pr": "A soma dos pixels e das coordenadas não deve exceder os limites da tela do dispositivo."
+                        },
+                        "id": "pixels",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "Normal",
+                            "en": "Normal",
+                            "pr": "Normal"
+                        },
+                        "title": {
+                            "es": "Velocidad de zoom",
+                            "en": "Zoom speed",
+                            "pr": "Velocidade de zoom"
+                        },
+                        "options": [
+                            {
+                                "title": "Instant",
+                                "value": "1"
+                            },
+                            {
+                                "title": "Fast",
+                                "value": "10"
+                            },
+                            {
+                                "title": "Normal",
+                                "value": "50"
+                            },
+                            {
+                                "title": "Slow",
+                                "value": "100"
+                            },
+                            {
+                                "title": "Very slow",
+                                "value": "200"
+                            }
+                        ],
+                        "description": {
+                            "es": "Velocidad de zoom a realizar.",
+                            "en": "Zoom speed to perform.",
+                            "pr": "Velocidade de zoom a realizar."
+                        },
+                        "id": "speed",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "coords_zoom",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Zoom en objeto",
+                "description": "Este comando permite realizar un zoom in o zoom out sobre un objeto en el dispositivo Android.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Zoom in object",
+                "description": "This command allows you to zoom in or zoom out on an object on the Android device.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Zoom em objeto",
+                "description": "Este comando permite dar zoom in ou zoom out em um objeto no dispositivo Android.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "Zoom in",
+                            "en": "Zoom in",
+                            "pr": "Zoom in"
+                        },
+                        "title": {
+                            "es": "Tipo de zoom",
+                            "en": "Type of zoom",
+                            "pr": "Tipo de zoom"
+                        },
+                        "options": [
+                            {
+                                "title": "Zoom in",
+                                "value": "zoom_in"
+                            },
+                            {
+                                "title": "Zoom out",
+                                "value": "zoom_out"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de zoom a realizar.",
+                            "en": "Type of zoom to perform.",
+                            "pr": "Tipo de zoom a realizar."
+                        },
+                        "id": "action",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "id",
+                            "en": "id",
+                            "pr": "id"
+                        },
+                        "title": {
+                            "es": "Tipo de dato",
+                            "en": "Data type",
+                            "pr": "Tipo de dado"
+                        },
+                        "options": [
+                            {
+                                "title": "id",
+                                "value": "id"
+                            },
+                            {
+                                "title": "xpath",
+                                "value": "xpath"
+                            },
+                            {
+                                "title": "class",
+                                "value": "class"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de dato del selector en el cual se realizará el zoom.",
+                            "en": "Data type of the selector in which the zoom will be performed.",
+                            "pr": "Tipo de dado do seletor no qual o zoom será realizado."
+                        },
+                        "id": "data_type",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "com.whatsapp:id/entry",
+                            "en": "com.whatsapp:id/entry",
+                            "pr": "com.whatsapp:id/entry"
+                        },
+                        "title": {
+                            "es": "Selector",
+                            "en": "Selector",
+                            "pr": "Seletor"
+                        },
+                        "description": {
+                            "es": "Selector en el cual realizará el zoom",
+                            "en": "Selector in which to perform the zoom",
+                            "pr": "Seletor no qual realizará o zoom"
+                        },
+                        "id": "selector",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "500",
+                            "en": "500",
+                            "pr": "500"
+                        },
+                        "title": {
+                            "es": "Píxeles a desplazar",
+                            "en": "Pixels to move",
+                            "pr": "Pixels a deslocar"
+                        },
+                        "description": {
+                            "es": "Píxeles a desplazar en el zoom.",
+                            "en": "Pixels to move in the zoom.",
+                            "pr": "Pixels a deslocar no zoom."
+                        },
+                        "help": {
+                            "es": "La suma de los píxeles y las coordenadas no deben exceder los límites de la pantalla del dispositivo.",
+                            "en": "The sum of the pixels and the coordinates must not exceed the limits of the device screen.",
+                            "pr": "A soma dos pixels e das coordenadas não deve exceder os limites da tela do dispositivo."
+                        },
+                        "id": "pixels",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "Normal",
+                            "en": "Normal",
+                            "pr": "Normal"
+                        },
+                        "title": {
+                            "es": "Velocidad de zoom",
+                            "en": "Zoom speed",
+                            "pr": "Velocidade de zoom"
+                        },
+                        "options": [
+                            {
+                                "title": "Instant",
+                                "value": "1"
+                            },
+                            {
+                                "title": "Fast",
+                                "value": "10"
+                            },
+                            {
+                                "title": "Normal",
+                                "value": "50"
+                            },
+                            {
+                                "title": "Slow",
+                                "value": "100"
+                            },
+                            {
+                                "title": "Very slow",
+                                "value": "200"
+                            }
+                        ],
+                        "description": {
+                            "es": "Velocidad de zoom a realizar.",
+                            "en": "Zoom speed to perform.",
+                            "pr": "Velocidade de zoom a realizar."
+                        },
+                        "id": "speed",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "object_zoom",
             "module_name": "Appium",
             "visible": true,
             "options": false,
@@ -930,6 +1963,244 @@
             "video_youtube": "",
             "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAACapJREFUeF7tnW9wVNUVwM/dTSKt2EoBKSlmhuoMtrrBqTLiTKfVaiqjHekIpK2tfKAmmbbTbOp02uFLjaPT+sVK7Bd8ARm0CiEbBCrFdqoypQkhhWLeCxJL/yApzWZ3IYlUnN1k93RewgvJ7nu799137937kt2ve8+fe373nPfn/nkE/PCL6N8EAlsBYYlLd88CGa+DdV/6k0u5ojUnRbPsZHhv7xrIkENC/UKsgw0rtwm1wahcDSAR/WMAmMfYB+9ifXuD0Nyc8a7Iu4biAekwfgmIm713gauGUVhffT1XjS6VyQcS6R0DIGUu/ZTfvO9COTTfOy7bsDwgEX0MANQHkU1AMhjxQCJ6PwCskD3SuNtbXy0+VgAgzsieUxUQSCe5B6a4CvthffUXRLogBkix75pERszULTBb+AOJ6Cg6Hrz1Lz4/Cmu3n4QAFnYdCYE3Nq6EwdCK+fDAZz/i7Qs/IBG9DQBqeTsoSt9DO9+Fz50d9qo+qRlhrs9PfID4KCvqn3rHK4Qcec0I84kjl4u6T2B8/5nDEEwXLkmstIaNv5S1Q3uaVd6S80bWBzDKUmnY9Ks/e40TlTwSXNuqNx2gauzQiB2ID2BseuYwlAnMCvuYkkOa0fggKxQ2ID6AIeJa4SLIvZoRvt1F+6mm7oGUYNDFmWCfpjeF6BpfbeUOSAmGq/gi4vbWvqbH3QjRA2nXo0Bcz9i58cVz2yKXKVv/SRm5/cWTjb20naMDsr//OhhLfUirtBjtHn/6MAQy4m5rvfRJMxoDAITKOTogipeq5e/FoKb9lJeYCZelfXgsDERxGGYkVSxVdoRpoOQHgkigw1BirtlpCPsFxhX/+zUjnPf1fX4gimdH1fsJWLPbEF5ueBoolCXOQDr0ekB4kaczvHX5LDumup8PijMQxbPje891wif/l+LNWIo+JNjZqjd92c6YPZAOoxkQn5TiHaMRv2aH1V2nLLEHonh2fPf5Lrj2Q79P1xOcfD6Z+csFsudUFQTSHzAOXClifs+OfFmSC0Tx7LjlxHn4yht/lwJehpHs0uU7ILMlO5yyZCaQiP4vAFguY2Sw2phtQABgRDPCC6x4ZAOhegHGGkyvcqLnxb36xyo/vWz5CsgszI5JhhXzKrQTDeba52lLSSO6+c6+mpWyDLlZCwQArCy5miGK312ZwBueeieJANfIgC/bhv+AZMg3oDZ00AxU3W0tjxECL8sOmkh71iTWZIb44DW73QLnulu3rCIB0iMyUPJ0kwHNaKyaBBLRzfWV98gzzmApz4rz+uoXmgDxeQatSomYZcsCovTt7kTUKLYA1IVakgSgQqkou3DGP0AQDsCG6rW0fasPtag/wGw64x8gCy+Uw73uNmDWV29pASSNtBBVaFeZXnqNP0oWRblyCqifsoUAeZL49Q7LzYiuv23LKBDyKTcyxWmLMfLpA/3LR1Mp86Wiuj8PGWJ1asMXm+cvCC64pG4nJx9AyNGh2Jm7j0RvVtpRDkCs/qlewkj3UBy/2hmFpKLLMIHAWVhXzXVKQGUoE0DM0bP6yKCaSUKwDtbxP7mnPtRiHpsRVK3T6gPJpK6H2jtHRQSuLtTSRhTbOTwFRNksWRcKAKFbOc4CrSHU8gQCPMciK0JmBpCvdUbhsmrXEo4XdKcANqz8zbcwk9ktIsBudc4AomSWSABiXkf1tvfgeOu7buPHvX0OEPNuy7zrUuYnEEh3PH4HZOC41dd9DYfg4j89n+7gKXQ5QExtNV1RuCR9O7FDPwQBse4us63ueGAXYBH7bgtEqdLFGcjRaPwnhMCv8w3jl+5/zdMo9yLsCEQZKJyANCMG1sQS1EdfFAlK2gSS9wGp6A+MHIA4lad8IxkRYUfNLi+D3b0swjZybCjxKgI+mk+6qFA8AGEBMT0Or9f9Hob/PeI+sIwSlQuHy0nXwMAnAhXzLhfScfeRQSjKNJxLIIhIjsUS3PZFyixdUzOGtCPpbyNJ+KFxsRA7vv9TPqn3DCZWZQIoZAWKLCiugViRllrCMsGlUHur44NR91DcvFDnbHzhOSq23/cqkCvrQXjqzdbFDEQqGMQXYMPK8HTnu2PxAUBYJjI42brFZwlu1oymZyfm1LujsT8CITWsHXz6/RE4GDOPbxfyw657Km8MpvEcCs6EfN63P7YfLg1yP/NyymTOUlLa60ihkJ/7eAxq/5pgPxEYARo/fx08umx+IVPS/xeZJcKA5L23n1i1OrnmXmjRF4Rq+/2viTp5elwzwuWm21Or33lliKBYKKNWRJbYbtjZgxisiiWkfw1AmUhTOiINyMTF/cr8OqVvc7JZ27f3wUeJgs/R1LHBAGxs7Q2/YgnM2NIm456e2lOFG/LMkoLboktZUngkcARyUTPCC6dbzNmnXgIiD4jdeSc5QE7ERm8ew9SZwm7N3RacXqUMa0b4M9lRtD18ppQl+Qfb7378B4ifvuBpRLo6DagzGl0bJMF9nizOYuELZy7C/h+8yd5DhFe0vvBGOwWOB5iVssQ53phB2PF19tlEphPljoyMLChPjkme/GAfdFIlEeClGraFEJoRNt8aOc715T0Es5Ql9phTl8fgtw+3s4yBtGaE8346sOC5vSUouXHXd5+C49uoTw+fUlDoRNIZLxedcHdH46eBwC0sw2G2yuxYswtw3N0KAxoYVEBK77hyh5XbJ3Uk8J1WPUy1mLtgybLcKZWuq2BcAnH1JTdqID2JxCOZNHbM1jLkpl9ugNCWKss+NZCJ0hWNJ4H49+gKN0F3avtB13/grV/QfWTMLQzqa8h05+Z66aLNDhYYTEDm+kWeBggrDGYgcxXKmz9/G/57Iv9mJi8wPAGZi1AKZYdXGJ6BzCUofZHT0LP1pMO1Hgc0o6mKx02Dq7ssx6f5ObA4wik7AoH0sq29T5znAYNLhliOHBtKJBHQt6e55QvozgfbIJ3K3XzFo0Rl2+WSIZbSrmg0FCBBnddoUUWPTXY8qxnhzSL84wpkNr5myYKBV+YzRLCY0CkEyORTfSwMhGwR5rkExTsfaoN0crJUiShPdl0QBsTv2TJybhT2bjqY0Yyw1BODhAPxIxgSJI/ctWjR6xKSMMeENCCW5aND8XGi4DlVpn9l6bFr76ys5Ldwl4GodCBTYKLxHkJgFYPPnEWwc/WSG2w/YcfZEJW6ogGxvDuOWD4eS8j+IOHbq5csvo8qQpIbFR3I9P6ae8x7YokzCHAT3zjgP+66YfEKQgi3/et8/buqTSkgdp00NxLdGI//iCD5GQAsddgCjQQghYhvlZcFfnrHokWnRQVMtN7/A6vSxj6BYcgrAAAAAElFTkSuQmCC",
             "module": "get_screenshot",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Ejecutar comando en dispositivo",
+                "description": "Este comando permite ejecutar un comando en el terminal del dispositivo Android. Para ejecutar este comando correctamente debe estar marcado el checkbox de Permitir shell en el comando de conexión.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Run command on device",
+                "description": "This command allows you to run a command on the Android device terminal. To run this command correctly, the Allow shell checkbox in the connection command must be checked.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Executar comando no dispositivo",
+                "description": "Este comando permite executar um comando no terminal do dispositivo Android. Para executar este comando corretamente, a caixa de seleção Permitir shell no comando de conexão deve estar marcada.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "pm list packages",
+                            "en": "pm list packages",
+                            "pr": "pm list packages"
+                        },
+                        "title": {
+                            "es": "Comando",
+                            "en": "Command",
+                            "pr": "Comando"
+                        },
+                        "description": {
+                            "es": "Comando que se ejecutará en el terminal del dispositivo.",
+                            "en": "Command to be executed in the device terminal.",
+                            "pr": "Comando a ser executado no terminal do dispositivo."
+                        },
+                        "id": "command",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado.",
+                            "en": "Name of the variable in which the result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,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",
+            "module": "run_command",
+            "module_name": "Appium",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "es": {
+                "title": "Esperar por objeto",
+                "description": "Este comando permite esperar por un objeto en el dispositivo Android. El comando se ejecutará hasta que el objeto sea encontrado o hasta que se cumpla el tiempo máximo de espera.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "en": {
+                "title": "Wait for object",
+                "description": "This command allows you to wait for an object on the Android device. The command will run until the object is found or until the maximum waiting time is met.",
+                "title_options": "Select Option",
+                "options": null
+            },
+            "pr": {
+                "title": "Aguardar por objeto",
+                "description": "Este comando permite aguardar por um objeto no dispositivo Android. O comando será executado até que o objeto seja encontrado ou até que o tempo máximo de espera seja atingido.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "select",
+                        "placeholder": {
+                            "es": "id",
+                            "en": "id",
+                            "pr": "id"
+                        },
+                        "title": {
+                            "es": "Tipo de dato",
+                            "en": "Data type",
+                            "pr": "Tipo de dado"
+                        },
+                        "options": [
+                            {
+                                "title": "id",
+                                "value": "id"
+                            },
+                            {
+                                "title": "xpath",
+                                "value": "xpath"
+                            },
+                            {
+                                "title": "class",
+                                "value": "class"
+                            }
+                        ],
+                        "description": {
+                            "es": "Tipo de dato del selector que se buscará.",
+                            "en": "Data type of the selector to be searched.",
+                            "pr": "Tipo de dado do seletor a ser pesquisado."
+                        },
+                        "id": "data_type",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "com.whatsapp:id/toolbar",
+                            "en": "com.whatsapp:id/toolbar",
+                            "pr": "com.whatsapp:id/toolbar"
+                        },
+                        "title": {
+                            "es": "Selector",
+                            "en": "Selector",
+                            "pr": "Seletor"
+                        },
+                        "description": {
+                            "es": "Selector del objeto que se buscará.",
+                            "en": "Selector of the object to be searched.",
+                            "pr": "Seletor do objeto a ser pesquisado."
+                        },
+                        "id": "selector",
+                        "css": "col-md-6",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "10",
+                            "en": "10",
+                            "pr": "10"
+                        },
+                        "title": {
+                            "es": "Tiempo máximo de espera",
+                            "en": "Maximum waiting time",
+                            "pr": "Tempo máximo de espera"
+                        },
+                        "description": {
+                            "es": "Tiempo máximo de espera en segundos.",
+                            "en": "Maximum waiting time in seconds.",
+                            "pr": "Nome da variável na qual o resultado da pesquisa será atribuído."
+                        },
+                        "id": "timeout",
+                        "css": "col-md-3",
+                        "data_type": "int",
+                        "default": 10,
+                        "required": false
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "variable",
+                            "en": "variable",
+                            "pr": "variável"
+                        },
+                        "title": {
+                            "es": "Asignar resultado a variable",
+                            "en": "Assign result to variable",
+                            "pr": "Atribuir resultado à variável"
+                        },
+                        "description": {
+                            "es": "Nombre de la variable en la cual se asignará el resultado de la búsqueda.",
+                            "en": "Name of the variable in which the search result will be assigned.",
+                            "pr": "Nome da variável na qual o resultado da pesquisa será atribuído."
+                        },
+                        "help": {
+                            "es": "Nombre de variable sin {}",
+                            "en": "Variable name without {}",
+                            "pr": "Nome da variável sem {}"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-9",
+                        "data_type": "str",
+                        "default": null,
+                        "required": true
+                    }
+                ]
+            },
+            "video_youtube": "",
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAACapJREFUeF7tnW9wVNUVwM/dTSKt2EoBKSlmhuoMtrrBqTLiTKfVaiqjHekIpK2tfKAmmbbTbOp02uFLjaPT+sVK7Bd8ARm0CiEbBCrFdqoypQkhhWLeCxJL/yApzWZ3IYlUnN1k93RewgvJ7nu799137937kt2ve8+fe373nPfn/nkE/PCL6N8EAlsBYYlLd88CGa+DdV/6k0u5ojUnRbPsZHhv7xrIkENC/UKsgw0rtwm1wahcDSAR/WMAmMfYB+9ifXuD0Nyc8a7Iu4biAekwfgmIm713gauGUVhffT1XjS6VyQcS6R0DIGUu/ZTfvO9COTTfOy7bsDwgEX0MANQHkU1AMhjxQCJ6PwCskD3SuNtbXy0+VgAgzsieUxUQSCe5B6a4CvthffUXRLogBkix75pERszULTBb+AOJ6Cg6Hrz1Lz4/Cmu3n4QAFnYdCYE3Nq6EwdCK+fDAZz/i7Qs/IBG9DQBqeTsoSt9DO9+Fz50d9qo+qRlhrs9PfID4KCvqn3rHK4Qcec0I84kjl4u6T2B8/5nDEEwXLkmstIaNv5S1Q3uaVd6S80bWBzDKUmnY9Ks/e40TlTwSXNuqNx2gauzQiB2ID2BseuYwlAnMCvuYkkOa0fggKxQ2ID6AIeJa4SLIvZoRvt1F+6mm7oGUYNDFmWCfpjeF6BpfbeUOSAmGq/gi4vbWvqbH3QjRA2nXo0Bcz9i58cVz2yKXKVv/SRm5/cWTjb20naMDsr//OhhLfUirtBjtHn/6MAQy4m5rvfRJMxoDAITKOTogipeq5e/FoKb9lJeYCZelfXgsDERxGGYkVSxVdoRpoOQHgkigw1BirtlpCPsFxhX/+zUjnPf1fX4gimdH1fsJWLPbEF5ueBoolCXOQDr0ekB4kaczvHX5LDumup8PijMQxbPje891wif/l+LNWIo+JNjZqjd92c6YPZAOoxkQn5TiHaMRv2aH1V2nLLEHonh2fPf5Lrj2Q79P1xOcfD6Z+csFsudUFQTSHzAOXClifs+OfFmSC0Tx7LjlxHn4yht/lwJehpHs0uU7ILMlO5yyZCaQiP4vAFguY2Sw2phtQABgRDPCC6x4ZAOhegHGGkyvcqLnxb36xyo/vWz5CsgszI5JhhXzKrQTDeba52lLSSO6+c6+mpWyDLlZCwQArCy5miGK312ZwBueeieJANfIgC/bhv+AZMg3oDZ00AxU3W0tjxECL8sOmkh71iTWZIb44DW73QLnulu3rCIB0iMyUPJ0kwHNaKyaBBLRzfWV98gzzmApz4rz+uoXmgDxeQatSomYZcsCovTt7kTUKLYA1IVakgSgQqkou3DGP0AQDsCG6rW0fasPtag/wGw64x8gCy+Uw73uNmDWV29pASSNtBBVaFeZXnqNP0oWRblyCqifsoUAeZL49Q7LzYiuv23LKBDyKTcyxWmLMfLpA/3LR1Mp86Wiuj8PGWJ1asMXm+cvCC64pG4nJx9AyNGh2Jm7j0RvVtpRDkCs/qlewkj3UBy/2hmFpKLLMIHAWVhXzXVKQGUoE0DM0bP6yKCaSUKwDtbxP7mnPtRiHpsRVK3T6gPJpK6H2jtHRQSuLtTSRhTbOTwFRNksWRcKAKFbOc4CrSHU8gQCPMciK0JmBpCvdUbhsmrXEo4XdKcANqz8zbcwk9ktIsBudc4AomSWSABiXkf1tvfgeOu7buPHvX0OEPNuy7zrUuYnEEh3PH4HZOC41dd9DYfg4j89n+7gKXQ5QExtNV1RuCR9O7FDPwQBse4us63ueGAXYBH7bgtEqdLFGcjRaPwnhMCv8w3jl+5/zdMo9yLsCEQZKJyANCMG1sQS1EdfFAlK2gSS9wGp6A+MHIA4lad8IxkRYUfNLi+D3b0swjZybCjxKgI+mk+6qFA8AGEBMT0Or9f9Hob/PeI+sIwSlQuHy0nXwMAnAhXzLhfScfeRQSjKNJxLIIhIjsUS3PZFyixdUzOGtCPpbyNJ+KFxsRA7vv9TPqn3DCZWZQIoZAWKLCiugViRllrCMsGlUHur44NR91DcvFDnbHzhOSq23/cqkCvrQXjqzdbFDEQqGMQXYMPK8HTnu2PxAUBYJjI42brFZwlu1oymZyfm1LujsT8CITWsHXz6/RE4GDOPbxfyw657Km8MpvEcCs6EfN63P7YfLg1yP/NyymTOUlLa60ihkJ/7eAxq/5pgPxEYARo/fx08umx+IVPS/xeZJcKA5L23n1i1OrnmXmjRF4Rq+/2viTp5elwzwuWm21Or33lliKBYKKNWRJbYbtjZgxisiiWkfw1AmUhTOiINyMTF/cr8OqVvc7JZ27f3wUeJgs/R1LHBAGxs7Q2/YgnM2NIm456e2lOFG/LMkoLboktZUngkcARyUTPCC6dbzNmnXgIiD4jdeSc5QE7ERm8ew9SZwm7N3RacXqUMa0b4M9lRtD18ppQl+Qfb7378B4ifvuBpRLo6DagzGl0bJMF9nizOYuELZy7C/h+8yd5DhFe0vvBGOwWOB5iVssQ53phB2PF19tlEphPljoyMLChPjkme/GAfdFIlEeClGraFEJoRNt8aOc715T0Es5Ql9phTl8fgtw+3s4yBtGaE8346sOC5vSUouXHXd5+C49uoTw+fUlDoRNIZLxedcHdH46eBwC0sw2G2yuxYswtw3N0KAxoYVEBK77hyh5XbJ3Uk8J1WPUy1mLtgybLcKZWuq2BcAnH1JTdqID2JxCOZNHbM1jLkpl9ugNCWKss+NZCJ0hWNJ4H49+gKN0F3avtB13/grV/QfWTMLQzqa8h05+Z66aLNDhYYTEDm+kWeBggrDGYgcxXKmz9/G/57Iv9mJi8wPAGZi1AKZYdXGJ6BzCUofZHT0LP1pMO1Hgc0o6mKx02Dq7ssx6f5ObA4wik7AoH0sq29T5znAYNLhliOHBtKJBHQt6e55QvozgfbIJ3K3XzFo0Rl2+WSIZbSrmg0FCBBnddoUUWPTXY8qxnhzSL84wpkNr5myYKBV+YzRLCY0CkEyORTfSwMhGwR5rkExTsfaoN0crJUiShPdl0QBsTv2TJybhT2bjqY0Yyw1BODhAPxIxgSJI/ctWjR6xKSMMeENCCW5aND8XGi4DlVpn9l6bFr76ys5Ldwl4GodCBTYKLxHkJgFYPPnEWwc/WSG2w/YcfZEJW6ogGxvDuOWD4eS8j+IOHbq5csvo8qQpIbFR3I9P6ae8x7YokzCHAT3zjgP+66YfEKQgi3/et8/buqTSkgdp00NxLdGI//iCD5GQAsddgCjQQghYhvlZcFfnrHokWnRQVMtN7/A6vSxj6BYcgrAAAAAElFTkSuQmCC",
+            "module": "wait_for_object",
             "module_name": "Appium",
             "visible": true,
             "options": false,

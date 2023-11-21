@@ -1,3 +1,7 @@
+
+
+
+
 # Appium
   
 Módulo para automatizar dispositivos móveis  
@@ -15,7 +19,7 @@ Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
 
 
 1. Configurar Appium  
-Este comando verifica se o Appium e o driver uiautomator2 estão instalados. Se alguma das dependências não estiver instalada, ela será instalada automaticamente.
+Este comando verifica se você instalou as dependências necessárias para executar o Appium. Ele tentará instalar alguns, mas não todos. Para aqueles em que o Rocketbot não puder, ele gerará um erro indicando as etapas a seguir para instalá-los manualmente. É recomendável executar este comando apenas para validar se você possui as dependências necessárias e não incluí-lo na versão do bot que é implantada em produção.
 
 2. Emparelhar dispositivo  
 Este comando permite emparelhar um dispositivo Android com a máquina que você deseja conectar. Esta etapa é necessária para realizar apenas uma vez por dispositivo se você deseja se conectar via WIFI.
@@ -27,24 +31,54 @@ Este comando permite conectar um dispositivo Android e configurar o servidor uti
 Este comando permite listar os dispositivos emulados disponíveis.
 
 5. Conectar Dispositivo Emulado  
-Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você conecta o dispositivo, o comando pode falhar porque você deve iniciar o sistema operacional. Se isso acontecer, execute o comando novamente.
+Este comando permite conectar um dispositivo emulado e configurar o servidor. Se esta for a primeira vez que você executa o emulador, pode levar alguns minutos para iniciar.
 
-6. Swipe simples  
+6. Bloquear dispositivo  
+Este comando permite bloquear um dispositivo Android.
+
+7. Desbloquear Dispositivo  
+Este comando permite desbloquear um dispositivo Android. Disponível apenas se o tipo e o código de desbloqueio tiverem sido definidos no comando de conexão.
+
+8. Obter informações do aplicativo atual  
+Este comando permite obter o nome do pacote e o nome da atividade do aplicativo que está sendo executado atualmente no dispositivo Android.
+
+9. Iniciar aplicação  
+Este comando permite iniciar um aplicativo no dispositivo Android. Para obter o nome do pacote e o nome da atividade, você pode usar o comando Obter informações do aplicativo atual
+
+10. Swipe simples  
 Esse comando permite que você faça um simples swipe na tela do dispositivo Android.
 
-7. Toque nas coordenadas  
+11. Toque nas coordenadas  
 Este comando permite tocar em uma coordenada específica na tela.
 
-8. Enviar teclas  
+12. Toque no elemento  
+Este comando permite tocar em um elemento específico na tela.
+
+13. Enviar teclas  
 Esse comando permite enviar teclas para um seletor específico no dispositivo Android.
 
-9. Obter texto  
+14. Extrair texto  
 Este comando permite obter o texto de um seletor específico do dispositivo Android.
 
-10. Captura de tela  
+15. Extrair texto por coordenadas  
+Este comando permite obter o texto de um elemento localizado em uma posição específica do dispositivo Android.
+
+16. Zoom em coordenadas  
+Este comando permite dar zoom in ou zoom out nas coordenadas especificadas no dispositivo Android.
+
+17. Zoom em objeto  
+Este comando permite dar zoom in ou zoom out em um objeto no dispositivo Android.
+
+18. Captura de tela  
 Este comando permite capturar a tela do dispositivo Android e armazenar a imagem no caminho especificado.
 
-11. Desconectar dispositivo  
+19. Executar comando no dispositivo  
+Este comando permite executar um comando no terminal do dispositivo Android. Para executar este comando corretamente, a caixa de seleção Permitir shell no comando de conexão deve estar marcada.
+
+20. Aguardar por objeto  
+Este comando permite aguardar por um objeto no dispositivo Android. O comando será executado até que o objeto seja encontrado ou até que o tempo máximo de espera seja atingido.
+
+21. Desconectar dispositivo  
 Este comando permite desconectar o dispositivo Android ou emulado que está sendo automatizado.  
 
 
